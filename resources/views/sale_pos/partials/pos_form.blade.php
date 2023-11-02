@@ -1,10 +1,7 @@
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-6">
 		<div class="form-group">
 			<div class="input-group">
-				<span class="input-group-addon">
-					<i class="fa fa-user"></i>
-				</span>
 				<input type="hidden" id="default_customer_id" 
 				value="{{ $walk_in_customer['id'] ?? ''}}" >
 				<input type="hidden" id="default_customer_name" 
@@ -17,16 +14,31 @@
 					<input type="hidden" id="default_selling_price_group" 
 				value="{{ $walk_in_customer['selling_price_group_id'] ?? ''}}" >
 				@endif
-				{!! Form::select('contact_id', 
-					[], null, ['class' => 'form-control mousetrap', 'id' => 'customer_id', 'placeholder' => 'Enter Customer name / phone', 'required']); !!}
-				<span class="input-group-btn mt-4">
-					<button type="button" class="btn btn-flat add_new_customer cusTheme-dark icon outline" data-name=""  @if(!auth()->user()->can('customer.create')) disabled @endif><i class="fa fa-plus-circle fa-lg"></i></button>
-				</span>
+
+
+				<div class="col-md-12 px-0">
+					<div class="py-4 px-4 cusBoxAnlys selectin">
+						<div class="boxTitle d-flex">
+							<div class="icon_Boxer">
+								<i class="fa fa-user fsz-35 text-white"></i>
+							</div>
+							<div class="text-center textContenter">
+								{!! Form::select('contact_id', 
+									[], null, ['class' => 'form-control mousetrap', 'id' => 'customer_id', 'placeholder' => 'Enter Customer name / phone', 'required']); !!}
+								<span class="input-group-btn mt-4">
+									<button type="button" class="btn btn-flat add_new_customer cusTheme-dark icon outline" data-name=""  @if(!auth()->user()->can('customer.create')) disabled @endif><i class="fa fa-plus-circle fa-lg"></i></button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 			<small class="text-danger hide contact_due_text"><strong>@lang('account.customer_due'):</strong> <span></span></small>
 		</div>
 	</div>
-	<div class="col-md-12">
+	<div class="col-md-6">
 		<div class="form-group custom-input-group">
 			<div class="input-group">
 				{{-- <div class="input-group-btn">
@@ -34,22 +46,34 @@
 						<i class="fas fa-search-plus"></i>
 					</button>
 				</div> --}}
-				{!! Form::text('search_product', null, ['class' => 'form-control mousetrap custom-search-input', 'id' => 'search_product', 'placeholder' => __('lang_v1.search_product_placeholder'),
-				'disabled' => is_null($default_location)? true : false,
-				'autofocus' => is_null($default_location)? false : true,
-				]); !!}
-				<span class="input-group-btn custom-btn-group">
-					<!-- Show button for weighing scale modal -->
-					@if(isset($pos_settings['enable_weighing_scale']) && $pos_settings['enable_weighing_scale'] == 1)
-						<button type="button" class="btn btn-default btn-flat custom-weighing-scale-btn cusTheme-dark icon outline mx-2" id="weighing_scale_btn" data-toggle="modal" data-target="#weighing_scale_modal" 
-						title="@lang('lang_v1.weighing_scale')">
-							<i class="fa fa-digital-tachograph fa-lg"></i>
-						</button>
-					@endif
-					<button type="button" class="btn cusTheme-dark icon outline btn-flat custom-pos-add-product-btn" data-href="{{action([\App\Http\Controllers\ProductController::class, 'quickAdd'])}}" data-container=".quick_add_product_modal">
-						<i class="fa fa-plus-circle fa-lg"></i>
-					</button>
-				</span>
+
+				<div class="col-md-12 px-0">
+					<div class="py-4 px-4 cusBoxAnlys selectin">
+						<div class="boxTitle d-flex">
+							<div class="icon_Boxer">
+								<i class="fa-solid fa-box fsz-35 text-white"></i>
+							</div>
+							<div class="text-center textContenter">
+								{!! Form::text('search_product', null, ['class' => 'form-control mousetrap custom-search-input', 'id' => 'search_product', 'placeholder' => __('lang_v1.search_product_placeholder'),
+								'disabled' => is_null($default_location)? true : false,
+								'autofocus' => is_null($default_location)? false : true,
+								]); !!}
+								<span class="input-group-btn custom-btn-group">
+									<!-- Show button for weighing scale modal -->
+									@if(isset($pos_settings['enable_weighing_scale']) && $pos_settings['enable_weighing_scale'] == 1)
+										<button type="button" class="btn btn-default btn-flat custom-weighing-scale-btn cusTheme-dark icon outline mx-2 width50" id="weighing_scale_btn" data-toggle="modal" data-target="#weighing_scale_modal" 
+										title="@lang('lang_v1.weighing_scale')">
+											<i class="fa fa-digital-tachograph fa-lg"></i>
+										</button>
+									@endif
+									<button type="button" class="btn cusTheme-dark icon outline btn-flat custom-pos-add-product-btn width50" data-href="{{action([\App\Http\Controllers\ProductController::class, 'quickAdd'])}}" data-container=".quick_add_product_modal">
+										<i class="fa fa-plus-circle fa-lg"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

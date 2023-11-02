@@ -10,6 +10,14 @@
 @extends('layouts.app')
 
 <section class="content no-print">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card mb-30 pb-1">
+				@include('sale_pos.partials.pos_top_sidebar')
+			</div>
+		<div>
+	</div>
+
 	<input type="hidden" id="amount_rounding_method" value="{{$pos_settings['amount_rounding_method'] ?? ''}}">
 	@if(!empty($pos_settings['allow_overselling']))
 		<input type="hidden" id="is_overselling_allowed">
@@ -23,10 +31,12 @@
 	@endphp
 	{!! Form::open(['url' => action([\App\Http\Controllers\SellPosController::class, 'store']), 'method' => 'post', 'id' => 'add_pos_sell_form' ]) !!}
 
+
+
 	<div class="row">
 		<div class="@if(empty($pos_settings['hide_product_suggestion'])) col-md-8 @else col-md-10 offset-md-1 @endif">
 			<div class="card mb-12 @if(!isMobile()) mb-100 @endif">
-				<div class="card-body pb-0">
+				<div class="card-body pb-0 d-block">
 					{!! Form::hidden('location_id', $default_location->id ?? null, ['id' => 'location_id', 'data-receipt_printer_type' => !empty($default_location->receipt_printer_type) ? $default_location->receipt_printer_type : 'browser', 'data-default_payment_accounts' => $default_location->default_payment_accounts ?? '']) !!}
 					<!-- sub_type -->
 					{!! Form::hidden('sub_type', isset($sub_type) ? $sub_type : null) !!}
@@ -62,7 +72,7 @@
 		@if(empty($pos_settings['hide_product_suggestion']) && !isMobile())
 		<div class="col-md-4">
 			<div class="card">
-				<div class="card-body">
+				<div class="card-body py-0">
 					@include('sale_pos.partials.pos_sidebar')
 				</div>
 			</div>

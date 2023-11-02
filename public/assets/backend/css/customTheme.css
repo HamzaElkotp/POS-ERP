@@ -194,6 +194,9 @@ body{
     width: 100%;
 }
 
+.mb-30 {
+    margin-bottom: 30px !important;
+}
 .mb-70 {
     margin-bottom: 70px !important;
 }
@@ -470,6 +473,31 @@ body{
 .boxTitle p {
     width: 100%;
     text-align: center;
+}
+
+
+.cusBoxAnlys.selectin .select2.select2-container.select2-container--default, .cusBoxAnlys.selectin .form-control.mousetrap.custom-search-input{
+    padding-right: 10px !important;
+    border-radius: 0.4rem !important;
+    width: 100% !important;
+}
+.cusBoxAnlys.selectin .icon_Boxer {
+    height: 72px !important;
+}
+.cusBoxAnlys.selectin .icon_Boxer i{
+    line-height: 72px !important;
+}
+.cusBoxAnlys.selectin .boxTitle button.btn{
+    margin-top: 4px !important;
+    margin-right: 10px !important;
+    width: calc(100% - 12px) !important;
+}
+.cusBoxAnlys.selectin .boxTitle button.btn.width50{
+    width: calc(50% - 12px) !important;
+}
+#search_product{    
+    width: calc(100% - 10px) !important;
+    margin-right: 10px;
 }
 
 .textContenter{
