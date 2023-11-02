@@ -23,7 +23,7 @@
 				            {!! Form::label('discount_type_modal', __('sale.discount_type') . ':*' ) !!}
 				            <div class="input-group">
 				                <span class="input-group-addon">
-				                    <i class="fa fa-info"></i>
+				                    <i class="fa-solid fa-tag"></i>
 				                </span>
 				                {!! Form::select('discount_type_modal', ['fixed' => __('lang_v1.fixed'), 'percentage' => __('lang_v1.percentage')], $discount_type , ['class' => 'form-control','placeholder' => __('messages.please_select'), 'required']); !!}
 				            </div>
@@ -40,7 +40,7 @@
 				            {!! Form::label('discount_amount_modal', __('sale.discount_amount') . ':*' ) !!}
 				            <div class="input-group">
 				                <span class="input-group-addon">
-				                    <i class="fa fa-info"></i>
+				                    <i class="fa-solid fa-hashtag"></i>
 				                </span>
 				                {!! Form::text('discount_amount_modal', @num_format($sales_discount), ['class' => 'form-control input_number', 'data-max-discount' => $max_discount, 'data-max-discount-error_msg' => __('lang_v1.max_discount_error_msg', ['discount' => $max_discount != '' ? @num_format($max_discount) : '']) ]); !!}
 				            </div>
@@ -74,7 +74,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" id="posEditDiscountModalUpdate">@lang('messages.update')</button>
-			    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('messages.cancel')</button>
+			    <button type="button" class="btn btn-danger" data-dismiss="modal">@lang('messages.cancel')</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

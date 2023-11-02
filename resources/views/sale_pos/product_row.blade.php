@@ -21,12 +21,12 @@
 			value="{{$so_line->id}}">
 		@endif
 		@php
-			$product_name = $product->product_name . '<br/>' . $product->sub_sku ;
+			$product_name = $product->product_name . ' | ' . $product->sub_sku ;
 			if(!empty($product->brand)){ $product_name .= ' ' . $product->brand ;}
 		@endphp
 
 		@if( ($edit_price || $edit_discount) && empty($is_direct_sell) )
-		<div title="@lang('lang_v1.pos_edit_product_price_help')">
+		<div title="@lang('lang_v1.pos_edit_product_price_help')" class="product_titleo">
 		<span class="text-link text-info cursor-pointer" data-toggle="modal" data-target="#row_edit_product_price_modal_{{$row_count}}">
 			{!! $product_name !!}
 			&nbsp;<i class="fa fa-info-circle"></i>
@@ -176,7 +176,7 @@
 		@endif
 	@endif
 	@if(!empty($is_direct_sell))
-  		<br>
+  		
   		<textarea class="form-control" name="products[{{$row_count}}][sell_line_note]" rows="2">{{$sell_line_note}}</textarea>
   		<p class="help-block"><small>@lang('lang_v1.sell_line_description_help')</small></p>
 	@endif
@@ -225,7 +225,7 @@
         		@endphp
         	@endif
         @endforeach
-		<div class="input-group input-number">
+		<div class="input-group input-number quntity">
 			<span class="input-group-btn"><button type="button" class="btn btn-default btn-flat quantity-down"><i class="fa fa-minus text-danger"></i></button></span>
 		<input type="text" data-min="1" 
 			class="form-control pos_quantity input_number mousetrap input_quantity" 
@@ -249,7 +249,7 @@
 		
 		<input type="hidden" name="products[{{$row_count}}][product_unit_id]" value="{{$product->unit_id}}">
 		@if(count($sub_units) > 0)
-			<br>
+			
 			<select name="products[{{$row_count}}][sub_unit_id]" class="form-control input-sm sub_unit">
                 @foreach($sub_units as $key => $value)
                     <option value="{{$key}}" data-multiplier="{{$value['multiplier']}}" data-unit_name="{{$value['name']}}" data-allow_decimal="{{$value['allow_decimal']}}" @if(!empty($product->sub_unit_id) && $product->sub_unit_id == $key) selected @endif>
@@ -262,9 +262,9 @@
 		@endif
 
 		@if(!empty($product->second_unit))
-            <br>
+            
             <span style="white-space: nowrap;">
-            @lang('lang_v1.quantity_in_second_unit', ['unit' => $product->second_unit])*:</span><br>
+            @lang('lang_v1.quantity_in_second_unit', ['unit' => $product->second_unit])*:</span>
             <input type="text" 
             name="products[{{$row_count}}][secondary_unit_quantity]" 
             value="{{@format_quantity($product->secondary_unit_quantity)}}"
@@ -337,19 +337,19 @@
 			<input type="text" name="products[{{$row_count}}][unit_price]" class="form-control pos_unit_price input_number mousetrap" value="{{@num_format($pos_unit_price)}}" @if(!empty($pos_settings['enable_msp'])) data-rule-min-value="{{$pos_unit_price}}" data-msg-min-value="{{__('lang_v1.minimum_selling_price_error_msg', ['price' => @num_format($pos_unit_price)])}}" @endif> 
 
 			@if(!empty($last_sell_line))
-				<br>
+				
 				<small class="text-muted">@lang('lang_v1.prev_unit_price'): @format_currency($last_sell_line->unit_price_before_discount)</small>
 			@endif
 		</td>
 		<td @if(!$edit_discount) class="hide" @endif>
-			{!! Form::text("products[$row_count][line_discount_amount]", @num_format($discount_amount), ['class' => 'form-control input_number row_discount_amount']); !!}<br>
+			{!! Form::text("products[$row_count][line_discount_amount]", @num_format($discount_amount), ['class' => 'form-control input_number row_discount_amount']); !!}
 			{!! Form::select("products[$row_count][line_discount_type]", ['fixed' => __('lang_v1.fixed'), 'percentage' => __('lang_v1.percentage')], $discount_type , ['class' => 'form-control row_discount_type']); !!}
 			@if(!empty($discount))
 				<p class="help-block">{!! __('lang_v1.applied_discount_text', ['discount_name' => $discount->name, 'starts_at' => $discount->formated_starts_at, 'ends_at' => $discount->formated_ends_at]) !!}</p>
 			@endif
 
 			@if(!empty($last_sell_line))
-				<br>
+				
 				<small class="text-muted">
 					@lang('lang_v1.prev_discount'): 
 					@if($last_sell_line->line_discount_type == 'percentage')
@@ -394,6 +394,6 @@
 		<span class="display_currency pos_line_total_text @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="true">{{$product->quantity_ordered*$unit_price_inc_tax}}</span>
 	</td>
 	<td class="text-center v-center">
-		<i class="fa fa-times text-danger pos_remove_row cursor-pointer" aria-hidden="true"></i>
+		<i class="fa-solid fa-trash-can text-danger pos_remove_row cursor-pointer" aria-hidden="true"></i>
 	</td>
 </tr>

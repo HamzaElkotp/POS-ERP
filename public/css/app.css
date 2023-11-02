@@ -204,18 +204,8 @@
 .dropdown-menu>li>a>.fas{
     margin-right: 6px;
 }
-.mt-5 {
+/* .mt-5 {
   margin-top: 5px !important;
-}
-.pos-form-actions{
-  height: auto;
-  padding-top: 12px;
-  padding-bottom: 20px;
-  position: fixed;
-  bottom: 0px;
-  background-color: #D1D5DC;
-  width: 100%;
-  z-index: 1000;
 }
 .mb-12 {
   margin-bottom: 12px !important;
@@ -225,7 +215,7 @@
 }
 .pr-12{
   padding-right: 12px !important;
-}
+} */
 .main-header .sidebar-toggle:before {
     content: "" !important;
 }

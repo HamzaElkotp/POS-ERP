@@ -20,13 +20,13 @@
 				{!! Form::select('contact_id', 
 					[], null, ['class' => 'form-control mousetrap', 'id' => 'customer_id', 'placeholder' => 'Enter Customer name / phone', 'required']); !!}
 				<span class="input-group-btn mt-4">
-					<button type="button" class="btn btn-default bg-white btn-flat add_new_customer" data-name=""  @if(!auth()->user()->can('customer.create')) disabled @endif><i class="fa fa-plus-circle text-primary fa-lg"></i></button>
+					<button type="button" class="btn btn-flat add_new_customer cusTheme-dark icon outline" data-name=""  @if(!auth()->user()->can('customer.create')) disabled @endif><i class="fa fa-plus-circle fa-lg"></i></button>
 				</span>
 			</div>
 			<small class="text-danger hide contact_due_text"><strong>@lang('account.customer_due'):</strong> <span></span></small>
 		</div>
 	</div>
-	<div class="col-md-10">
+	<div class="col-md-12">
 		<div class="form-group custom-input-group">
 			<div class="input-group">
 				{{-- <div class="input-group-btn">
@@ -41,13 +41,13 @@
 				<span class="input-group-btn custom-btn-group">
 					<!-- Show button for weighing scale modal -->
 					@if(isset($pos_settings['enable_weighing_scale']) && $pos_settings['enable_weighing_scale'] == 1)
-						<button type="button" class="btn btn-default bg-white btn-flat custom-weighing-scale-btn" id="weighing_scale_btn" data-toggle="modal" data-target="#weighing_scale_modal" 
+						<button type="button" class="btn btn-default btn-flat custom-weighing-scale-btn cusTheme-dark icon outline mx-2" id="weighing_scale_btn" data-toggle="modal" data-target="#weighing_scale_modal" 
 						title="@lang('lang_v1.weighing_scale')">
-							<i class="fa fa-digital-tachograph text-primary fa-lg"></i>
+							<i class="fa fa-digital-tachograph fa-lg"></i>
 						</button>
 					@endif
-					<button type="button" class="btn btn-default bg-white btn-flat custom-pos-add-product-btn" data-href="{{action([\App\Http\Controllers\ProductController::class, 'quickAdd'])}}" data-container=".quick_add_product_modal">
-						<i class="fa fa-plus-circle text-primary fa-lg"></i>
+					<button type="button" class="btn cusTheme-dark icon outline btn-flat custom-pos-add-product-btn" data-href="{{action([\App\Http\Controllers\ProductController::class, 'quickAdd'])}}" data-container=".quick_add_product_modal">
+						<i class="fa fa-plus-circle fa-lg"></i>
 					</button>
 				</span>
 			</div>
@@ -207,24 +207,24 @@
 		<table class="table table-condensed table-bordered table-striped table-responsive" id="pos_table">
 			<thead>
 				<tr>
-					<th class="tex-center @if(!empty($pos_settings['inline_service_staff'])) col-md-3 @else col-md-4 @endif">	
-						@lang('sale.product') @show_tooltip(__('lang_v1.tooltip_sell_product_column'))
+					<th class="fs-4 fw-500 tex-center @if(!empty($pos_settings['inline_service_staff'])) col-md-3 @else col-md-4 @endif">	
+						<i class="fa-solid fa-box text-cusTheme1"></i> @lang('sale.product') @show_tooltip(__('lang_v1.tooltip_sell_product_column'))
 					</th>
-					<th class="text-center col-md-3">
-						@lang('sale.qty')
+					<th class="fs-4 fw-500 text-center col-md-2">
+						<i class="fa-solid fa-boxes-stacked text-cusTheme1"></i> @lang('sale.qty')
 					</th>
 					@if(!empty($pos_settings['inline_service_staff']))
-						<th class="text-center col-md-2">
-							@lang('restaurant.service_staff')
+						<th class="fs-4 fw-500 text-center col-md-2">
+							<i class="fa-solid fa-people-group text-cusTheme1"></i> @lang('restaurant.service_staff')
 						</th>
 					@endif
-					<th class="text-center col-md-2 {{$hide_tax}}">
-						@lang('sale.price_inc_tax')
+					<th class="fs-4 fw-500 text-center col-md-3 {{$hide_tax}}">
+						<i class="fa-solid fa-sack-dollar text-cusTheme1"></i> @lang('sale.price_inc_tax')
 					</th>
-					<th class="text-center col-md-2">
-						@lang('sale.subtotal')
+					<th class="fs-4 fw-500 text-center col-md-2">
+						<i class="fa-solid fa-dollar-sign text-cusTheme1"></i> @lang('sale.subtotal')
 					</th>
-					<th class="text-center"><i class="fas fa-times" aria-hidden="true"></i></th>
+					<th class="text-center col-md-2"><i class="fas fa-times fs-3" aria-hidden="true"></i></th>
 				</tr>
 			</thead>
 			<tbody></tbody>

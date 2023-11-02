@@ -75,7 +75,10 @@
                         {!! Form::text('final_total', null, ['class' => 'form-control input_number', 'placeholder' => __('sale.total_amount'), 'required', 'id' => 'expense_final_total']); !!}
                     </div>
                 </div>
-                <div class="col-sm-6">
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
                     <div class="form-group">
                         {!! Form::label('expense_additional_notes', __('expense.expense_note') . ':') !!}
                                 {!! Form::textarea('additional_notes', null, ['class' => 'form-control', 'rows' => 3, 'id' => 'expense_additional_notes']); !!}
@@ -99,7 +102,7 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">@lang( 'messages.save' )</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">@lang( 'messages.close' )</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">@lang( 'messages.close' )</button>
         </div>
         {!! Form::close() !!}
     </div>

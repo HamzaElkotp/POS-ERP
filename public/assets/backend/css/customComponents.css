@@ -1,0 +1,48 @@
+
+.longcarsole {
+    margin-top: 12px;
+    padding-bottom: 20px;
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    overflow: -moz-scrollbars-none;
+    scroll-behavior: smooth;
+}
+.longcarsole .carsole-box{
+    background-color: var(--system-box-bg);
+    border-radius: 5px;
+    padding: 16px 10px 10px 10px;
+    box-shadow: 0px 4px 4px 0px rgba(237, 237, 237, 0.2509803922);
+    border: 1px solid #F8F8F8 !important;
+    height: 105px;
+    min-width: 120px !important;
+    cursor: pointer;
+    transition: background 0.15s, border 0.15s;
+    min-width: 105px;
+    text-align: center !important;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.longcarsole .carsole-box:hover, .longcarsole .carsole-box.active {
+    background-color: var(--main-color1);
+    border: 1px solid var(--main-color1) !important;
+}
+.longcarsole .carsole-box + .carsole-box {
+    margin-right: 12px;
+}
+.longcarsole .carsole-box img{
+    margin-bottom: 10px;
+    width: 46px;
+}
+.longcarsole .carsole-box p{
+    margin-bottom: 0;
+    color: var(--main-color);
+    transition: 0.3s color;
+}
+.longcarsole .carsole-box:hover p, .longcarsole .carsole-box.active p{
+    color: var(--system-bg) !important;
+}

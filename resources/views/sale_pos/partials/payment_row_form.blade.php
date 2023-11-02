@@ -3,7 +3,7 @@
 	@php
 		$col_class = 'col-md-6';
 		if(!empty($accounts)){
-			$col_class = 'col-md-4';
+			$col_class = 'col-md-6';
 		}
 		$readonly = $payment_line['method'] == 'advance' ? true : false;
 	@endphp
@@ -12,7 +12,7 @@
 			{!! Form::label("amount_$row_index" ,__('sale.amount') . ':*') !!}
 			<div class="input-group">
 				<span class="input-group-addon">
-					<i class="fas fa-money-bill-alt"></i>
+					<i class="fa-solid fa-dollar-sign"></i>
 				</span>
 				{!! Form::text("payment[$row_index][amount]", @num_format($payment_line['amount']), ['class' => 'form-control payment-amount input_number', 'required', 'id' => "amount_$row_index", 'placeholder' => __('sale.amount'), 'readonly' => $readonly]); !!}
 			</div>
@@ -36,7 +36,7 @@
 			{!! Form::label("method_$row_index" , __('lang_v1.payment_method') . ':*') !!}
 			<div class="input-group">
 				<span class="input-group-addon">
-					<i class="fas fa-money-bill-alt"></i>
+					<i class="fa-regular fa-credit-card"></i>
 				</span>
 				@php
 					$_payment_method = empty($payment_line['method']) && array_key_exists('cash', $payment_types) ? 'cash' : $payment_line['method'];

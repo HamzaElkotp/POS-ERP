@@ -27,7 +27,7 @@
 				            {!! Form::label('shipping_charges_modal', __('sale.shipping_charges') . ':*' ) !!}
 				            <div class="input-group">
 				                <span class="input-group-addon">
-				                    <i class="fa fa-info"></i>
+				                    <i class="fa-solid fa-ship"></i>
 				                </span>
 				                {!! Form::text('shipping_charges_modal', !empty($transaction->shipping_charges) ? @num_format($transaction->shipping_charges) : 0, ['class' => 'form-control input_number','placeholder' => __('sale.shipping_charges')]); !!}
 				            </div>
@@ -150,7 +150,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" id="posShippingModalUpdate">@lang('messages.update')</button>
-			    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('messages.cancel')</button>
+			    <button type="button" class="btn btn-danger" data-dismiss="modal">@lang('messages.cancel')</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
