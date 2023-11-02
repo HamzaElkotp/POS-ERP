@@ -1,0 +1,355 @@
+
+body{
+  font-size: 16px;
+  font-weight: bold;;
+}
+
+.dropzone {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+    background-color: #f5f5f9;
+}
+
+.dropzone.dragover {
+    background-color: #ebebeb;
+}
+
+.dropzone-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.dropzone-text {
+    font-weight: bold;
+}
+
+/* Styles for success and error messages */
+.message-container {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+.message-container.success {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.message-container.error {
+    background-color: #ffcdd2;
+    color: #c62828;
+}
+
+.dropzone.active {
+    background-color: #ebebeb;
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    /* Set the desired height for the preview image */
+}
+
+textarea#editor {
+    border-radius: 0px 0px 10px 10px !important;
+}
+
+.progress-bar {
+    background-color: #ffffff00 !important;
+    color: #fff;
+    box-shadow: none !important;
+}
+
+.tag-container {
+    margin-top: 10px;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.tag button {
+    background: none;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    color: #888;
+}
+ .order-details-container .order-header {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+ }
+ .order-details-container .order-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+ }
+ .order-details-container .order-header p {
+    font-size: 14px;
+    color: #777;
+ }
+ .order-details-container .order-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+ }
+ .order-details-container .order-content h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+ }
+ .order-details-container .order-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 10px;
+ }
+ .message-box {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 30px;
+ }
+ .message-box h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+ }
+ .message-box p {
+    font-size: 14px;
+    color: #555;
+ }
+ .timer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .timer-style {
+    font-size: 64px;
+    font-weight: bold;
+    color: #ff4d4d;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .timer-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .timer-item {
+    text-align: center;
+  }
+  
+  .timer-value {
+    font-size: 48px;
+    font-weight: bold;
+  }
+  
+  .timer-label {
+    font-size: 14px;
+  }
+  .status-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background-color: #F2F2F2;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .completed-color {
+    color: #4CAF50;
+  }
+  
+  .cancelled-color {
+    color: #e91414;
+  }
+  
+  .status-label {
+    margin-left: 10px;
+  }
+  @media screen and (max-width: 768px) {
+    .timer-value {
+        font-size: 30px;
+    }
+  
+    .timer-label {
+        font-size: 12px;
+    }
+}
+.card {
+  border-radius: 10px !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 10px 20px;
+}
+
+.card-title {
+  margin-bottom: 0;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.form-text.text-muted {
+  color: #6c757d;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+.preview {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+/* Additional Form Styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+.color-input {
+  appearance: none;
+  padding: 0;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+ }
+ .repeater-container {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin: 0px;
+}
+  /* Add your desired background color class to the repeater container */
+  .repeater-container {
+  background-color: #f0f0f0;
+}
+
+/* Style the Add and Remove buttons */
+.repeater-container .add-row,
+.repeater-container .remove-row {
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.repeater-container .add-row {
+  background-color: #5cb85c;
+  color: #fff;
+}
+
+.repeater-container .remove-row {
+  background-color: #d9534f;
+  color: #fff;
+}
+.repeater-container .remove-row[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+  /* Add a background color to the repeater section */
+  .repeater {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Add some spacing to the repeater rows */
+.repeater-row {
+    margin-bottom: 5px;
+}
+
+/* Style the "Add New" button */
+#addBtn {
+    margin-top: 10px;
+}
+.col-md-2.repeater-btn {
+  margin-top: 34px;
+}
+.row.mb-3.repeater-row.repeater {
+  --bs-gutter-x: 0.625rem;
+}
+@media (max-width: 767.98px) {
+      .repeater-row .col {
+          margin-bottom: 10px;
+      }
+      .col-md-2.repeater-btn {
+          margin-top: 15px;
+      }
+  }
