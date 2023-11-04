@@ -30,10 +30,10 @@ body{
     padding: 12px 28px;
     left: 0;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.55);
     box-shadow: var(--box-shadow);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4.5px);
+    -webkit-backdrop-filter: blur(4.5px);
     /* width: calc(100% - 60px); */
     padding: 10px !important;
 }
@@ -684,4 +684,15 @@ select.form-control{
 .form-group .btn.btn-flat.add_new_customer.cusTheme-dark.icon.outline {
     border-radius: 0.4rem !important;
     margin-right: 2px;
+}
+
+
+
+
+
+#openBtnParentNav, #closeBtnParentNav {
+    font-size: 24px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: var(--main-color);
 }
