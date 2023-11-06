@@ -705,9 +705,6 @@ select.form-control{
 
 
 
-
-
-
 html[dir="ltr"] .ltrRotate180{
     transform: rotate(180deg) !important;
 }
