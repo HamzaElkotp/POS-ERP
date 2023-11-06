@@ -30,10 +30,10 @@ body{
     padding: 12px 28px;
     left: 0;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.55);
     box-shadow: var(--box-shadow);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4.5px);
+    -webkit-backdrop-filter: blur(4.5px);
     /* width: calc(100% - 60px); */
     padding: 10px !important;
 }
@@ -319,6 +319,12 @@ body{
     background-color: var(--main-color);
     color: var(--bs-body-bg);
 }
+
+.btn.cusTheme-light{
+    background-color: var(--main-color1);
+    color: var(--bs-body-bg);
+}
+
 
 
 
@@ -684,4 +690,64 @@ select.form-control{
 .form-group .btn.btn-flat.add_new_customer.cusTheme-dark.icon.outline {
     border-radius: 0.4rem !important;
     margin-right: 2px;
+}
+
+
+
+
+
+#openBtnParentNav, #closeBtnParentNav {
+    font-size: 24px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: var(--main-color);
+}
+
+
+
+
+
+
+html[dir="ltr"] .ltrRotate180{
+    transform: rotate(180deg) !important;
+}
+html[dir="ltr"] .ltr-flexreverse-row{
+    flex-direction: row-reverse !important;
+}
+html[dir="ltr"] hr.cusTheme {
+    margin-left: 10px !important;
+    margin-right: 0 !important;
+}
+html[dir="ltr"] .scroll {
+    right: 70px;
+}
+html[dir="ltr"] select.form-control {
+    padding-right: 6px !important;
+    padding-left: 6px !important;
+}
+
+html[dir="ltr"] .cusBoxAnlys.selectin .select2.select2-container.select2-container--default{
+    padding-left: 10px !important;
+    padding-right: 0 !important;
+}
+html[dir="ltr"] .cusBoxAnlys.selectin .boxTitle button.btn {
+    margin-left: 10px !important;
+    margin-right: 0 !important;
+}
+html[dir="ltr"] #search_product {
+    margin-left: 10px;
+    margin-right: 0 !important;
+}
+html[dir="ltr"] .select2-container--default .select2-selection--single .select2-selection__arrow {
+    border-radius: 0px 6px 6px 0px !important;
+}
+html[dir="ltr"] .select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 0px !important; 
+}
+html[dir="ltr"] .form-control.mousetrap.select2-hidden-accessible + .select2.select2-container.select2-container--default .select2-selection--single {
+    border-radius: 0.5rem !important;
+}
+html[dir="ltr"] .longcarsole .carsole-box + .carsole-box {
+    margin-right: 0 !important;
+    margin-left: 12px !important;
 }

@@ -46,3 +46,70 @@
 .longcarsole .carsole-box:hover p, .longcarsole .carsole-box.active p{
     color: var(--system-bg) !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#calculator {
+    width: 280px;
+    padding: 18px;
+    background-color: var(--tagify-dd-bg-color);
+    border-radius: 20px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    box-shadow: 10px 18px 40px -3px #419ed357;
+    z-index: 1000000;
+    cursor: all-scroll;
+  }
+  
+  #calculator.notActive{
+    display: none !important;
+  }
+  
+  #calculator .screen {
+    width: 100% !important;
+    background: #ffffffbd !important;
+    margin: 0 !important;
+    height: 80px !important;
+    font-size: 32px !important;
+    font-weight: 400 !important;
+    padding: 20px 10px !important;
+    border-radius: 12px !important;
+    color: var(--main-color1) !important;
+  }
+  
+  
+  .calcbtn{
+      font-weight: 500 !important;
+      height: 46px !important;
+      font-size: 30px !important;
+      line-height: 23px;
+      margin: 3px !important;
+  }
+  .calcbtn.rightcol{
+      background-color: var(--main-color1);
+      color: var(--bs-body-bg);
+  }
+  .calcbtn.number{
+      font-size: 18px !important;
+      background: var(--system-bg);
+  }
+  .calcbtn.control{
+      font-size: 20px !important;
+      font-weight: 400 !important;
+      background-color: #d4efff !important;
+  }
+  #equals {
+    background: #1795dd;
+  }

@@ -1,7 +1,7 @@
 {{-- Start Adding Custom Theme File --}}
 <link rel="stylesheet" href="{{ asset('assets/backend/css/customTheme.css?v='.$asset_v) }}">
 <link rel="stylesheet" href="{{ asset('assets/backend/css/customComponents.css?v='.$asset_v) }}">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href="{{ asset('assets/backend/css/bootstrap.min.css?v='.$asset_v) }}" rel="stylesheet">
 {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
 {{-- End Adding Custom Theme File --}}
 
@@ -107,6 +107,7 @@
 </div>
 
 @include('sale_pos.partials.configure_search_modal')
+@include('layouts.partials.calculator')
 
 @include('sale_pos.partials.recent_transactions_modal')
 

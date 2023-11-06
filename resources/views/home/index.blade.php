@@ -1,4 +1,7 @@
 @extends('layouts.app')
+<link rel="stylesheet" href="{{ asset('assets/backend/css/customTheme.css?v='.$asset_v) }}">
+<link rel="stylesheet" href="{{ asset('assets/backend/css/customComponents.css?v='.$asset_v) }}">
+<link href="{{ asset('assets/backend/css/bootstrap.min.css?v='.$asset_v) }}" rel="stylesheet">
 <style>
     /* In your CSS file */
     .widget-container {

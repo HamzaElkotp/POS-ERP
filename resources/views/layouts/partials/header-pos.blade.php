@@ -166,7 +166,7 @@
                     <a href="{{ $go_back_url }}" title="{{ __('lang_v1.go_back') }}"
                         class="link cusTheme backLink pull-left">
                         <span>{{ __('lang_v1.go_back') }}</span>
-                        <i class="fa-solid fa-caret-left"></i>
+                        <i class="fa-solid fa-caret-left ltrRotate180"></i>
                     </a>
                 </div>
             </div>

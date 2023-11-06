@@ -16,9 +16,10 @@
         </div>
 
         <div class="carsole-container" carsole="brand-carsole" opt2box-carsole="brand-carsole" linkedto="product_brand">
-			<div rightbtn="brand-carsole" class="btn cusTheme-dark btn-sm outline sm"><i class="fa-solid fa-caret-right"></i></div>
-			<div leftbtn="brand-carsole" class="btn cusTheme-dark btn-sm outline sm"><i class="fa-solid fa-caret-left"></i></div>
-
+			<div class="d-flex ltr-flexreverse-row">
+                <div rightbtn="brand-carsole" class="btn cusTheme-dark btn-sm outline sm mx-1"><i class="fa-solid fa-caret-right"></i></div>
+			    <div leftbtn="brand-carsole" class="btn cusTheme-dark btn-sm outline sm"><i class="fa-solid fa-caret-left"></i></div>
+            </div>
 			<div class="longcarsole">
 				<div class="carsole-box" opt2box-option="product_brand" carsol-parent="brand-carsole" optionid="all">
 					<img src="https://cdn-icons-png.flaticon.com/512/5277/5277703.png">

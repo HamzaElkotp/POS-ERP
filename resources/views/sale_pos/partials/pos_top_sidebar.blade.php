@@ -23,8 +23,11 @@
         </div>
 
 		<div class="carsole-container" carsole="category-carsole" opt2box-carsole="category-carsole" linkedto="product_category">
-			<div rightbtn="category-carsole" class="btn cusTheme-dark btn-sm outline sm"><i class="fa-solid fa-caret-right"></i></div>
-			<div leftbtn="category-carsole" class="btn cusTheme-dark btn-sm outline sm"><i class="fa-solid fa-caret-left"></i></div>
+			
+            <div class="d-flex ltr-flexreverse-row">
+                <div rightbtn="category-carsole" class="btn cusTheme-dark btn-sm outline sm mx-1"><i class="fa-solid fa-caret-right"></i></div>
+                <div leftbtn="category-carsole" class="btn cusTheme-dark btn-sm outline sm"><i class="fa-solid fa-caret-left"></i></div>
+            </div>
 
 			<div class="longcarsole">
 				<div class="carsole-box" opt2box-option="product_category" carsol-parent="category-carsole" optionid="all">

@@ -18,6 +18,6 @@ function calculate() {
     }
 }
 
-$(document).ready( function(){
-	$('#btnCalculator').popover();
-});
+// $(document).ready( function(){
+// 	$('#btnCalculator').popover();
+// });
