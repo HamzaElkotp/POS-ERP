@@ -27,7 +27,7 @@
     <input type="hidden" id="pos_redirect_url" value="{{ $pos_redirect_url }}">
     <div class="row mx-0 px-3">
 
-        <div class="col-md-4">
+        <div class="col-md-4 mobile-paddx-0">
             <div class="d-flex flex-row justify-content-evenly align-items-center">
                 <div class="p-2 flex-fill">
                     <div class="d-flex align-items-center">
@@ -35,7 +35,7 @@
 
                         @if (empty($transaction->location_id))
                             @if (count($business_locations) > 1)
-                                <div style="width: calc(100% - 120px);" class="my-0">
+                                <div style="width: calc(100% - 120px);" class="my-0 width100minus">
                                     {!! Form::select(
                                         'select_location_id',
                                         $business_locations,
@@ -54,8 +54,8 @@
             </div>
         </div>
 
-        <div class="col-md-5">
-            <div class="p-2 d-flex justify-content-center align-items-center">
+        <div class="col-md-5 mobile-paddx-0">
+            <div class="p-2 d-flex justify-content-center align-items-center buttonscroll">
                 @if (!empty($pos_settings['inline_service_staff']))
                     <button type="button" id="show_service_staff_availability"
                         title="{{ __('lang_v1.service_staff_availability') }}"
@@ -67,19 +67,19 @@
 
                 @can('close_cash_register')
                     <button type="button" id="close_register" title="{{ __('cash_register.close_register') }}"
-                        class="btn cusTheme-dark icon outline mx-2 pull-right"
+                        class="btn cusTheme-dark icon outline mx-2 btn-modal pull-right"
                         data-container=".close_register_modal"
                         data-href="{{ action([\App\Http\Controllers\CashRegisterController::class, 'getCloseRegister']) }}">
-                        <i class="fa-regular fa-calendar-check"></i>
+                        <strong><i class="fa fa-window-close fa-lg"></i></strong>
                     </button>
                 @endcan
 
                 @can('view_cash_register')
                     <button type="button" id="register_details" title="{{ __('cash_register.register_details') }}"
-                        class="btn cusTheme-dark icon outline mx-2 pull-right"
+                        class="btn btn-modal pull-right cusTheme-dark icon outline mx-2"
                         data-container=".register_details_modal"
                         data-href="{{ action([\App\Http\Controllers\CashRegisterController::class, 'getRegisterDetails']) }}">
-                        <i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+                        <strong><i class="fa fa-briefcase fa-lg" aria-hidden="true"></i></strong>
                     </button>
                 @endcan
 
@@ -90,12 +90,11 @@
                     <i class="fa-solid fa-calculator"></i>
                 </button>
 
-                <button title="@lang('lang_v1.sell_return')" id="return_sale" type="button" 
-                    class="btn cusTheme-dark icon outline mx-2 popover-default" data-toggle="popover" 
-                    data-trigger="click" data-content='@include('layouts.partials.calculator')' data-html="true" 
-                    data-placement="bottom"
-                    data-content='<div class="m-8"><input type="text" class="form-control" placeholder="@lang('sale.invoice_no')" id="send_for_sell_return_invoice_no"></div><div class="w-100 text-center"><button type="button" class="btn btn-danger" id="send_for_sell_return">@lang('lang_v1.send')</button></div>'>
-                    <i class="fas fa-undo fa-lg" aria-hidden="true"></i>
+                <button title="@lang('lang_v1.sell_return')" id="return_sale" type="button"
+                    class="btn cusTheme-dark icon outline mx-2 popover-default" data-toggle="popover"
+                    data-trigger="click" data-content='<div class="m-8"><input type="text" class="form-control" placeholder="@lang('sale.invoice_no')" id="send_for_sell_return_invoice_no"></div><div class="w-100 text-center"><button type="button" class="btn btn-danger" id="send_for_sell_return">@lang('lang_v1.send')</button></div>'
+                    data-html="true" data-placement="bottom">
+                    <strong><i class="fas fa-undo fa-lg"></i></strong>
                 </button>
 
                 <button type="button" title="{{ __('lang_v1.full_screen') }}"
@@ -104,10 +103,11 @@
                 </button>
 
                 <button type="button" id="view_suspended_sales" title="{{ __('lang_v1.view_suspended_sales') }}"
-                    class="btn cusTheme-dark icon outline mx-2 pull-right" data-container=".view_modal"
+                    class="btn cusTheme-dark icon outline mx-2 btn-modal pull-right" data-container=".view_modal"
                     data-href="{{ $view_suspended_sell_url }}">
-                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <strong><i class="fa-solid fa-boxes-stacked"></i></strong>
                 </button>
+
                 @if (empty($pos_settings['hide_product_suggestion']) && isMobile())
                     <button type="button" title="{{ __('lang_v1.view_products') }}" data-placement="bottom"
                         class="btn btn-success btn-flat m-6 btn-xs m-5 btn-modal pull-right" data-toggle="modal"
@@ -151,12 +151,12 @@
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="p-2 d-flex justify-content-end align-items-center">
+        <div class="col-md-3 mobile-paddx-0">
+            <div class="p-2 d-flex justify-content-end align-items-center backdate">
                 <div class="p-2 d-flex justify-content-evenly align-items-center">
                     @if (!empty($transaction->location_id))
                         {{ $transaction->location->name }}
-                    @endif &nbsp; <span class="curr_datetime">{{ @format_datetime('now') }}</span>
+                    @endif &nbsp; <span class="curr_datetime mobile-paddx-0">{{ @format_datetime('now') }}</span>
                     <i class="fa fa-keyboard hover-q text-cusTheme fs-2 mx-3" aria-hidden="true" data-container="body"
                         data-toggle="popover" data-placement="bottom" data-content="@include('sale_pos.partials.keyboard_shortcuts_details')"
                         data-html="true" data-trigger="hover" data-original-title="" title=""></i>

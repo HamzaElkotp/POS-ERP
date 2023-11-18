@@ -33,7 +33,7 @@
 
 
 
-	<div class="row">
+	<div class="row mobile-reverse">
 		<div class="@if(empty($pos_settings['hide_product_suggestion'])) col-md-8 @else col-md-10 offset-md-1 @endif">
 			<div class="card mb-12 @if(!isMobile()) mb-100 @endif">
 				<div class="card-body pb-0 d-block">
@@ -70,7 +70,7 @@
 		</div>
 		
 		@if(empty($pos_settings['hide_product_suggestion']) && !isMobile())
-		<div class="col-md-4">
+		<div class="col-md-4 mb-30 pb-1">
 			<div class="card">
 				<div class="card-body py-0">
 					@include('sale_pos.partials.pos_sidebar')

@@ -4,81 +4,81 @@
 <div class="col-md-12 no-print bottonNav">
 	<div class="row">
 		<div class="pos-form-actions">
-		<div class="row"> {{-- Removed Class --}}
-			<div class="col-md-8 d-flex">
-				<button type="button" class="btn" id="openBtnParentNav"><i class="fa-solid fa-bars-staggered"></i></button>
-				<div id="btnparent" class="d-none">
-					@if($is_mobile)
-						<div class="col-md-12 text-right">
-							<b>@lang('sale.total_payable'):</b>
-							<input type="hidden" name="final_total" 
-														id="final_total_input" value=0>
-							<span id="total_payable" class="text-success lead text-bold text-right">0</span>
-						</div>
-					@endif
-					<button type="button" class="btn-msm @if($is_mobile) col-xs-6 @endif btn cusTheme-dark @if($pos_settings['disable_draft'] != 0) hide @endif" id="pos-draft" @if(!empty($only_payment)) disabled @endif><i class="fas fa-edit"></i> @lang('sale.draft')</button>
-					<button type="button" class="btn btn-success btn-msm @if($is_mobile) col-xs-6 @endif" id="pos-quotation" @if(!empty($only_payment)) disabled @endif><i class="fas fa-file-invoice-dollar"></i> @lang('lang_v1.quotation')</button>
+			<div class="row"> {{-- Removed Class --}}
+				<div class="col-lg-8 col-md-7 col-12 d-flex">
+					<button type="button" class="btn" id="openBtnParentNav"><i class="fa-solid fa-bars-staggered"></i></button>
+					<div id="btnparent" class="d-none">
+						@if($is_mobile)
+							<div class="col-md-12 text-right">
+								<b>@lang('sale.total_payable'):</b>
+								<input type="hidden" name="final_total" 
+															id="final_total_input" value=0>
+								<span id="total_payable" class="text-success lead text-bold text-right">0</span>
+							</div>
+						@endif
+						<button type="button" class="btn-msm @if($is_mobile) col-xs-6 @endif btn cusTheme-dark @if($pos_settings['disable_draft'] != 0) hide @endif" id="pos-draft" @if(!empty($only_payment)) disabled @endif><i class="fas fa-edit"></i> @lang('sale.draft')</button>
+						<button type="button" class="btn btn-success btn-msm @if($is_mobile) col-xs-6 @endif" id="pos-quotation" @if(!empty($only_payment)) disabled @endif><i class="fas fa-file-invoice-dollar"></i> @lang('lang_v1.quotation')</button>
 
-					@if(empty($pos_settings['disable_suspend']))
+						@if(empty($pos_settings['disable_suspend']))
+							<button type="button" 
+							class="@if($is_mobile) col-xs-6 @endif btn btn-warning btn-msm" 
+							data-pay_method="suspend"
+							title="@lang('lang_v1.tooltip_suspend')" @if(!empty($only_payment)) disabled @endif>
+							<i class="fas fa-pause" aria-hidden="true"></i>
+							@lang('lang_v1.suspend')
+							</button>
+						@endif
+
+						@if(empty($pos_settings['disable_credit_sale_button']))
+							<input type="hidden" name="is_credit_sale" value="0" id="is_credit_sale">
+							<button type="button" 
+							class="btn btn-primary btn-msm @if($is_mobile) col-xs-6 @endif" 
+							data-pay_method="credit_sale"
+							title="@lang('lang_v1.tooltip_credit_sale')" @if(!empty($only_payment)) disabled @endif>
+								<i class="fas fa-check" aria-hidden="true"></i> @lang('lang_v1.credit_sale')
+							</button>
+						@endif
+
+						<button type="button" class="btn btn-primary btn-msm @if(!$is_mobile) @endif @if($pos_settings['disable_pay_checkout'] != 0) hide @endif @if($is_mobile) col-xs-6 @endif" id="pos-finalize" title="@lang('lang_v1.tooltip_checkout_multi_pay')"><i class="fas fa-money-check-alt" aria-hidden="true"></i> @lang('lang_v1.checkout_multi_pay') </button>
+
+
+						@if(empty($edit))
+							<button type="button" class="btn btn-danger btn-msm @if($is_mobile) col-xs-6 @else  @endif" id="pos-cancel"> <i class="fas fa-window-close"></i> @lang('sale.cancel')</button>
+						@else
+							<button type="button" class="btn btn-danger btn-msm hide @if($is_mobile) col-xs-6 @else btn-xs @endif" id="pos-delete" @if(!empty($only_payment)) disabled @endif> <i class="fas fa-trash-alt"></i> @lang('messages.delete')</button>
+						@endif
+					</div>
+
+					<div>
 						<button type="button" 
-						class="@if($is_mobile) col-xs-6 @endif btn btn-warning btn-msm" 
-						data-pay_method="suspend"
-						title="@lang('lang_v1.tooltip_suspend')" @if(!empty($only_payment)) disabled @endif>
-						<i class="fas fa-pause" aria-hidden="true"></i>
-						@lang('lang_v1.suspend')
+							class="btn bg cusTheme1 text-white btn-msm @if(!empty($pos_settings['disable_suspend'])) @endif pos-express-finalize @if(!array_key_exists('card', $payment_types)) hide @endif @if($is_mobile) col-xs-6 @endif" 
+							data-pay_method="card"
+							title="@lang('lang_v1.tooltip_express_checkout_card')" >
+							<i class="fas fa-credit-card" aria-hidden="true"></i> @lang('lang_v1.express_checkout_card')
 						</button>
-					@endif
 
-					@if(empty($pos_settings['disable_credit_sale_button']))
-						<input type="hidden" name="is_credit_sale" value="0" id="is_credit_sale">
-						<button type="button" 
-						class="btn btn-primary btn-msm @if($is_mobile) col-xs-6 @endif" 
-						data-pay_method="credit_sale"
-						title="@lang('lang_v1.tooltip_credit_sale')" @if(!empty($only_payment)) disabled @endif>
-							<i class="fas fa-check" aria-hidden="true"></i> @lang('lang_v1.credit_sale')
-						</button>
-					@endif
-
-					<button type="button" class="btn btn-primary btn-msm @if(!$is_mobile) @endif @if($pos_settings['disable_pay_checkout'] != 0) hide @endif @if($is_mobile) col-xs-6 @endif" id="pos-finalize" title="@lang('lang_v1.tooltip_checkout_multi_pay')"><i class="fas fa-money-check-alt" aria-hidden="true"></i> @lang('lang_v1.checkout_multi_pay') </button>
-
-
-					@if(empty($edit))
-						<button type="button" class="btn btn-danger btn-msm @if($is_mobile) col-xs-6 @else  @endif" id="pos-cancel"> <i class="fas fa-window-close"></i> @lang('sale.cancel')</button>
-					@else
-						<button type="button" class="btn btn-danger btn-msm hide @if($is_mobile) col-xs-6 @else btn-xs @endif" id="pos-delete" @if(!empty($only_payment)) disabled @endif> <i class="fas fa-trash-alt"></i> @lang('messages.delete')</button>
-					@endif
+						<button type="button" class="btn bg-green btn-msm @if(!$is_mobile) @endif  @if($pos_settings['disable_express_checkout'] != 0 || !array_key_exists('cash', $payment_types)) hide @endif pos-express-finalize @if($is_mobile) col-xs-6 @endif" data-pay_method="cash" title="@lang('tooltip.express_checkout')"> <i class="fas fa-money-bill-alt" aria-hidden="true"></i> @lang('lang_v1.express_checkout_cash')</button>
+					</div>
+					<button type="button" class="btn d-none mx-1" id="closeBtnParentNav"><i class="fa-solid fa-chevron-right ltrRotate180"></i></button> 
 				</div>
+				
+				<div class="col-lg-4 col-md-5 col-12">
+					<div class="d-flex justify-content-between">
+						@if(!isset($pos_settings['hide_recent_trans']) || $pos_settings['hide_recent_trans'] == 0)
+							<button type="button" class="btn-msm pull-right btn btn-primary btn-flat @if($is_mobile) col-xs-6 @endif" data-toggle="modal" data-target="#recent_transactions_modal" id="recent-transactions"> <i class="fas fa-clock"></i> @lang('lang_v1.recent_transactions')</button>
+						@endif	
 
-				<div>
-					<button type="button" 
-						class="btn bg cusTheme1 text-white btn-msm @if(!empty($pos_settings['disable_suspend'])) @endif pos-express-finalize @if(!array_key_exists('card', $payment_types)) hide @endif @if($is_mobile) col-xs-6 @endif" 
-						data-pay_method="card"
-						title="@lang('lang_v1.tooltip_express_checkout_card')" >
-						<i class="fas fa-credit-card" aria-hidden="true"></i> @lang('lang_v1.express_checkout_card')
-					</button>
-
-					<button type="button" class="btn bg-green btn-msm @if(!$is_mobile) @endif  @if($pos_settings['disable_express_checkout'] != 0 || !array_key_exists('cash', $payment_types)) hide @endif pos-express-finalize @if($is_mobile) col-xs-6 @endif" data-pay_method="cash" title="@lang('tooltip.express_checkout')"> <i class="fas fa-money-bill-alt" aria-hidden="true"></i> @lang('lang_v1.express_checkout_cash')</button>
-				</div>
-				<button type="button" class="btn d-none mx-1" id="closeBtnParentNav"><i class="fa-solid fa-chevron-right ltrRotate180"></i></button> 
-			</div>
-			
-			<div class="col-md-4">
-				<div class="d-flex justify-content-between">
-					@if(!isset($pos_settings['hide_recent_trans']) || $pos_settings['hide_recent_trans'] == 0)
-						<button type="button" class="btn-msm pull-right btn btn-primary btn-flat @if($is_mobile) col-xs-6 @endif" data-toggle="modal" data-target="#recent_transactions_modal" id="recent-transactions"> <i class="fas fa-clock"></i> @lang('lang_v1.recent_transactions')</button>
-					@endif	
-
-					@if(!$is_mobile)
-						<div class="btn btn-msm text-white bg cusTheme1 pos_total_box d-flex align-items-center">
-							<span class="text" style="margin-left:6px">@lang('sale.total_payable'): </span>
-							<input type="hidden" name="final_total" id="final_total_input" value=0 class="form-control form-control-sm input_total_box mx-2">
-							<span id="total_payable" class="number">0</span>
-						</div>
-					@endif			
+						@if(!$is_mobile)
+							<div class="btn btn-msm text-white bg cusTheme1 pos_total_box d-flex align-items-center">
+								<span class="text" style="margin-left:6px">@lang('sale.total_payable'): </span>
+								<input type="hidden" name="final_total" id="final_total_input" value=0 class="form-control form-control-sm input_total_box mx-2">
+								<span id="total_payable" class="number">0</span>
+							</div>
+						@endif			
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </div>
 <div class="row">

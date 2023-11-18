@@ -43,10 +43,12 @@
                     body.className += " sidebar-collapse";
                 }
             </script>
-            <section class="small-container">
+            @if(!$pos_layout)
+                @include('layouts.partials.sidebar')
+            @endif
+            <section class="@if(!$pos_layout) hasSideBar @else small-container @endif">
                 @if(!$pos_layout)
                     @include('layouts.partials.header')
-                    @include('layouts.partials.sidebar')
                 @else
                     @include('layouts.partials.header-pos')
                 @endif
@@ -56,7 +58,7 @@
                 @endif
 
                 <!-- Content Wrapper. Contains page content -->
-                <div class="@if(!$pos_layout) content-wrapper @endif">
+                <div class="@if(!$pos_layout) content-wrapper @endif" @if(!$pos_layout) style="margin-right: 0 !important; margin-left: 0 !important;" @endif>
                     <!-- empty div for vuejs -->
                     <div id="app">
                         @yield('vue')
@@ -80,7 +82,7 @@
                         <input type="hidden" id="status_span" data-status="{{ session('status.success') }}" data-msg="{{ session('status.msg') }}">
                     @endif
                     
-                    <div class="">
+                    <div class="@if(!$pos_layout) littel-small-container @endif">
                         @yield('content')
                     </div>
 
@@ -134,6 +136,7 @@
                     @endforeach
                 @endif
             </section>
+        </div>
     </body>
 
 </html>

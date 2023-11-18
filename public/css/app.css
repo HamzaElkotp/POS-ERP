@@ -937,11 +937,7 @@ table.table-text-center td, table.table-text-center th{
   content: "\2192 ";
 }
 
-@media only screen and (max-width: 600px) {
-  .pos-form-actions{
-    position: absolute;
-  }
-}
+
 .mr-8 {
   margin-right: 8px !important;
 }

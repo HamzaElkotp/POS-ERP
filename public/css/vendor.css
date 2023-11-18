@@ -12528,9 +12528,7 @@ th {
   padding: 5px
 }
 
-.table-bordered {
-  border: 1px solid #ddd
-}
+
 
 .table-bordered>tbody>tr>td,
 .table-bordered>tbody>tr>th,
@@ -22801,7 +22799,7 @@ a:hover {
     -ms-transform: translate(0, 0);
     -o-transform: translate(0, 0);
     transform: translate(0, 0);
-    width: 50px !important;
+    width: 60px !important;
     z-index: 850
   }
 
@@ -25254,9 +25252,6 @@ a:hover {
   margin-top: 5px
 }
 
-.table-bordered {
-  border: 1px solid #f4f4f4
-}
 
 .table-bordered>tbody>tr>td,
 .table-bordered>tbody>tr>th,
@@ -25269,7 +25264,7 @@ a:hover {
 
 .table-bordered>thead>tr>td,
 .table-bordered>thead>tr>th {
-  border-bottom-width: 2px
+  border-bottom-width: 0px !important
 }
 
 .table.no-border,
@@ -29038,7 +29033,8 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 div.dataTables_wrapper div.dataTables_info {
   padding-top: 8px;
-  white-space: nowrap
+  white-space: nowrap;
+  color: var(--main-color);
 }
 
 div.dataTables_wrapper div.dataTables_paginate {
@@ -29183,8 +29179,13 @@ table.table-bordered.dataTable tbody th {
   border-bottom-width: 0
 }
 
+.dataTables_scroll{
+    margin-top: 10px !important;
+}
 div.dataTables_scrollHead table.table-bordered {
-  border-bottom-width: 0
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    margin-bottom: 8px !important;
 }
 
 div.table-responsive>div.dataTables_wrapper>div.row {
@@ -30588,11 +30589,11 @@ button.toast-close-button {
   background: 0 0
 }
 
-.skin-blue .left-side,
+/* .skin-blue .left-side,
 .skin-blue .main-sidebar,
 .skin-blue .wrapper {
   background-color: #222d32
-}
+} */
 
 .skin-blue .user-panel>.info,
 .skin-blue .user-panel>.info>a {
@@ -34557,16 +34558,6 @@ h6 {
   padding-top: 62px
 }
 
-.main-sidebar .logo {
-  width: 100%;
-  height: 62px;
-  line-height: 62px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 300;
-  display: none
-}
-
 .main-sidebar hr {
   border-top: 1px solid rgba(0, 0, 0, .1);
   margin: 20px 24px
@@ -35099,7 +35090,7 @@ h6 {
   padding: .8rem 1.5rem !important
 }
 
-.skin-black .main-sidebar,
+/* .skin-black .main-sidebar,
 .skin-blue .main-sidebar,
 .skin-green .main-sidebar,
 .skin-purple .main-sidebar,
@@ -35107,37 +35098,18 @@ h6 {
 .skin-yellow .main-sidebar {
   background: #21243d !important;
   border-right: 0px !important
-}
+} */
 
-.skin-black .sidebar-menu>li.active>a,
-.skin-black .sidebar-menu>li.menu-open>a,
-.skin-black .sidebar-menu>li:hover>a,
-.skin-blue .sidebar-menu>li.active>a,
-.skin-blue .sidebar-menu>li.menu-open>a,
-.skin-blue .sidebar-menu>li:hover>a,
-.skin-green .sidebar-menu>li.active>a,
-.skin-green .sidebar-menu>li.menu-open>a,
-.skin-green .sidebar-menu>li:hover>a,
-.skin-purple .sidebar-menu>li.active>a,
-.skin-purple .sidebar-menu>li.menu-open>a,
-.skin-purple .sidebar-menu>li:hover>a,
-.skin-red .sidebar-menu>li.active>a,
-.skin-red .sidebar-menu>li.menu-open>a,
-.skin-red .sidebar-menu>li:hover>a,
-.skin-yellow .sidebar-menu>li.active>a,
-.skin-yellow .sidebar-menu>li.menu-open>a,
-.skin-yellow .sidebar-menu>li:hover>a {
-  background: #1d1f33 !important
-}
 
-.skin-black .sidebar-menu>li>.treeview-menu,
+
+/* .skin-black .sidebar-menu>li>.treeview-menu,
 .skin-blue .sidebar-menu>li>.treeview-menu,
 .skin-green .sidebar-menu>li>.treeview-menu,
 .skin-purple .sidebar-menu>li>.treeview-menu,
 .skin-red .sidebar-menu>li>.treeview-menu,
 .skin-yellow .sidebar-menu>li>.treeview-menu {
   background: #1d1f33 !important
-}
+} */
 
 .skin-black-light .main-sidebar,
 .skin-blue-light .main-sidebar,
@@ -35200,20 +35172,22 @@ h6 {
   background-color: #2b80ec
 }
 
-.skin-blue .main-sidebar .logo,
+/* .skin-blue .main-sidebar .logo,
 .skin-blue-light .main-sidebar .logo {
   background: #1572e8;
   color: #fff
-}
+} */
 
 .skin-blue .main-sidebar .logo:hover,
 .skin-blue-light .main-sidebar .logo:hover {
   background: #1572e8
 }
 
-.skin-blue .content-wrapper .content-header-custom,
+.skin-blue .content-wrapper .content-header-custom{
+  padding: 0;
+}
 .skin-blue-light .content-wrapper .content-header-custom {
-  background-color: #f3f6f9;
+  /* background-color: #f3f6f9; */
   color: #fff !important;
   padding: 0px 0px 200px
 }
@@ -35238,10 +35212,10 @@ h6 {
   color: #fff
 }
 
-.skin-blue .content-wrapper .content-custom,
+/* .skin-blue .content-wrapper .content-custom,
 .skin-blue-light .content-wrapper .content-custom {
   margin-top: -210px
-}
+} */
 
 .skin-red .main-header .logo,
 .skin-red-light .main-header .logo {

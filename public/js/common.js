@@ -466,15 +466,15 @@ $('table#stock_adjustment_product_table tbody').on('change', 'select.lot_number'
     }
     qty_element.trigger('change');
 });
-// $('button#btnCalculator, button#return_sale').hover(function () {
-//     $(this).tooltip('show');
-// });
+$('button#btnCalculator, button#return_sale').hover(function () {
+    $(this).tooltip('show');
+});
 $('button#return_sale').click(function () {
     $(this).popover('toggle');
 });
-// $(document).on('mouseleave', 'button#btnCalculator, button#return_sale', function (e) {
-//     $(this).tooltip('hide');
-// });
+$(document).on('mouseleave', 'button#btnCalculator, button#return_sale', function (e) {
+    $(this).tooltip('hide');
+});
 
 jQuery.validator.addMethod(
     'min-value',

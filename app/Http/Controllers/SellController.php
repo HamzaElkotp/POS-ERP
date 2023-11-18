@@ -333,7 +333,7 @@ class SellController extends Controller
                     'action',
                     function ($row) use ($only_shipments, $is_admin, $sale_type) {
                         $html = '<div class="btn-group">
-                                    <button type="button" class="btn btn-warning dropdown-toggle btn-xs" 
+                                    <button type="button" class="btn cusTheme-light dropdown-toggle btn-xs" 
                                         data-toggle="dropdown" aria-expanded="false">'.
                                         __('messages.actions').
                                         '<span class="caret"></span><span class="sr-only">Toggle Dropdown

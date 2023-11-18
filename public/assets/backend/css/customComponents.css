@@ -65,7 +65,7 @@
     padding: 18px;
     background-color: var(--tagify-dd-bg-color);
     border-radius: 20px;
-    position: absolute;
+    position: fixed;
     left: 20px;
     top: 20px;
     box-shadow: 10px 18px 40px -3px #419ed357;
@@ -100,16 +100,24 @@
   .calcbtn.rightcol{
       background-color: var(--main-color1);
       color: var(--bs-body-bg);
+      line-height: 23px;
   }
   .calcbtn.number{
       font-size: 18px !important;
       background: var(--system-bg);
+      line-height: 23px;
   }
   .calcbtn.control{
       font-size: 20px !important;
       font-weight: 400 !important;
       background-color: #d4efff !important;
+      line-height: 23px;
   }
   #equals {
     background: #1795dd;
   }
+
+
+
+
+
