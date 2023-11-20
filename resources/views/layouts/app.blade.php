@@ -24,6 +24,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
+        <link rel="stylesheet" href="{{ asset('assets/backend/css/customTheme.css?v=' . $asset_v) }}">
+        <link rel="stylesheet" href="{{ asset('assets/backend/css/customComponents.css?v=' . $asset_v) }}">
+        <link href="{{ asset('assets/backend/css/bootstrap.min.css?v=' . $asset_v) }}" rel="stylesheet">
+
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -32,6 +36,8 @@
         @include('layouts.partials.css')
             <link rel="stylesheet" href="{{ asset('css/custom.css')}}">
         @yield('css')
+
+
 
     </head>
 

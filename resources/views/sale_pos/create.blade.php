@@ -1,7 +1,7 @@
 {{-- Start Adding Custom Theme File --}}
 <link rel="stylesheet" href="{{ asset('assets/backend/css/customTheme.css?v='.$asset_v) }}">
-<link rel="stylesheet" href="{{ asset('assets/backend/css/customComponents.css?v='.$asset_v) }}">
-<link href="{{ asset('assets/backend/css/bootstrap.min.css?v='.$asset_v) }}" rel="stylesheet">
+{{-- <link rel="stylesheet" href="{{ asset('assets/backend/css/customComponents.css?v='.$asset_v) }}"> --}}
+{{-- <link href="{{ asset('assets/backend/css/bootstrap.min.css?v='.$asset_v) }}" rel="stylesheet"> --}}
 {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
 {{-- End Adding Custom Theme File --}}
 

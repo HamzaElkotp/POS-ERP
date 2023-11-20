@@ -47,3 +47,18 @@ if(pinunpin && statistics_parent){
     })
 }
 
+
+
+
+const account_details_boxes = document.querySelectorAll("[account_details_box]");
+account_details_boxes.forEach((box)=>{
+    console.log(box)
+    let showbtn = box.querySelector("[show_details_btn]");
+    let details = box.querySelector("[details]");
+    if(showbtn && details){
+        showbtn.addEventListener('click', ()=>{
+            details.classList.toggle("d-none");
+        })
+    }
+})
+

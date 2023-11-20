@@ -237,6 +237,9 @@ body{
     margin-bottom: 100px !important;
 }
 
+.pb-0{
+    padding-bottom: 0rem !important;
+}
 .pl-0{
     padding-left: 0rem !important;
 }
@@ -250,7 +253,9 @@ body{
     padding-left: 0.2rem !important;
 }
 
-
+.br-tl-0{
+    border-top-left-radius: 0 !important;
+}
 
 
 
@@ -374,7 +379,9 @@ body{
     background-color: var(--main-color);
     color: var(--bs-body-bg);
 }
-
+.btn.cusTheme-dark.outline.icon.lighter:hover{
+    background-color: #e8f4ff;
+}
 .btn.cusTheme-light{
     background-color: var(--main-color1);
     color: var(--bs-body-bg);
@@ -1047,7 +1054,7 @@ select.form-control{
 }
 
 /* */
-.graph-details{
+.graph-details, .box.graph-details{
     background-color: rgba(242, 245, 249, 0.5);
     border-radius: 14px;
     border-radius: 16px;
@@ -1056,6 +1063,7 @@ select.form-control{
     -webkit-backdrop-filter: blur(3px);
     border: 1px solid rgba(255, 255, 255, 1);
 }
+
 .statistics-details{
     border-radius: 14px;
     background: var(--bs-gray-25);
@@ -1238,18 +1246,59 @@ tr[role="row"] th{
 .ranges ul li.active{
     background-color: var(--main-color1) !important;
 }
+.dataTables_scrollBody {
+    max-height: 47vh !important;
+}
+
+
+.jstree-anchor {
+    width: calc(100% - 40px) !important;
+    margin-bottom: 5px !important;
+    border-radius: 8px !important;
+    font-size: 15px !important;
+}
+.jstree-clicked, .jstree-anchor.jstree-hovered.jstree-clicked  {
+    background: var(--main-color1) !important;
+    color: var(--system-bg) !important;
+}
+.jstree-anchor.jstree-hovered{
+    background: #419ed347 !important;
+    color: #0067a1 !important;
+}
+.tree-actions a{
+    margin: 0 !important;
+}
+.jstree-default-large .jstree-anchor {
+    height: fit-content !important;
+    padding: 2.8px 6px !important;
+    height: fit-content;
+}
+.tree-actions {
+    float: inline-end !important;
+}
+.jstree-node.jstree-open > .jstree-anchor{
+    color: var(--main-color);
+}
+.jstree-anchor.jstree-search{
+    border: 1px solid var(--main-color) ;
+    background-color: var(--system-bg) !important; 
+    color: var(--main-color) !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+}
 
 
 
 
+.mnaiel .box-body{
+    padding-top: 0 !important;
+}
 
-
-
-
-
-
-
-
+.graph-details .box-header.with-border {
+    border-bottom: 1px solid var(--main-color1);
+    padding-bottom: 10px !important;
+    padding-top: 20px !important;
+}
 
 
 

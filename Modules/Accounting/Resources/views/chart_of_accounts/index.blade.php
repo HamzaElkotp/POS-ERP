@@ -11,11 +11,12 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>@lang( 'accounting::lang.chart_of_accounts' )</h1>
-</section>
-<section class="content">
+<section class="content px-0">
+    <section class="row content-header content-header-custom">
+        <h1 class="content_h1 text-cusTheme1">@lang( 'accounting::lang.chart_of_accounts' )</h1>
+    </section>
     <div class="row mb-12">
-        <div class="col-md-12">
+        <div class="col-md-12 pb-0 px-0">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-info active">
                     <input type="radio" name="view_type" value="tree" class="view_type">
@@ -29,12 +30,12 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            @component('components.widget', ['class' => 'box-solid'])
+    <div class="row pb-0 px-0">
+        <div class="col-md-12 pb-0 px-0">
+            @component('components.widget', ['class' => 'graph-details px-1 pt-3 pb-0 br-tl-0 mnaiel'])
             @slot('tool')
-                <div class="box-tools">
-                    <a class="btn btn-primary pull-right m-5 btn-modal" 
+                <div class="box-tools pb-0">
+                    <a class="btn btn cusTheme-dark text-white pull-right btn-modal" 
                     href="{{action([\Modules\Accounting\Http\Controllers\CoaController::class, 'create'])}}" 
                     data-href="{{action([\Modules\Accounting\Http\Controllers\CoaController::class, 'create'])}}" 
                     data-container="#create_account_modal">

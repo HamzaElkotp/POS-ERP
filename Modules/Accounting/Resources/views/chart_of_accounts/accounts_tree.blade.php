@@ -11,19 +11,21 @@
     </table>
 @else
 
-<div class="row">
-    <div class="col-md-4 mb-12 col-md-offset-4">
+<div class="row mb-6">
+    <div class="col-md-4">
         <div class="input-group">
-            <input type="input" class="form-control" id="accounts_tree_search">
+            <input type="input" class="form-control" id="accounts_tree_search" placeholder="Search for chart">
             <span class="input-group-addon">
                 <i class="fas fa-search"></i>
             </span>
         </div>
     </div>
-    <div class="col-md-4">
-        <button class="btn btn-primary btn-sm" id="expand_all">@lang('accounting::lang.expand_all')</button>
-        <button class="btn btn-primary btn-sm" id="collapse_all">@lang('accounting::lang.collapse_all')</button>
+    <div class="col-md-4 px-0">
+        <button class="btn btn cusTheme-dark text-white mx-2" id="expand_all"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> @lang('accounting::lang.expand_all')</button>
+        <button class="btn btn cusTheme-dark text-white" id="collapse_all"><i class="fa-solid fa-down-left-and-up-right-to-center"></i> @lang('accounting::lang.collapse_all')</button>
     </div>
+</div>
+<div class="row pt-0">
     <div class="col-md-12" id="accounts_tree_container">
 
         <ul>
@@ -62,28 +64,28 @@
                                                             style="font-size: 14px;"></i></span>
                                                 @endif
                                                 <span class="tree-actions">
-                                                    <a class="btn btn-xs btn-default text-success  m-5 btn-modal"
+                                                    <a class="btn btn-modal py-1 pb-0 cusTheme-dark icon outline lighter"
                                                         title="@lang('accounting::lang.add')"
                                                         href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger1'], $account->id) }}"
                                                         data-href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger1'], $account->id) }}"
                                                         data-container="#create_account_modal">
-                                                        <i class="fas fa-plus"></i>
+                                                        <i class="fas fa-plus text-success"></i>
                                                     </a>
-                                                    <a class="btn btn-xs btn-default text-success ledger-link"
+                                                    <a class="btn py-1 pb-0 ledger-link cusTheme-dark icon outline lighter"
                                                         title="@lang('accounting::lang.ledger')"
                                                         href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger'], $account->id) }}">
-                                                        <i class="fas fa-file-alt"></i></a>
-                                                    <a class="btn-modal btn-xs btn-default text-primary"
+                                                        <i class="fas fa-file-alt text-primary"></i></a>
+                                                    <a class="btn btn-modal py-1 pb-0 cusTheme-dark icon outline lighter"
                                                         title="@lang('messages.edit')"
                                                         href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'edit'], $account->id) }}"
                                                         data-href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'edit'], $account->id) }}"
                                                         data-container="#create_account_modal">
-                                                        <i class="fas fa-edit"></i></a>
-                                                    <a class="activate-deactivate-btn text-warning  btn-xs btn-default"
+                                                        <i class="fas fa-edit text-warning"></i></a>
+                                                    <a class="activate-deactivate-btn btn btn-modal py-1 pb-0 cusTheme-dark icon outline lighter"
                                                         title="@if ($account->status == 'active') @lang('messages.deactivate') @else 
                                                     @lang('messages.activate') @endif"
                                                         href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'activateDeactivate'], $account->id) }}">
-                                                        <i class="fas fa-power-off"></i>
+                                                        <i class="fas fa-power-off text-danger"></i>
                                                     </a>
                                                 </span>
 
