@@ -186,8 +186,8 @@
             total_debit += debit;
         });
 
-        $('.total_credit_hidden').val(total_credit);
-        $('.total_debit_hidden').val(total_debit);
+        $('.total_debit_hidden').val(Math.abs(total_debit).toFixed(2));
+        $('.total_credit_hidden').val(Math.abs(total_credit).toFixed(2));
 
         $('.total_credit').text(__currency_trans_from_en(total_credit));
         $('.total_debit').text(__currency_trans_from_en(total_debit));

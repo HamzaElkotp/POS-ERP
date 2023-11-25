@@ -36,6 +36,12 @@ return new class extends Migration
             $table->enum('barcode_type', ['C39', 'C128', 'EAN-13', 'EAN-8', 'UPC-A', 'UPC-E', 'ITF-14']);
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            
+            $table->string('signal_type_id')->nullable();
+            $table->string('sph_from_id')->nullable();
+            $table->string('sph_to_id')->nullable();
+            $table->string('lens_diameter_id')->nullable();
+
             $table->timestamps();
 
             //Indexing

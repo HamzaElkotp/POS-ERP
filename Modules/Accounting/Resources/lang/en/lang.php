@@ -8,6 +8,8 @@ return [
     'cash_and_cash_equivalents' => 'Cash and cash equivalents',
     'fixed_assets' => 'Fixed assets',
     'level' => 'Level',
+    'code' => 'Account Code',
+    'code_help' => '',
     'non_current_assets' => 'Non-current assets',
     'accounts_payable' => 'Accounts Payable (A/P)',
     'credit_card' => 'Credit Card',

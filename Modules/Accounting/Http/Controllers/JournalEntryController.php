@@ -49,23 +49,25 @@ class JournalEntryController extends Controller
         }
 
         if (request()->ajax()) {
-            $journal = AccountingAccTransMapping::where('accounting_acc_trans_mappings.business_id', $business_id)
-                        ->join('users as u', 'accounting_acc_trans_mappings.created_by', 'u.id')
-                        ->where('type', 'journal_entry')
-                        ->select(['accounting_acc_trans_mappings.id', 'ref_no', 'operation_date', 'note',
-                            DB::raw("CONCAT(COALESCE(u.surname, ''),' ',COALESCE(u.first_name, ''),' ',COALESCE(u.last_name,'')) as added_by"),
-                        ]);
+            $journal = AccountingAccTransMapping::with('user')->where('business_id', $business_id)->get();
+                        // ->join('users as u', 'accounting_acc_trans_mappings.created_by', 'u.id')
+                        // ->where('type', 'journal_entry')
+                        // ->select(['accounting_acc_trans_mappings.id', 'ref_no', 'operation_date', 'note',
+                        //     DB::raw("CONCAT(COALESCE(u.surname, ''),' ',COALESCE(u.first_name, ''),' ',COALESCE(u.last_name,'')) as added_by"),
+                        // ]);
 
             if (! empty(request()->start_date) && ! empty(request()->end_date)) {
                 $start = request()->start_date;
                 $end = request()->end_date;
-                $journal->whereDate('accounting_acc_trans_mappings.operation_date', '>=', $start)
-                            ->whereDate('accounting_acc_trans_mappings.operation_date', '<=', $end);
+                $journal = AccountingAccTransMapping::with('user')->where('business_id', $business_id)
+                ->whereDate('operation_date', '>=', $start)
+                            ->whereDate('operation_date', '<=', $end)->get();
             }
 
             return Datatables::of($journal)
                 ->addColumn(
                     'action', function ($row) {
+                      
                         $html = '<div class="btn-group">
                                 <button type="button" class="btn btn-info dropdown-toggle btn-xs" 
                                     data-toggle="dropdown" aria-expanded="false">'.
@@ -75,32 +77,48 @@ class JournalEntryController extends Controller
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">';
                         if (auth()->user()->can('accounting.view_journal')) {
-                            // $html .= '<li>
-                            //         <a href="#" data-href="'.action([\Modules\Accounting\Http\Controllers\JournalEntryController::class, 'show'], [$row->id]).'">
-                            //             <i class="fas fa-eye" aria-hidden="true"></i>'.__("messages.view").'
-                            //         </a>
-                            //         </li>';
-                        }
+                            // if($row->type == "journal_entry")
+                            // {
+                            $html .= '<li>
+                            <a href="'.action([\Modules\Accounting\Http\Controllers\JournalEntryController::class, 'show'], [$row->id]).'">
+                                <i class="fas fa-edit"></i>'.__('messages.view').'
+                            </a>
+                        </li>';
+                            // }
+                            // else
+                            // {
+                            //     $html .= '<li>
+                            //     <a href="'.action([\Modules\Accounting\Http\Controllers\JournalEntryController::class, 'show1'], [$row->id]).'">
+                            //         <i class="fas fa-edit"></i>'.__('messages.view').'
+                            //     </a>
+                            // </li>';
+                            // }
+                         }
 
                         if (auth()->user()->can('accounting.edit_journal')) {
+                            if($row->type == "journal_entry")
+                            {
                             $html .= '<li>
                                     <a href="'.action([\Modules\Accounting\Http\Controllers\JournalEntryController::class, 'edit'], [$row->id]).'">
                                         <i class="fas fa-edit"></i>'.__('messages.edit').'
                                     </a>
                                 </li>';
                         }
-
+                        }
                         if (auth()->user()->can('accounting.delete_journal')) {
+                            if($row->type == "journal_entry")
+                            {
                             $html .= '<li>
                                     <a href="#" data-href="'.action([\Modules\Accounting\Http\Controllers\JournalEntryController::class, 'destroy'], [$row->id]).'" class="delete_journal_button">
                                         <i class="fas fa-trash" aria-hidden="true"></i>'.__('messages.delete').'
                                     </a>
                                     </li>';
                         }
-
+                    }
                         $html .= '</ul></div>';
 
                         return $html;
+                    
                     })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -170,6 +188,8 @@ class JournalEntryController extends Controller
             $acc_trans_mapping->ref_no = $ref_no;
             $acc_trans_mapping->note = $request->get('note');
             $acc_trans_mapping->type = 'journal_entry';
+            $acc_trans_mapping->type1 = 'قيد يدوي';
+
             $acc_trans_mapping->created_by = $user_id;
             $acc_trans_mapping->operation_date = $this->util->uf_date($journal_date, true);
             $acc_trans_mapping->save();
@@ -234,7 +254,38 @@ class JournalEntryController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        return view('accounting::journal_entry.show');
+        $journal = AccountingAccTransMapping::where('business_id', $business_id)
+                    // ->where('type', 'journal_entry')
+                    ->where('id', $id)
+                    ->firstOrFail();
+        $accounts_transactions = AccountingAccountsTransaction::with('account')
+                                    ->where('acc_trans_mapping_id', $id)
+                                    ->get()->toArray();
+
+        return view('accounting::journal_entry.show')
+            ->with(compact('journal', 'accounts_transactions'));
+    }
+
+    public function show1($id)
+    {
+        $business_id = request()->session()->get('user.business_id');
+
+        if (! (auth()->user()->can('superadmin') ||
+            $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
+            ! (auth()->user()->can('accounting.view_journal'))) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $journal = AccountingAccTransMapping::where('business_id', $business_id)
+                    // ->where('type', 'journal_entry')
+                    ->where('id', $id)
+                    ->firstOrFail();
+        $accounts_transactions = AccountingAccountsTransaction::with('account')
+                                    ->where('acc_trans_mapping_id', $id)
+                                    ->get()->toArray();
+
+        return view('accounting::journal_entry.show')
+            ->with(compact('journal', 'accounts_transactions'));
     }
 
     /**

@@ -18,6 +18,8 @@ class CreateAccountingAccountsTable extends Migration
             $table->string('name');
             $table->string('gl_code')->nullable();
             $table->integer('business_id');
+            $table->integer('level')->nullable();
+            $table->integer('code')->nullable();
             $table->string('account_primary_type')->nullable();
             $table->bigInteger('account_sub_type_id')->nullable();
             $table->bigInteger('detail_type_id')->nullable();

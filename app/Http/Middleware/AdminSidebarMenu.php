@@ -271,7 +271,9 @@ class AdminSidebarMenu
                 auth()->user()->can('category.view') || auth()->user()->can('brand.create') ||
                 auth()->user()->can('unit.create') || auth()->user()->can('category.create')
             ) {
+
                 $menu->dropdown(
+    
                     __('sale.products'),
                     function ($sub) {
                         if (auth()->user()->can('product.view')) {
@@ -357,7 +359,26 @@ class AdminSidebarMenu
                             __('lang_v1.warranties'),
                             ['icon' => 'fa fas fa-shield-alt', 'active' => request()->segment(1) == 'warranties']
                         );
+                        $business = Business::find( auth()->user()->business_id);
+                        $mod = $business->subscriptions;
+                        foreach ($mod as $item){ 
+                            $package_modules = $item->package['custom_permissions'];
+                                       
+                            }
+        // dd( $package_modules);
+                        $enabled_modules1 = !empty(session('business.enabled_modules')) ? session('business.enabled_modules') : [];
+            
+                        $enabled_modules =array_merge($enabled_modules1, array_keys($package_modules));
+    
+                        if (in_array('lens_module', $enabled_modules)) {
+                        $sub->url(
+                            action([\Modules\Lens\Http\Controllers\LensController::class, 'index']),
+                            __('lens::lang.lens'),
+                            ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'lens' ]
+                        );
+                    }
                     },
+                    
                     ['icon' => 'fa fas fa-cubes', 'id' => 'tour_step5']
                 )->order(20);
             }
@@ -749,6 +770,13 @@ class AdminSidebarMenu
                                 ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'journal-entry']
                             );
                         }
+                        // if (auth()->user()->can('accounting.view_journal')) {
+                        //     $sub->url(
+                        //         action([\Modules\Accounting\Http\Controllers\ReportController::class, 'get_acc_trans']),
+                        //         __('accounting::lang.get_acc_trans'),
+                        //         ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'get_acc_trans']
+                        //     );
+                        // }
                         if (auth()->user()->can('accounting.view_transfer')) {
                             $sub->url(
                                 action([\Modules\Accounting\Http\Controllers\TransferController::class, 'index']),
@@ -777,13 +805,20 @@ class AdminSidebarMenu
                                 ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'reports']
                             );
                         }
-                        if (auth()->user()->can('superadmin')) {
+                        // if (auth()->user()->can('superadmin')) {
                             $sub->url(
                                 action([\Modules\Accounting\Http\Controllers\SettingsController::class, 'index']),
                                 __('messages.settings'),
                                 ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'settings']
                             );
-                        }
+                        // }
+                        // if (auth()->user()->can('superadmin')) {
+                            $sub->url(
+                                action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit']),
+                                __('accounting::lang.mapping'),
+                                ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'mapping']
+                            );
+                        // }
                     },
                     ['icon' => 'fas fa-industry']
                 )->order(45);

@@ -121,6 +121,8 @@
             //check if same or not
             if($('.total_credit_hidden').val() != $('.total_debit_hidden').val()){
                 is_valid = false;
+                // alert($('.total_credit_hidden').val());
+                // alert($('.total_debit_hidden').val());
                 alert("@lang('accounting::lang.credit_debit_equal')");
             }
 
@@ -167,10 +169,14 @@
 
             var debit = __read_number($(tr).find('.debit'));
             total_debit += debit;
+            console.log( total_debit);
         });
 
-        $('.total_credit_hidden').val(total_credit);
-        $('.total_debit_hidden').val(total_debit);
+        // $('.total_credit_hidden').val(total_credit);
+        // $('.total_debit_hidden').val(total_debit);
+        $('.total_debit_hidden').val(Math.abs(total_debit).toFixed(2));
+        $('.total_credit_hidden').val(Math.abs(total_credit).toFixed(2));
+
 
         $('.total_credit').text(__currency_trans_from_en(total_credit));
         $('.total_debit').text(__currency_trans_from_en(total_debit));

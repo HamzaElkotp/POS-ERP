@@ -25,6 +25,8 @@ class AccountingAccountsTransaction extends Model
         $transaction->amount = $data['amount'];
         $transaction->accounting_account_id = $data['accounting_account_id'];
         $transaction->transaction_id = ! empty($data['transaction_id']) ? $data['transaction_id'] : null;
+        $transaction->business_id1 = $data['business_id1'];
+        $transaction->acc_trans_mapping_id = $data['acc_trans_mapping_id'];
         $transaction->type = $data['type'];
         $transaction->sub_type = ! empty($data['sub_type']) ? $data['sub_type'] : null;
         $transaction->map_type = ! empty($data['map_type']) ? $data['map_type'] : null;
@@ -42,14 +44,22 @@ class AccountingAccountsTransaction extends Model
      */
     public static function updateOrCreateMapTransaction($data)
     {
+        // dd($data);
         $transaction = AccountingAccountsTransaction::updateOrCreate(
             ['transaction_id' => $data['transaction_id'],
                 'map_type' => $data['map_type'],
                 'transaction_payment_id' => $data['transaction_payment_id'],
             ],
-            ['accounting_account_id' => $data['accounting_account_id'], 'amount' => $data['amount'],
-                'type' => $data['type'], 'sub_type' => $data['sub_type'], 'created_by' => $data['created_by'], 'operation_date' => $data['operation_date'],
+            ['accounting_account_id' => $data['accounting_account_id'],
+             'amount' => $data['amount'],
+                'type' => $data['type'], 
+                'sub_type' => $data['sub_type'],
+                 'created_by' => $data['created_by'],
+                 'business_id1' => $data['business_id1'],
+                 'acc_trans_mapping_id' => $data['acc_trans_mapping_id'],
+                  'operation_date' => $data['operation_date'],
             ]
         );
+        // dd( $transaction);
     }
 }

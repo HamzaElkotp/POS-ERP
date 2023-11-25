@@ -20,6 +20,8 @@ class CreateAccountsTransactionsTable extends Migration
             $table->integer('transaction_id')->nullable()->comment('id form transactions table');
             $table->integer('transaction_payment_id')->nullable()->comment('id form transaction_payments table');
             $table->decimal('amount', 22, 4);
+            $table->integer('business_id')->nullable();
+
             $table->string('type', 100)->comment('debit, credit etc');
             $table->string('sub_type', 100);
             $table->string('map_type', 100)->nullable();

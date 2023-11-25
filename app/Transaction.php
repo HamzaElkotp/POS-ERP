@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Modules\Lens\Entities\Len;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
@@ -61,6 +62,10 @@ class Transaction extends Model
         return $this->belongsTo(\App\BusinessLocation::class, 'location_id');
     }
 
+    // public function lens()
+    // {
+    //     return $this->belongsToMany(Len::class)->withPivot(['quantity', 'price', 'sub_total', 'disc','barecode','sph','cyl','purch_price']);
+    // }
     public function business()
     {
         return $this->belongsTo(\App\Business::class, 'business_id');

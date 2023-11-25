@@ -11,12 +11,11 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-<section class="content px-0">
-    <section class="row content-header content-header-custom">
-        <h1 class="content_h1 text-cusTheme1">@lang( 'accounting::lang.chart_of_accounts' )</h1>
-    </section>
+    <h1>@lang( 'accounting::lang.chart_of_accounts' )</h1>
+</section>
+<section class="content">
     <div class="row mb-12">
-        <div class="col-md-12 pb-0 px-0">
+        <div class="col-md-12">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-info active">
                     <input type="radio" name="view_type" value="tree" class="view_type">
@@ -30,17 +29,29 @@
             </div>
         </div>
     </div>
-    <div class="row pb-0 px-0">
-        <div class="col-md-12 pb-0 px-0">
-            @component('components.widget', ['class' => 'graph-details px-1 pt-3 pb-0 br-tl-0 mnaiel'])
+    <a
+    href="{{url(
+        action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit']))}}" 
+    ></a>
+    <div class="row">
+        <div class="col-md-12">
+            @component('components.widget', ['class' => 'box-solid'])
             @slot('tool')
-                <div class="box-tools pb-0">
-                    <a class="btn btn cusTheme-dark text-white pull-right btn-modal" 
+                <div class="box-tools">
+                    <a class="btn btn-primary pull-right m-5 btn-modal" 
+                    href="{{action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit'])}}" 
+                    {{-- data-href="{{action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit'])}}" 
+                    data-container="#update_mapping_modal"> --}}
+                    >
+                    <i class="fas fa-plus"></i> @lang( 'messages.edit' )</a>
+                </div>
+                {{-- <div class="box-tools">
+                    <a class="btn btn-primary pull-right m-5 btn-modal" 
                     href="{{action([\Modules\Accounting\Http\Controllers\CoaController::class, 'create'])}}" 
                     data-href="{{action([\Modules\Accounting\Http\Controllers\CoaController::class, 'create'])}}" 
                     data-container="#create_account_modal">
                     <i class="fas fa-plus"></i> @lang( 'messages.add' )</a>
-                </div>
+                </div> --}}
             @endslot
                 <div id="accounts_tree"></div>
                 <div id="tabular_view" class="hide">
@@ -75,6 +86,7 @@
     </div>
 </section>
 <div class="modal fade" id="create_account_modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="update_mapping_modal" tabindex="-1" role="dialog">
 </div>
 @stop
 @section('javascript')
@@ -171,6 +183,12 @@
             endDate: 'today',
         });
         init_tinymce('description');
+    });
+    $(document).on('shown.bs.modal', '#update_mapping_modal', function(){
+        $(this).find('#account_sub_type').select2({
+            dropdownParent: $('#update_mapping_modal')
+        });
+       
     });
 
     $(document).on('hidden.bs.modal', '#create_account_modal', function(){
