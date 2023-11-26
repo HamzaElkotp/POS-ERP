@@ -2,7 +2,15 @@
 
 namespace App;
 
+use Modules\Lens\Entities\ProductsDiam;
+use Modules\Lens\Entities\SphTo;
+use Modules\Lens\Entities\SphFrom;
+use Modules\Lens\Entities\LensDiam;
+use Modules\Lens\Entities\LensDiam2;
+use Modules\Lens\Entities\LensDiam3;
+use Modules\Lens\Entities\Signaltype;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Lens\Entities\LensDiameter;
 
 class Product extends Model
 {
@@ -222,4 +230,39 @@ class Product extends Model
     {
         return $this->hasMany(\App\ProductRack::class);
     }
+
+    public function signal_type()
+    {
+        return $this->belongsTo(Signaltype::class, 'signal_type_id');
+    }
+
+    public function lens_diameter()
+    {
+        return $this->belongsTo(LensDiameter::class, 'lens_diameter_id');
+    }
+
+    public function sph_from()
+    {
+        return $this->belongsTo(SphFrom::class, 'sph_from_id');
+    }
+
+    public function sph_to()
+    {
+        return $this->belongsTo(SphTo::class, 'sph_to_id');
+    }
+
+    public function len_lenses_diams()
+    {
+        return $this->hasMany(ProductsDiam::class, 'product_id','id');
+    }
+    public function len_lenses_diams2()
+    {
+        return $this->hasMany(LensDiam2::class, 'len_id','id');
+    }
+    public function len_lenses_diams3()
+    {
+        return $this->hasMany(LensDiam3::class, 'len_id','id');
+    }
+
+
 }

@@ -51,9 +51,9 @@ class CoaController extends Controller
 
         $account_types = AccountingAccountType::accounting_primary_type();
 
-        foreach ($account_types as $k => $v) {
-            $account_types[$k] = $v['label'];
-        }
+        // foreach ($account_types as $k => $v) {
+        //     $account_types[$k] = $v['label'];
+        // }
 
         if (request()->ajax()) {
             $balance_formula = $this->accountingUtil->balanceFormula('AA');
@@ -82,7 +82,7 @@ class CoaController extends Controller
                     'accounting_accounts.*',
                 ]);
 
-            
+
             if (!empty(request()->input('account_type'))) {
                 $query->where('accounting_accounts.account_primary_type', request()->input('account_type'));
             }
@@ -90,9 +90,9 @@ class CoaController extends Controller
                 $query->where('accounting_accounts.status', request()->input('status'));
             }
 
-            
+
             $accounts = $query->get();
-            
+
             $account_exist = AccountingAccount::where('business_id', $business_id)->exists();
 
             if (request()->input('view_type') == 'table') {
@@ -107,7 +107,7 @@ class CoaController extends Controller
                     ->get();
 
                 return view('accounting::chart_of_accounts.accounts_tree')
-                    ->with(compact('accounts', 'account_exist', 'account_types', 'account_sub_types','levels'));
+                    ->with(compact('accounts', 'account_exist', 'account_types', 'account_sub_types', 'levels'));
             }
         }
 
@@ -180,17 +180,28 @@ class CoaController extends Controller
                 // ->whereNull('parent_account_id')
                 ->get();
 
+            $code = AccountingAccount::
+                where('parent_account_id', $account->id)
+                ->max('code') + 1;
+            // if ($code1 = 1) {
+            //     $code = $account->code . '01';
+            // } else {
+            //     $code =  $code1; 
+              
+            // }
             return view('accounting::chart_of_accounts.create1')->with(
                 compact(
                     'account_types',
                     'account',
                     'account_sub_types',
                     'account_detail_types',
-                    'parent_accounts'
+                    'parent_accounts',
+                    'code'
                 )
             );
         }
     }
+
     public function ledger2($account_id)
     {
         $business_id = request()->session()->get('user.business_id');
@@ -205,38 +216,50 @@ class CoaController extends Controller
         // dd($account);
 
         if (request()->ajax()) {
-            $account = AccountingAccount::where('business_id', $business_id)
-                ->with(['detail_type'])
+            $account = AccountingAccountType::
+                where('account_type', 'sub_type')
+                ->where(function ($q) use ($business_id) {
+                    $q->whereNull('business_id')
+                        ->orWhere('business_id', $business_id);
+                })
                 ->find($account_id);
-            dd($account);
-            // $account_types = AccountingAccountType::accounting_primary_type();
-            // $account_sub_types = AccountingAccountType::where('account_primary_type', $account->account_primary_type)
-            //     ->where('account_type', 'sub_type')
-            //     ->where(function ($q) use ($business_id) {
-            //         $q->whereNull('business_id')
-            //             ->orWhere('business_id', $business_id);
-            //     })
-            //     ->get();
-            // $account_detail_types = AccountingAccountType::where('parent_id', $account->account_sub_type_id)
-            //     ->where('account_type', 'detail_type')
-            //     ->where(function ($q) use ($business_id) {
-            //         $q->whereNull('business_id')
-            //             ->orWhere('business_id', $business_id);
-            //     })
-            //     ->get();
 
-            $parent_accounts = AccountingAccount::where('business_id', $business_id)
-                ->where('parent_account_id', $account->id)
-                // ->whereNull('parent_account_id')
+            // dd($account);
+            $account_types = AccountingAccountType::accounting_primary_type();
+            $account_sub_types = AccountingAccountType::
+                where('account_type', 'sub_type')
+                ->where(function ($q) use ($business_id) {
+                    $q->whereNull('business_id')
+                        ->orWhere('business_id', $business_id);
+                })
+                ->get();
+            $account_detail_types = AccountingAccountType::
+                where('account_type', 'detail_type')
+                ->where(function ($q) use ($business_id) {
+                    $q->whereNull('business_id')
+                        ->orWhere('business_id', $business_id);
+                })
                 ->get();
 
-            return view('accounting::chart_of_accounts.create2')->with(
+            $parent_accounts = AccountingAccount::where('business_id', $business_id)
+                ->where('account_sub_type_id', $account_id)
+                ->whereNull('parent_account_id')
+                ->get();
+
+                $code = AccountingAccount::
+                where('account_sub_type_id', $account->id)
+                 ->where('parent_account_id', null)
+                ->max('code') + 1;
+
+                return view('accounting::chart_of_accounts.create2')->with(
                 compact(
-                    // 'account_types',
+                    'account_types',
                     'account',
-                    // 'account_sub_types',
-                    // 'account_detail_types',
-                    'parent_accounts'
+                    'account_sub_types',
+                    'account_detail_types',
+                    'parent_accounts',
+                    'code',
+                    'account_id'
                 )
             );
         }
@@ -266,7 +289,7 @@ class CoaController extends Controller
             0 => [
                 'name' => 'Accounts Payable (A/P)',
                 'code' => 11010000,
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 6,
@@ -280,7 +303,7 @@ class CoaController extends Controller
                 'name' => 'Credit Card',
                 'code' => 11020000,
 
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 7,
@@ -294,7 +317,7 @@ class CoaController extends Controller
                 'name' => 'Wage expenses',
                 'code' => 11030000,
 
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -308,7 +331,7 @@ class CoaController extends Controller
                 'name' => 'Utilities',
                 'code' => 11040000,
 
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -335,7 +358,7 @@ class CoaController extends Controller
             5 => [
                 'name' => 'Undeposited Funds',
                 'code' => 11060000,
- 
+
                 'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
@@ -348,7 +371,7 @@ class CoaController extends Controller
             ],
             6 => [
                 'name' => 'Uncategorised Income',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 11,
@@ -360,7 +383,7 @@ class CoaController extends Controller
             ],
             7 => [
                 'name' => 'Uncategorised Expense',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -372,7 +395,7 @@ class CoaController extends Controller
             ],
             8 => [
                 'name' => 'Uncategorised Asset',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 2,
@@ -384,7 +407,7 @@ class CoaController extends Controller
             ],
             9 => [
                 'name' => 'Unapplied Cash Payment Income',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 11,
@@ -396,7 +419,7 @@ class CoaController extends Controller
             ],
             10 => [
                 'name' => 'Travel expenses - selling expense',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -408,7 +431,7 @@ class CoaController extends Controller
             ],
             11 => [
                 'name' => 'Travel expenses - general and admin expenses',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -420,7 +443,7 @@ class CoaController extends Controller
             ],
             12 => [
                 'name' => 'Supplies',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -432,7 +455,7 @@ class CoaController extends Controller
             ],
             13 => [
                 'name' => 'Subcontractors - COS',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 13,
@@ -444,7 +467,7 @@ class CoaController extends Controller
             ],
             14 => [
                 'name' => 'Stationery and printing',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -456,7 +479,7 @@ class CoaController extends Controller
             ],
             15 => [
                 'name' => 'Short-term debit',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 8,
@@ -468,7 +491,7 @@ class CoaController extends Controller
             ],
             16 => [
                 'name' => 'Shipping and delivery expense',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -480,7 +503,7 @@ class CoaController extends Controller
             ],
             17 => [
                 'name' => 'Share capital',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'equity',
                 'account_sub_type_id' => 10,
@@ -492,7 +515,7 @@ class CoaController extends Controller
             ],
             18 => [
                 'name' => 'Sales of Product Income',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 11,
@@ -504,7 +527,7 @@ class CoaController extends Controller
             ],
             19 => [
                 'name' => 'Sales - wholesale',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 11,
@@ -516,7 +539,7 @@ class CoaController extends Controller
             ],
             20 => [
                 'name' => 'Sales - retail',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 11,
@@ -528,7 +551,7 @@ class CoaController extends Controller
             ],
             21 => [
                 'name' => 'Sales',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 11,
@@ -540,7 +563,7 @@ class CoaController extends Controller
             ],
             22 => [
                 'name' => 'Revenue - General',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 11,
@@ -552,7 +575,7 @@ class CoaController extends Controller
             ],
             23 => [
                 'name' => 'Retained Earnings',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'equity',
                 'account_sub_type_id' => 10,
@@ -564,7 +587,7 @@ class CoaController extends Controller
             ],
             24 => [
                 'name' => 'Repair and maintenance',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -576,7 +599,7 @@ class CoaController extends Controller
             ],
             25 => [
                 'name' => 'Rent or lease payments',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -588,7 +611,7 @@ class CoaController extends Controller
             ],
             26 => [
                 'name' => 'Reconciliation Discrepancies',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 15,
@@ -600,7 +623,7 @@ class CoaController extends Controller
             ],
             27 => [
                 'name' => 'Purchases',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -612,7 +635,7 @@ class CoaController extends Controller
             ],
             28 => [
                 'name' => 'Property, plant and equipment',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 4,
@@ -624,7 +647,7 @@ class CoaController extends Controller
             ],
             29 => [
                 'name' => 'Prepaid Expenses',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 2,
@@ -636,7 +659,7 @@ class CoaController extends Controller
             ],
             30 => [
                 'name' => 'Payroll liabilities',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 8,
@@ -648,7 +671,7 @@ class CoaController extends Controller
             ],
             31 => [
                 'name' => 'Payroll Expenses',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -660,7 +683,7 @@ class CoaController extends Controller
             ],
             32 => [
                 'name' => 'Payroll Clearing',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 8,
@@ -672,7 +695,7 @@ class CoaController extends Controller
             ],
             33 => [
                 'name' => 'Overhead - COS',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 13,
@@ -684,7 +707,7 @@ class CoaController extends Controller
             ],
             34 => [
                 'name' => 'Other Types of Expenses-Advertising Expenses',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -696,7 +719,7 @@ class CoaController extends Controller
             ],
             35 => [
                 'name' => 'Other selling expenses',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -708,7 +731,7 @@ class CoaController extends Controller
             ],
             36 => [
                 'name' => 'Other operating income (expenses)',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 12,
@@ -720,7 +743,7 @@ class CoaController extends Controller
             ],
             37 => [
                 'name' => 'Other general and administrative expenses',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -732,7 +755,7 @@ class CoaController extends Controller
             ],
             38 => [
                 'name' => 'Other comprehensive income',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'equity',
                 'account_sub_type_id' => 10,
@@ -744,7 +767,7 @@ class CoaController extends Controller
             ],
             39 => [
                 'name' => 'Other - COS',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 13,
@@ -756,7 +779,7 @@ class CoaController extends Controller
             ],
             40 => [
                 'name' => 'Office expenses',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -768,7 +791,7 @@ class CoaController extends Controller
             ],
             41 => [
                 'name' => 'Meals and entertainment',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -780,7 +803,7 @@ class CoaController extends Controller
             ],
             42 => [
                 'name' => 'Materials - COS',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 13,
@@ -792,7 +815,7 @@ class CoaController extends Controller
             ],
             43 => [
                 'name' => 'Management compensation',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -804,7 +827,7 @@ class CoaController extends Controller
             ],
             44 => [
                 'name' => 'Loss on disposal of assets',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 12,
@@ -816,7 +839,7 @@ class CoaController extends Controller
             ],
             45 => [
                 'name' => 'Loss on discontinued operations, net of tax',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -828,7 +851,7 @@ class CoaController extends Controller
             ],
             46 => [
                 'name' => 'Long-term investments',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 5,
@@ -840,7 +863,7 @@ class CoaController extends Controller
             ],
             47 => [
                 'name' => 'Long-term debt',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 9,
@@ -852,7 +875,7 @@ class CoaController extends Controller
             ],
             48 => [
                 'name' => 'Liabilities related to assets held for sale',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 9,
@@ -864,7 +887,7 @@ class CoaController extends Controller
             ],
             49 => [
                 'name' => 'Legal and professional fees',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -876,7 +899,7 @@ class CoaController extends Controller
             ],
             50 => [
                 'name' => 'Inventory Asset',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 2,
@@ -888,7 +911,7 @@ class CoaController extends Controller
             ],
             51 => [
                 'name' => 'Inventory',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 2,
@@ -900,7 +923,7 @@ class CoaController extends Controller
             ],
             52 => [
                 'name' => 'Interest income',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 12,
@@ -912,7 +935,7 @@ class CoaController extends Controller
             ],
             53 => [
                 'name' => 'Interest expense',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -924,7 +947,7 @@ class CoaController extends Controller
             ],
             54 => [
                 'name' => 'Intangibles',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 5,
@@ -936,7 +959,7 @@ class CoaController extends Controller
             ],
             55 => [
                 'name' => 'Insurance - Liability',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -948,7 +971,7 @@ class CoaController extends Controller
             ],
             56 => [
                 'name' => 'Insurance - General',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -960,7 +983,7 @@ class CoaController extends Controller
             ],
             57 => [
                 'name' => 'Insurance - Disability',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -972,7 +995,7 @@ class CoaController extends Controller
             ],
             58 => [
                 'name' => 'Income tax payable',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 8,
@@ -984,7 +1007,7 @@ class CoaController extends Controller
             ],
             59 => [
                 'name' => 'Income tax expense',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -996,7 +1019,7 @@ class CoaController extends Controller
             ],
             60 => [
                 'name' => 'Goodwill',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 5,
@@ -1008,7 +1031,7 @@ class CoaController extends Controller
             ],
             61 => [
                 'name' => 'Freight and delivery - COS',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 13,
@@ -1020,7 +1043,7 @@ class CoaController extends Controller
             ],
             62 => [
                 'name' => 'Equity in earnings of subsidiaries',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'equity',
                 'account_sub_type_id' => 10,
@@ -1032,7 +1055,7 @@ class CoaController extends Controller
             ],
             63 => [
                 'name' => 'Equipment rental',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -1044,7 +1067,7 @@ class CoaController extends Controller
             ],
             64 => [
                 'name' => 'Dues and Subscriptions',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -1056,7 +1079,7 @@ class CoaController extends Controller
             ],
             65 => [
                 'name' => 'Dividends payable',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 8,
@@ -1068,7 +1091,7 @@ class CoaController extends Controller
             ],
             66 => [
                 'name' => 'Dividend income',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 12,
@@ -1080,7 +1103,7 @@ class CoaController extends Controller
             ],
             67 => [
                 'name' => 'Dividend disbursed',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'equity',
                 'account_sub_type_id' => 10,
@@ -1092,7 +1115,7 @@ class CoaController extends Controller
             ],
             68 => [
                 'name' => 'Discounts given - COS',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 13,
@@ -1104,7 +1127,7 @@ class CoaController extends Controller
             ],
             69 => [
                 'name' => 'Direct labour - COS',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 13,
@@ -1116,7 +1139,7 @@ class CoaController extends Controller
             ],
             70 => [
                 'name' => 'Deferred tax assets',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 5,
@@ -1128,7 +1151,7 @@ class CoaController extends Controller
             ],
             71 => [
                 'name' => 'Cost of sales',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 13,
@@ -1140,7 +1163,7 @@ class CoaController extends Controller
             ],
             72 => [
                 'name' => 'Commissions and fees',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -1152,7 +1175,7 @@ class CoaController extends Controller
             ],
             73 => [
                 'name' => 'Change in inventory - COS',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 13,
@@ -1164,7 +1187,7 @@ class CoaController extends Controller
             ],
             74 => [
                 'name' => 'Cash and cash equivalents',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 3,
@@ -1176,7 +1199,7 @@ class CoaController extends Controller
             ],
             75 => [
                 'name' => 'Billable Expense Income',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'income',
                 'account_sub_type_id' => 11,
@@ -1188,7 +1211,7 @@ class CoaController extends Controller
             ],
             76 => [
                 'name' => 'Bank charges',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -1200,7 +1223,7 @@ class CoaController extends Controller
             ],
             77 => [
                 'name' => 'Bad debts',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -1212,7 +1235,7 @@ class CoaController extends Controller
             ],
             78 => [
                 'name' => 'Available for sale assets (short-term)',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 2,
@@ -1224,7 +1247,7 @@ class CoaController extends Controller
             ],
             79 => [
                 'name' => 'Assets held for sale',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 5,
@@ -1236,7 +1259,7 @@ class CoaController extends Controller
             ],
             80 => [
                 'name' => 'Amortisation expense',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'expenses',
                 'account_sub_type_id' => 14,
@@ -1248,7 +1271,7 @@ class CoaController extends Controller
             ],
             81 => [
                 'name' => 'Allowance for bad debts',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 2,
@@ -1260,7 +1283,7 @@ class CoaController extends Controller
             ],
             82 => [
                 'name' => 'Accumulated depreciation on property, plant and equipment',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 4,
@@ -1272,7 +1295,7 @@ class CoaController extends Controller
             ],
             83 => [
                 'name' => 'Accrued non-current liabilities',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 9,
@@ -1284,7 +1307,7 @@ class CoaController extends Controller
             ],
             84 => [
                 'name' => 'Accrued liabilities',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 8,
@@ -1296,7 +1319,7 @@ class CoaController extends Controller
             ],
             85 => [
                 'name' => 'Accrued holiday payable',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'liability',
                 'account_sub_type_id' => 9,
@@ -1308,7 +1331,7 @@ class CoaController extends Controller
             ],
             86 => [
                 'name' => 'Accounts Receivable (A/R)',
-                 'business_id' => $business_id,
+                'business_id' => $business_id,
                 'level' => 3,
                 'account_primary_type' => 'asset',
                 'account_sub_type_id' => 1,
@@ -1453,6 +1476,7 @@ class CoaController extends Controller
                 'description',
                 'gl_code',
                 'level',
+                'code',
             ]);
 
             $account_type = AccountingAccountType::find($input['account_sub_type_id']);
@@ -1463,6 +1487,7 @@ class CoaController extends Controller
             $input['business_id'] = $request->session()->get('user.business_id');
             $input['status'] = 'active';
 
+            // dd($input);
             $account = AccountingAccount::create($input);
 
             if ($account_type->show_balance == 1 && !empty($request->input('balance'))) {
@@ -1671,12 +1696,13 @@ class CoaController extends Controller
             $start_date = request()->input('start_date');
             $end_date = request()->input('end_date');
 
-            // $before_bal_query = AccountingAccountsTransaction::where('accounting_account_id', $account->id)
-            //                     ->leftjoin('accounting_acc_trans_mappings as ATM', 'accounting_accounts_transactions.acc_trans_mapping_id', '=', 'ATM.id')
-            //         ->select([
-            //             DB::raw('SUM(IF(accounting_accounts_transactions.type="credit", accounting_accounts_transactions.amount, -1 * accounting_accounts_transactions.amount)) as prev_bal')])
-            //         ->where('accounting_accounts_transactions.operation_date', '<', $start_date);
-            // $bal_before_start_date = $before_bal_query->first()->prev_bal;
+            $before_bal_query = AccountingAccountsTransaction::where('accounting_account_id', $account->id)
+                ->leftjoin('accounting_acc_trans_mappings as ATM', 'accounting_accounts_transactions.acc_trans_mapping_id', '=', 'ATM.id')
+                ->select([
+                    DB::raw('SUM(IF(accounting_accounts_transactions.type="credit", accounting_accounts_transactions.amount, -1 * accounting_accounts_transactions.amount)) as prev_bal')
+                ])
+                ->where('accounting_accounts_transactions.operation_date', '<', $start_date);
+            $bal_before_start_date = $before_bal_query->first()->prev_bal;
 
             $transactions = AccountingAccountsTransaction::where('accounting_account_id', $account->id)
                 ->leftjoin('accounting_acc_trans_mappings as ATM', 'accounting_accounts_transactions.acc_trans_mapping_id', '=', 'ATM.id')
@@ -1734,17 +1760,19 @@ class CoaController extends Controller
 
                     return '';
                 })
-                // ->addColumn('balance', function ($row) use ($bal_before_start_date, $start_date) {
-                //     //TODO:: Need to fix same balance showing for transactions having same operation date
-                //     $current_bal = AccountingAccountsTransaction::where('accounting_account_id',
-                //                         $row->account_id)
-                //                     ->where('operation_date', '>=', $start_date)
-                //                     ->where('operation_date', '<=', $row->operation_date)
-                //                     ->select(DB::raw("SUM(IF(type='credit', amount, -1 * amount)) as balance"))
-                //                     ->first()->balance;
-                //     $bal = $bal_before_start_date + $current_bal;
-                //     return '<span class="balance" data-orig-value="' . $bal . '">' . $this->accountingUtil->num_f($bal, true) . '</span>';
-                // })
+                ->addColumn('balance', function ($row) use ($bal_before_start_date, $start_date) {
+                    //TODO:: Need to fix same balance showing for transactions having same operation date
+                    $current_bal = AccountingAccountsTransaction::where(
+                        'accounting_account_id',
+                        $row->account_id
+                    )
+                        ->where('operation_date', '>=', $start_date)
+                        ->where('operation_date', '<=', $row->operation_date)
+                        ->select(DB::raw("SUM(IF(type='credit', amount, -1 * amount)) as balance"))
+                        ->first()->balance;
+                    $bal = $bal_before_start_date + $current_bal;
+                    return '<span class="balance" data-orig-value="' . $bal . '">' . $this->accountingUtil->num_f($bal, true) . '</span>';
+                })
                 ->editColumn('action', function ($row) {
                     $action = '';
 
@@ -1772,3 +1800,4 @@ class CoaController extends Controller
             ->with(compact('account', 'current_bal'));
     }
 }
+

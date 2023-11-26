@@ -2,14 +2,15 @@
 
 namespace Modules\Accounting\Http\Controllers;
 
-use App\BusinessLocation;
-use App\Utils\BusinessUtil;
-use App\Utils\ModuleUtil;
 use DB;
+use App\BusinessLocation;
+use App\Utils\ModuleUtil;
+use App\Utils\BusinessUtil;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Accounting\Entities\AccountingAccount;
 use Modules\Accounting\Utils\AccountingUtil;
+use Modules\Accounting\Entities\AccountingAccount;
+use Modules\Accounting\Entities\AccountingAccountsTransaction;
 
 class ReportController extends Controller
 {
@@ -62,6 +63,16 @@ class ReportController extends Controller
      *
      * @return Response
      */
+
+     public function get_acc_trans()
+     {
+        $business_id = request()->session()->get('user.business_id');
+        $quods = AccountingAccountsTransaction::where('business_id1', $business_id)
+        ->get();
+
+        // dd( $quods);
+        return view('accounting::report.get_acc_trans', compact('quods'));
+     }
     public function trialBalance()
     {
         $business_id = request()->session()->get('user.business_id');

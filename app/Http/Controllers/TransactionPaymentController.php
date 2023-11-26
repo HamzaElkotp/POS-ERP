@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Datatables;
 use App\Contact;
+use App\Transaction;
+use App\Utils\ModuleUtil;
+use App\TransactionPayment;
+use Illuminate\Http\Request;
+use App\Utils\TransactionUtil;
 use App\Events\TransactionPaymentAdded;
+use Modules\Accounting\Entities\Mapping;
 use App\Events\TransactionPaymentUpdated;
 use App\Exceptions\AdvanceBalanceNotAvailable;
-use App\Transaction;
-use App\TransactionPayment;
-use App\Utils\ModuleUtil;
-use App\Utils\TransactionUtil;
-use Datatables;
-use DB;
-use Illuminate\Http\Request;
+use Modules\Accounting\Entities\AccountingAccTransMapping;
+use Modules\Accounting\Entities\AccountingAccountsTransaction;
 
 class TransactionPaymentController extends Controller
 {
@@ -65,6 +68,8 @@ class TransactionPaymentController extends Controller
             $transaction_id = $request->input('transaction_id');
             $transaction = Transaction::where('business_id', $business_id)->with(['contact'])->findOrFail($transaction_id);
 
+      
+
             $transaction_before = $transaction->replicate();
 
             if (! (auth()->user()->can('purchase.payments') || auth()->user()->can('sell.payments') || auth()->user()->can('all_expense.access') || auth()->user()->can('view_own_expense'))) {
@@ -102,6 +107,17 @@ class TransactionPaymentController extends Controller
 
                 DB::beginTransaction();
 
+                $acc_trans_mapping = new AccountingAccTransMapping();
+                $acc_trans_mapping['business_id'] = $business_id;
+                // $acc_trans_mapping->ref_no = $ref_no;
+                // $acc_trans_mapping['note'] = $request->get('note');
+                $acc_trans_mapping['type'] = 'Purchase';
+                $acc_trans_mapping['type1'] = 'قيد تلقائي';
+        
+                // $acc_trans_mapping['created_by'] = $transaction->user_id;
+                // $acc_trans_mapping['operation_date'] = $this->productUtil->uf_date($transaction_data['transaction_date'], true);
+                $acc_trans_mapping->save();
+
                 $ref_count = $this->transactionUtil->setAndGetReferenceCount($prefix_type);
                 //Generate reference number
                 $inputs['payment_ref_no'] = $this->transactionUtil->generateReferenceNumber($prefix_type, $ref_count);
@@ -135,6 +151,43 @@ class TransactionPaymentController extends Controller
 
                 DB::commit();
             }
+
+
+    
+            $mapping = Mapping::where('business_id', $business_id)->get();
+            // dd($inputs['amount']);
+            $khazine_acc_id = [
+                'accounting_account_id' => $mapping[0]['khazine_acc_id'],
+                'transaction_id' => $transaction->id,
+                'transaction_payment_id' => null,
+                'amount' =>$inputs['amount'],
+                'acc_trans_mapping_id' => $acc_trans_mapping->id,
+                'type' => 'debit',
+                'business_id1' => $business_id,
+                'sub_type' => $transaction->type,
+                'map_type' => 'deposit_to',
+                'created_by' => auth()->user()->id,
+                // 'operation_date' => \Carbon::now(),
+            ];
+
+            $suppliers_acc_id = [
+                'accounting_account_id' => $mapping[0]['suppliers_acc_id'],
+                'transaction_id' => $transaction->id,
+                'transaction_payment_id' => null,
+                'amount' => $inputs['amount'],
+                'acc_trans_mapping_id' => $acc_trans_mapping->id,
+                'type' => 'credit',
+                'business_id1' => $business_id,
+                'sub_type' => $transaction->type,
+                'map_type' => 'payment_account',
+                'created_by' => auth()->user()->id,
+                // 'operation_date' => \Carbon::now(),
+            ];
+    // dd( $khazine_acc_id , $suppliers_acc_id);
+    
+            //Deposit to will increase = debit
+            AccountingAccountsTransaction::createTransaction($khazine_acc_id);
+            AccountingAccountsTransaction::createTransaction($suppliers_acc_id);
 
             $output = ['success' => true,
                 'msg' => __('purchase.payment_added_success'),
@@ -409,6 +462,11 @@ class TransactionPaymentController extends Controller
                 $payment_line->method = 'cash';
                 $payment_line->paid_on = \Carbon::now()->toDateTimeString();
 
+                $mapping = Mapping::where('business_id', $business_id)->get();
+        
+                //$payment_account will increase = sales = credit
+        
+            
                 //Accounts
                 $accounts = $this->moduleUtil->accountsDropdown($business_id, true, false, true);
 

@@ -1,7 +1,7 @@
 {{-- Start Adding Custom Theme File --}}
 <link rel="stylesheet" href="{{ asset('assets/backend/css/customTheme.css?v='.$asset_v) }}">
-{{-- <link rel="stylesheet" href="{{ asset('assets/backend/css/customComponents.css?v='.$asset_v) }}"> --}}
-{{-- <link href="{{ asset('assets/backend/css/bootstrap.min.css?v='.$asset_v) }}" rel="stylesheet"> --}}
+<link rel="stylesheet" href="{{ asset('assets/backend/css/customComponents.css?v='.$asset_v) }}">
+<link href="{{ asset('assets/backend/css/bootstrap.min.css?v='.$asset_v) }}" rel="stylesheet">
 {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
 {{-- End Adding Custom Theme File --}}
 
@@ -29,7 +29,7 @@
 		$is_discount_enabled = $pos_settings['disable_discount'] != 1 ? true : false;
 		$is_rp_enabled = session('business.enable_rp') == 1 ? true : false;
 	@endphp
-	{!! Form::open(['url' => action([\App\Http\Controllers\SellPosController::class, 'store']), 'method' => 'post', 'id' => 'add_pos_sell_form' ]) !!}
+	{!! Form::open(['url' => action([\App\Http\Controllers\SellPos1Controller::class, 'store']), 'method' => 'post', 'id' => 'add_pos_sell_form' ]) !!}
 
 
 

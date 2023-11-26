@@ -7,7 +7,6 @@
     @include('accounting::layouts.nav')
 
     <!-- Content Header (Page header) -->
-
     <section class="content no-print">
         <section class="row content-header content-header-custom">
             <h1 class="content_h1 text-cusTheme1">@lang('accounting::lang.journal_entry')</h1>
@@ -47,6 +46,8 @@
                                 <th>@lang('purchase.ref_no')</th>
                                 <th>@lang('lang_v1.added_by')</th>
                                 <th>@lang('lang_v1.additional_notes')</th>
+                                <th>@lang('lang_v1.type')</th>
+                                <th>@lang('lang_v1.type')</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -61,7 +62,6 @@
 @section('javascript')
     <script type="text/javascript">
         $(document).ready(function() {
-
             //Journal table
             journal_table = $('#journal_table').DataTable({
                 processing: true,
@@ -101,14 +101,27 @@
                         name: 'ref_no'
                     },
                     {
-                        data: 'added_by',
-                        name: 'added_by'
+                        data: 'user.surname',
+                        name: 'user'
                     },
                     {
                         data: 'note',
                         name: 'note'
+                    },
+                    {
+                        data: 'type',
+                        name: 'type'
+                    },
+                    {
+                        data: 'type1',
+                        name: 'type1'
                     }
-                ]
+                ],
+                stateSaveParams: function(settings, data) {
+                    for (var i = 0, ien = data.columns.length; i < ien; i++) {
+                        delete data.columns[i].visible;
+                    }
+                }
             });
 
             $('#journal_entry_date_range_filter').daterangepicker(
@@ -118,8 +131,7 @@
                         .format(moment_date_format));
                     journal_table.ajax.reload();
                 }
-            );
-            $('#journal_entry_date_range_filter').on('cancel.daterangepicker', function(ev, picker) {
+            ); $('#journal_entry_date_range_filter').on('cancel.daterangepicker', function(ev, picker) {
                 $('#journal_entry_date_range_filter').val('');
                 journal_table.ajax.reload();
             });
@@ -150,8 +162,8 @@
                         });
                     }
                 });
-            });
 
+            });
         });
     </script>
 @endsection

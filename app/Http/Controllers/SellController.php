@@ -2,28 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use App\User;
+use App\Media;
 use App\Account;
-use App\Business;
-use App\BusinessLocation;
 use App\Contact;
+use App\Product;
+use App\TaxRate;
+use App\Business;
+use App\Warranty;
+use App\Transaction;
 use App\CustomerGroup;
 use App\InvoiceScheme;
-use App\Media;
-use App\Product;
-use App\SellingPriceGroup;
-use App\TaxRate;
-use App\Transaction;
-use App\TransactionSellLine;
 use App\TypesOfService;
-use App\User;
-use App\Utils\BusinessUtil;
-use App\Utils\ContactUtil;
+use App\BusinessLocation;
 use App\Utils\ModuleUtil;
+use App\SellingPriceGroup;
+use App\Utils\ContactUtil;
 use App\Utils\ProductUtil;
-use App\Utils\TransactionUtil;
-use App\Warranty;
-use DB;
+use App\Utils\BusinessUtil;
+use App\TransactionSellLine;
 use Illuminate\Http\Request;
+use App\Utils\TransactionUtil;
+use Modules\Lens\Entities\Len;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\Facades\DataTables;
@@ -333,7 +334,7 @@ class SellController extends Controller
                     'action',
                     function ($row) use ($only_shipments, $is_admin, $sale_type) {
                         $html = '<div class="btn-group">
-                                    <button type="button" class="btn cusTheme-light dropdown-toggle btn-xs" 
+                                    <button type="button" class="btn btn-warning dropdown-toggle btn-xs" 
                                         data-toggle="dropdown" aria-expanded="false">'.
                                         __('messages.actions').
                                         '<span class="caret"></span><span class="sr-only">Toggle Dropdown
@@ -729,6 +730,7 @@ class SellController extends Controller
         $users = config('constants.enable_contact_assign') ? User::forDropdown($business_id, false, false, false, true) : [];
 
         $change_return = $this->dummyPaymentLine;
+        $lens = Len::where('business_id', $business_id)->get();;
 
         return view('sell.create')
             ->with(compact(
@@ -757,7 +759,8 @@ class SellController extends Controller
                 'is_order_request_enabled',
                 'users',
                 'default_price_group_id',
-                'change_return'
+                'change_return',
+                'lens'
             ));
     }
 

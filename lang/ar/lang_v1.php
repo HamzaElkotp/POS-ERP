@@ -722,7 +722,7 @@ return [
     'earned' => 'حصل',
     'total_reward_amount' => 'إجمالي مكافأة العميل',
     'ledger' => 'حساب',
-    'type' => 'نوع',
+    'type' => 'النوع',
     'show_payments' => 'إظهار المدفوعات',
     'variation_images' => 'صور التباين',
     'file_deleted_successfully' => 'تم حذف الملف بنجاح',

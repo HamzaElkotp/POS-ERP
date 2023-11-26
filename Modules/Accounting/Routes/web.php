@@ -22,11 +22,14 @@ Route::middleware('web', 'SetSessionData', 'auth', 'language', 'timezone', 'Admi
     Route::get('ledger/{id}', [\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger'])->name('accounting.ledger');
     Route::get('ledger1/{id}', [\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger1'])->name('accounting.ledger1');
     Route::get('ledger2/{id}', [\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger2'])->name('accounting.ledger2');
+    Route::get('mapping', [\Modules\Accounting\Http\Controllers\MappingController::class, 'edit'])->name('accounting.edit');
+    Route::put('mapping/{id}', [\Modules\Accounting\Http\Controllers\MappingController::class, 'update'])->name('accounting.update');
     Route::get('activate-deactivate/{id}', [\Modules\Accounting\Http\Controllers\CoaController::class, 'activateDeactivate']);
     Route::get('create-default-accounts', [\Modules\Accounting\Http\Controllers\CoaController::class, 'createDefaultAccounts'])->name('accounting.create-default-accounts');
 
     Route::resource('journal-entry', \Modules\Accounting\Http\Controllers\JournalEntryController::class);
 
+    Route::get('show1/{id}', [\Modules\Accounting\Http\Controllers\JournalEntryController::class, 'show1'])->name('accounting.show1');
     Route::get('settings', [\Modules\Accounting\Http\Controllers\SettingsController::class, 'index']);
     Route::get('reset-data', [\Modules\Accounting\Http\Controllers\SettingsController::class, 'resetData']);
 
@@ -37,6 +40,7 @@ Route::middleware('web', 'SetSessionData', 'auth', 'language', 'timezone', 'Admi
     Route::resource('budget', \Modules\Accounting\Http\Controllers\BudgetController::class)->except(['show', 'edit', 'update', 'destroy']);
 
     Route::get('reports', [\Modules\Accounting\Http\Controllers\ReportController::class, 'index']);
+    Route::get('get_acc_trans', [\Modules\Accounting\Http\Controllers\ReportController::class, 'get_acc_trans'])->name('accounting.get_acc_trans');
     Route::get('reports/trial-balance', [\Modules\Accounting\Http\Controllers\ReportController::class, 'trialBalance'])->name('accounting.trialBalance');
     Route::get('reports/balance-sheet', [\Modules\Accounting\Http\Controllers\ReportController::class, 'balanceSheet'])->name('accounting.balanceSheet');
     Route::get('reports/account-receivable-ageing-report',

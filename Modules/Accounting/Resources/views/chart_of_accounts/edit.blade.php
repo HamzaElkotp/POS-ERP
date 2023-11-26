@@ -12,9 +12,9 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
+                <div hidden class="form-group">
                     {!! Form::label('account_primary_type', __( 'accounting::lang.account_type' ) . ':*') !!}
-                    <select class="form-control" name="account_primary_type" id="account_primary_type" required>
+                    <select  id="selection"  class="form-control" name="account_primary_type" id="account_primary_type" required>
                         <option value="">@lang('messages.please_select')</option>
                         @foreach($account_types as $account_type => $account_details)
                             <option value="{{$account_type}}"
@@ -23,9 +23,9 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
+                <div hidden  class="form-group">
                     {!! Form::label('account_sub_type', __( 'accounting::lang.account_sub_type' ) . ':*') !!}
-                    <select class="form-control" name="account_sub_type_id" id="account_sub_type" required>
+                    <select  id="selection"  class="form-control" name="account_sub_type_id" id="account_sub_type" required>
                         <option value="">@lang('messages.please_select')</option>
                         @foreach($account_sub_types as $account_type)
                             <option value="{{$account_type->id}}" 
@@ -35,10 +35,10 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
+                <div hidden class="form-group">
                     {!! Form::label('detail_type', __( 'accounting::lang.detail_type' ) . ':*') !!}
 
-                    <select class="form-control" name="detail_type_id" id="detail_type" required>
+                    <select  id="selection"  class="form-control" name="detail_type_id" id="detail_type" >
                         <option value="">@lang('messages.please_select')</option>
                         @foreach($account_detail_types as $detail_type)
                             <option value="{{$detail_type->id}}" 
@@ -52,14 +52,14 @@
                     {!! Form::label('name', __( 'user.name' ) . ':*') !!}
                     {!! Form::text('name', $account->name, ['class' => 'form-control', 'required', 'placeholder' => __( 'user.name' ) ]); !!}
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     {!! Form::label('gl_code', __( 'accounting::lang.gl_code' ) . ':') !!}
                     {!! Form::text('gl_code', $account->gl_code, ['class' => 'form-control', 'placeholder' => __( 'accounting::lang.gl_code' ) ]); !!}
                     <p class="help-block">@lang( 'accounting::lang.gl_code_help' )</p>
-                </div>
-                <div class="form-group">
+                </div> --}}
+                <div hidden  class="form-group">
                     {!! Form::label('parent_account', __( 'accounting::lang.parent_account' ) . ':') !!}
-                    <select class="form-control" name="parent_account_id" id="parent_account">
+                    <select  id="selection"  class="form-control" name="parent_account_id" id="parent_account">
                         <option value="">@lang('messages.please_select')</option>
                         @foreach($parent_accounts as $parent_account)
                             <option value="{{$parent_account->id}}" 
@@ -68,6 +68,21 @@
                         @endforeach
                     </select>
                 </div>
+                <div  class="form-group">
+                    {!! Form::label('level', __('accounting::lang.level') . ':') !!}
+                    {!! Form::text('level', $account->level, [
+                        'class' => 'form-control',
+                        'placeholder' => __('accounting::lang.level')
+                        , 'readonly' => 'true'
+                    ])  !!}
+                    <p class="help-block">@lang('accounting::lang.level_help')</p>
+                </div>
+                <div  class="form-group">
+                    {!! Form::label('code', __('accounting::lang.code') . ':') !!}
+                    {!! Form::text('code', $account->code, ['class' => 'form-control', 'placeholder' => __('accounting::lang.code'), 'readonly' => 'true']) !!}
+                    <p class="help-block">@lang('accounting::lang.code_help')</p>
+                 </div>
+
             </div>
         </div>
         <div class="row"">
@@ -90,3 +105,5 @@
 
   </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
+
+

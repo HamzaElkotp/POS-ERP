@@ -2,19 +2,20 @@
 
 namespace Modules\Accounting\Http\Controllers;
 
-use App\BusinessLocation;
+use DB;
 use App\Contact;
 use App\Transaction;
-use App\TransactionPayment;
+use App\BusinessLocation;
 use App\Utils\ModuleUtil;
-use App\Utils\TransactionUtil;
-use DB;
+use App\TransactionPayment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Utils\TransactionUtil;
 use Illuminate\Routing\Controller;
-use Modules\Accounting\Entities\AccountingAccount;
-use Modules\Accounting\Entities\AccountingAccountsTransaction;
 use Yajra\DataTables\Facades\DataTables;
+use Modules\Accounting\Entities\AccountingAccount;
+use Modules\Accounting\Entities\AccountingAccTransMapping;
+use Modules\Accounting\Entities\AccountingAccountsTransaction;
 
 class TransactionController extends Controller
 {
@@ -484,6 +485,19 @@ class TransactionController extends Controller
             ! (auth()->user()->can('accounting.map_transactions'))) {
             abort(403, 'Unauthorized action.');
         }
+        $user_id = request()->session()->get('user.id');
+        $type = $request->get('type');
+
+        $acc_trans_mapping = new AccountingAccTransMapping();
+        $acc_trans_mapping['business_id'] = $business_id;
+        // $acc_trans_mapping->ref_no = $ref_no;
+        // $acc_trans_mapping['note'] = $request->get('note');
+        $acc_trans_mapping['type'] = $type;
+        $acc_trans_mapping['type1'] = 'قيد تلقائي';
+
+        $acc_trans_mapping['created_by'] = $user_id;
+        // $acc_trans_mapping['operation_date'] = $this->productUtil->uf_date($transaction_data['transaction_date'], true);
+        $acc_trans_mapping->save();
 
         try {
             if (request()->ajax()) {

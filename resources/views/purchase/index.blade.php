@@ -13,7 +13,6 @@
         <li class="active">Here</li>
     </ol> -->
 </section>
-
 <!-- Main content -->
 <section class="content no-print">
     @component('components.filters', ['title' => __('report.filters')])

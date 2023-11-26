@@ -56,13 +56,14 @@ class ModuleUtil extends Util
     public function getModuleData($function_name, $arguments = null)
     {
         $modules = Module::toCollection()->toArray();
-        
+       
         $installed_modules = [];
         foreach ($modules as $module => $details) {
             if ($this->isModuleInstalled($details['name'])) {
                 $installed_modules[] = $details;
             }
-        }
+        } 
+        // dd($installed_modules);
         $data = [];
         if (!empty($installed_modules)) {
             foreach ($installed_modules as $module) {
@@ -80,6 +81,7 @@ class ModuleUtil extends Util
                 }
             }
         }
+        // dd($data);
         return $data;
     }
 

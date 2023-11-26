@@ -18,6 +18,8 @@ class CreateAccountingAccountTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('business_id')->nullable();
+            $table->integer('level')->nullable();
+            $table->bigInteger('code')->nullable();
             $table->integer('created_by')->nullable();
             $table->string('account_primary_type')->nullable();
             $table->string('account_type')->nullable();

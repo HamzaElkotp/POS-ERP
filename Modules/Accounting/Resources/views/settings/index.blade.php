@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', __('messages.settings'))
-
+{{-- <p>gggg</p> --}}
 @section('content')
 
 @include('accounting::layouts.nav')
@@ -187,6 +187,7 @@
             $('#description_div').removeClass('hide');
             $('#parent_id_div').removeClass('hide');
             $('#account_type_div').addClass('hide');
+            $('#code').addClass('hide');
             $('#create_account_type_modal').modal('show');
         })
 	});

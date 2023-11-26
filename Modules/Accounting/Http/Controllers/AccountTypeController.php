@@ -120,16 +120,21 @@ class AccountTypeController extends Controller
             $input['business_id'] = $business_id;
             $input['created_by'] = $request->session()->get('user.id');
             $input['parent_id'] = ($input['account_type'] == 'detail_type') ? $request->input('parent_id') : null;
+            $input['code'] =  $request->input('code') ;
 
             $input['account_primary_type'] = ($input['account_type'] == 'sub_type') ? $request->input('account_primary_type') : null;
 
             $input['show_balance'] = ($input['account_type'] == 'sub_type') ? 1 : 0;
-
+            // dd( $input);
+          
+        
             $account_type = AccountingAccountType::create($input);
             $output = ['success' => true,
                 'data' => $account_type,
                 'msg' => __('lang_v1.added_success'),
             ];
+          
+
         } catch (\Exception $e) {
             \Log::emergency('File:'.$e->getFile().'Line:'.$e->getLine().'Message:'.$e->getMessage());
 
