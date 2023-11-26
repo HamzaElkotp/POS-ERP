@@ -7,16 +7,15 @@
 @include('accounting::layouts.nav')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang( 'accounting::lang.ledger' ) - {{$account->name}}</h1>
-</section>
-
 <section class="content">
+    <section class="row content-header content-header-custom px-4">
+        <h1 class="content_h1 text-cusTheme1">@lang( 'accounting::lang.ledger' ) - {{$account->name}}</h1>
+    </section>
     <div class="row">
         <div class="col-md-5">
-            <div class="box box-solid">
+            <div class="box box-solid graph-details">
                 <div class="box-body">
-                    <table class="table table-condensed">
+                    <table class="table table-condensed tableCustomBalaha">
                         <tr>
                             <th>@lang( 'user.name' ):</th>
                             <td>
@@ -65,7 +64,7 @@
 
         <div class="col-md-7">
         
-            <div class="box box-solid">
+            <div class="box box-solid graph-details">
                 <div class="box-header">
                     <h3 class="box-title"> <i class="fa fa-filter" aria-hidden="true"></i> @lang('report.filters'):</h3>
                 </div>
@@ -99,37 +98,39 @@
 <section class="content">
     <div class="row">
         <div class="col-sm-12">
-        	<div class="box">
-                <div class="box-body">
-                    @can('account.access')
-                        <div class="table-responsive">
-                    	<table class="table table-bordered table-striped" id="ledger">
-                    		<thead>
-                    			<tr>
-                                    <th>@lang( 'messages.date' )</th>
-                                    <th>@lang( 'lang_v1.description' )</th>
-                                    <th>@lang( 'brand.note' )</th>
-                                    <th>@lang( 'lang_v1.added_by' )</th>
-                                    <th>@lang('account.debit')</th>
-                                    <th>@lang('account.credit')</th>
-                    				<!-- <th>@lang( 'lang_v1.balance' )</th> -->
-                                    <th>@lang( 'messages.action' )</th>
-                    			</tr>
-                    		</thead>
+        	<div class="box boxreset">
+                <div class="box-body tabletextooas   qaraf">
+                    <div class="graph-details px-4 py-4">
+                        @can('account.access')
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" id="ledger">
+                                    <thead>
+                                        <tr>
+                                            <th>@lang( 'messages.date' )</th>
+                                            <th>@lang( 'lang_v1.description' )</th>
+                                            <th>@lang( 'brand.note' )</th>
+                                            <th>@lang( 'lang_v1.added_by' )</th>
+                                            <th>@lang('account.debit')</th>
+                                            <th>@lang('account.credit')</th>
+                                            <!-- <th>@lang( 'lang_v1.balance' )</th> -->
+                                            <th>@lang( 'messages.action' )</th>
+                                        </tr>
+                                    </thead>
 
-                            
+                                    
 
-                            <tfoot>
-                                <tr class="bg-gray font-17 footer-total text-center">
-                                    <td colspan="4"><strong>@lang('sale.total'):</strong></td>
-                                    <td class="footer_total_debit"></td>
-                                    <td class="footer_total_credit"></td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
-                    	</table>
-                        </div>
-                    @endcan
+                                    <tfoot>
+                                        <tr class="bg-gray font-17 footer-total text-center">
+                                            <td colspan="4"><strong>@lang('sale.total'):</strong></td>
+                                            <td class="footer_total_debit"></td>
+                                            <td class="footer_total_credit"></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        @endcan
+                    </div>
                 </div>
             </div>
         </div>

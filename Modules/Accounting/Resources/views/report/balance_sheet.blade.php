@@ -7,14 +7,16 @@
 @include('accounting::layouts.nav')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang( 'accounting::lang.balance_sheet' )</h1>
-</section>
 
 <section class="content">
 
-    <div class="col-md-3">
-        <div class="form-group">
+    <section class="row content-header content-header-custom">
+        <h1 class="content_h1 text-cusTheme1">@lang( 'accounting::lang.balance_sheet' )</h1>
+    </section>
+
+
+    <div class="col-md-4">
+        <div class="form-group labelcus">
             {!! Form::label('date_range_filter', __('report.date_range') . ':') !!}
             {!! Form::text('date_range_filter', null, 
                 ['placeholder' => __('lang_v1.select_a_date_range'), 
@@ -22,10 +24,10 @@
         </div>
     </div>
 
-    <div class="col-md-10 col-md-offset-1">
-        <div class="box box-warning">
+    <div class="col-md-12">
+        <div class="box graph-details">
             <div class="box-header with-border text-center">
-                <h2 class="box-title">@lang( 'accounting::lang.balance_sheet')</h2>
+                <h2 class="box-title text-cusTheme">@lang( 'accounting::lang.balance_sheet')</h2>
                 <p>{{@format_date($start_date)}} ~ {{@format_date($end_date)}}</p>
             </div>
 
@@ -36,11 +38,11 @@
                     $total_liab_owners = 0;
                 @endphp
 
-                    <table class="table table-stripped table-bordered" style="min-height: 300px">
+                    <table class="table table-stripped table-bordered zefot-table" style="min-height: 300px">
                         <thead>
                             <tr>
-                                <th class="success">@lang( 'accounting::lang.assets')</th>
-                                <th class="warning">@lang( 'accounting::lang.liab_owners_capital')</th>
+                                <th class="very-light-cus-bg">@lang( 'accounting::lang.assets')</th>
+                                <th class="very-light-cus-bg1">@lang( 'accounting::lang.liab_owners_capital')</th>
                             </tr>
                         </thead>
 
@@ -53,8 +55,8 @@
                                         @endphp
 
                                         <tr>
-                                            <th>{{$asset->name}}</th>
-                                            <td>@format_currency($asset->balance)</td>
+                                            <th class="nested-th">{{$asset->name}}</th>
+                                            <td class="nested-th-cont">@format_currency($asset->balance)</td>
                                         </tr>
                                     @endforeach
                                 </table>
@@ -69,8 +71,8 @@
                                         @endphp
 
                                         <tr>
-                                            <th>{{$liability->name}}</th>
-                                            <td>@format_currency($liability->balance)</td>
+                                            <th class="nested-th">{{$liability->name}}</th>
+                                            <td class="nested-th-cont">@format_currency($liability->balance)</td>
                                         </tr>
                                     @endforeach
 
@@ -80,8 +82,8 @@
                                         @endphp
                                         
                                         <tr>
-                                            <th>{{$equity->name}}</th>
-                                            <td>@format_currency($equity->balance)</td>
+                                            <th class="nested-th">{{$equity->name}}</th>
+                                            <td class="nested-th-cont">@format_currency($equity->balance)</td>
                                         </tr>
                                     @endforeach
                                 </table>
@@ -91,18 +93,18 @@
                         <tr>
                             <td class="col-md-6">
                                 <span>
-                                    <strong>@lang( 'accounting::lang.total_assets'): </strong>
+                                    <strong class="nested-th">@lang( 'accounting::lang.total_assets'): </strong>
                                 </span>
 
-                                <span>@format_currency($total_assets)</span>
+                                <span class="nested-th-cont">@format_currency($total_assets)</span>
                             </td>
 
                             <td class="col-md-6">
                                 <span>
-                                    <strong>@lang( 'accounting::lang.total_liab_owners'): </strong>
+                                    <strong class="nested-th">@lang( 'accounting::lang.total_liab_owners'): </strong>
                                 </span>
 
-                                <span>@format_currency($total_liab_owners)</span>
+                                <span class="nested-th-cont">@format_currency($total_liab_owners)</span>
                             </td>
                         </tr>
 

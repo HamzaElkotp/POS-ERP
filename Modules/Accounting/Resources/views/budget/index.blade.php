@@ -25,14 +25,15 @@
 @include('accounting::layouts.nav')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang( 'accounting::lang.budget' )</h1>
-</section>
+
 <section class="content">
+    <section class="row content-header content-header-custom">
+        <h1 class="content_h1 text-cusTheme1">@lang( 'accounting::lang.budget' )</h1>
+    </section>
 	@component('components.widget', ['class' => 'box-solid'])
         @slot('tool')
             <div class="box-tools">
-                <button type="button" class="btn btn-block btn-primary" data-toggle="modal"  
+                <button type="button" class="btn cusTheme-dark text-white" data-toggle="modal"  
                     data-target="#add_budget_modal">
                     <i class="fas fa-plus"></i> @lang( 'messages.add' )</button>
             </div>

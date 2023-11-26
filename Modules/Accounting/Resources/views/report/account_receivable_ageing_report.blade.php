@@ -9,8 +9,8 @@
 <!-- Content Header (Page header) -->
 <section class="content">
     <div class="row">
-        <div class="col-md-3 col-md-offset-1">
-            <div class="form-group">
+        <div class="col-md-3 ">
+            <div class="form-group labelcus">
                 {!! Form::label('location_id',  __('purchase.business_location') . ':') !!}
                 {!! Form::select('location_id', $business_locations, request()->input('location_id'), 
                     ['class' => 'form-control select2', 'style' => 'width:100%']); !!}
@@ -18,16 +18,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="box box-warning">
+        <div class="col-md-12">
+            <div class="box graph-details">
                 <div class="box-header with-border text-center">
-                    <h2 class="box-title">@lang( 'accounting::lang.account_recievable_ageing_report' )</h2>
+                    <h2 class="box-title text-cusTheme">@lang( 'accounting::lang.account_recievable_ageing_report' )</h2>
                 </div>
                 <div class="box-body">
-                    <table class="table table-stripped table-bordered">
+                    <table class="table table-stripped table-bordered zefot-table">
                         <thead>
-                            <tr>
-                                <th>@lang( 'sale.customer_name')</th>
+                            <tr class="th-custheme-fw-500">
+                                <th class="th-custheme-color">@lang( 'sale.customer_name')</th>
                                 <th style="color: #2dce89 !important;">@lang( 'lang_v1.current')</th>
                                 <th style="color: #ffd026 !important;">
                                     @lang( 'accounting::lang.1_30_days' )
@@ -41,7 +41,7 @@
                                 <th style="color: #FF0000 !important;">
                                     @lang( 'accounting::lang.91_and_over' )
                                 </th>
-                                <th>@lang('sale.total')</th>
+                                <th class="th-custheme-color">@lang('sale.total')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,7 +89,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>
+                                <th class="th-custheme-color th-custheme-fw-500">
                                     @lang('sale.total')
                                 </th>
                                 <td>

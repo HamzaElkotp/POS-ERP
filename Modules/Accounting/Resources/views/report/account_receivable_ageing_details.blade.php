@@ -27,8 +27,8 @@
 <!-- Content Header (Page header) -->
 <section class="content">
     <div class="row">
-        <div class="col-md-3 col-md-offset-1">
-            <div class="form-group">
+        <div class="col-md-4">
+            <div class="form-group labelcus">
                 {!! Form::label('location_id',  __('purchase.business_location') . ':') !!}
                 {!! Form::select('location_id', $business_locations, request()->input('location_id'), 
                     ['class' => 'form-control select2', 'style' => 'width:100%']); !!}
@@ -36,15 +36,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="box box-warning">
+        <div class="col-md-12">
+            <div class="box graph-details">
                 <div class="box-header with-border text-center">
-                    <h2 class="box-title">@lang( 'accounting::lang.account_receivable_ageing_details' )</h2>
+                    <h2 class="box-title text-cusTheme">@lang( 'accounting::lang.account_receivable_ageing_details' )</h2>
                 </div>
                 <div class="box-body">
                     <table class="table table-stripped table-bordered">
                         <thead>
-                            <tr>
+                            <tr class="th-custheme-color th-custheme-fw-500">
                                 <th>@lang('messages.date')</th>
                                 <th>@lang('account.transaction_type')</th>
                                 <th>@lang('sale.invoice_no')</th>
@@ -55,7 +55,7 @@
                         </thead>
                         @foreach($report_details as $key => $value)
                         <tbody @if($loop->index != 0) class="collapsed" @endif>
-                            <tr class="toggle-tr" style="cursor: pointer;">
+                            <tr class="toggle-tr th-custheme-color th-custheme-fw-500" style="cursor: pointer;">
                                 <th colspan="6">
                                     <span class="collapse-icon">
                                         <i class="fas fa-arrow-circle-right"></i>
@@ -111,7 +111,7 @@
                                 </tr>
                             @endforeach
                             <tr class="collapse-tr bg-gray">
-                                <th>
+                                <th class="th-custheme-fw-500">
                                     @if($key == 'current')
                                         @lang( 'accounting::lang.total_for_current' )
                                     @elseif($key == '1_30')
@@ -128,7 +128,7 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th>@format_currency($total)</th>
+                                <th class="th-custheme-color1 th-custheme-fw-500">@format_currency($total)</th>
                             </tr>
                         </tbody>
                         @endforeach

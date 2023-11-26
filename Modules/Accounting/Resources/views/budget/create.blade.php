@@ -7,35 +7,33 @@
 @include('accounting::layouts.nav')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang('accounting::lang.budget_for_fy', ['fy' => $fy_year])</h1>
-</section>
 <section class="content">
-	@component('components.widget', ['class' => 'box-solid'])
+    <section class="row content-header content-header-custom">
+        <h1 class="content_h1 text-cusTheme1">@lang('accounting::lang.budget_for_fy', ['fy' => $fy_year])</h1>
+    </section>
+
+	@component('components.widget', ['class' => 'boxreset'])
     {!! Form::open(['url' => action([\Modules\Accounting\Http\Controllers\BudgetController::class, 'store']), 
             'method' => 'post', 'id' => 'add_budget_form' ]) !!}
         <input type="hidden" name="financial_year" value="{{$fy_year}}">
         <div class="row">
             <div class="col-md-12">
-                <div class="nav-tabs-custom">
+                <div class="nav-tabs-custom graph-details qaraf">
                     <ul class="nav nav-tabs nav-justified">
-                        <li class="active">
-                            <a href="#monthly_tab" data-toggle="tab" 
-                            aria-expanded="true">@lang('accounting::lang.monthly')</a>
+                        <li class="btn cusTapThemeLight large mx-0 active" href="#monthly_tab" data-toggle="tab" aria-expanded="true">
+                            @lang('accounting::lang.monthly')         
                         </li>
-                        <li>
-                            <a href="#quarterly_tab" data-toggle="tab" 
-                            aria-expanded="true">@lang('accounting::lang.quarterly')</a>
+                        <li class="btn cusTapThemeLight large mx-0" href="#quarterly_tab" data-toggle="tab" aria-expanded="true">
+                            @lang('accounting::lang.quarterly')         
                         </li>
-                        <li>
-                            <a href="#yearly_tab" data-toggle="tab" 
-                            aria-expanded="true">@lang('accounting::lang.yearly')</a>
+                        <li class="btn cusTapThemeLight large mx-0" href="#yearly_tab" data-toggle="tab" aria-expanded="true">
+                            @lang('accounting::lang.yearly')         
                         </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="monthly_tab">
                             <div class="table-responsive" style="height: 500px;">
-                                <table class="table table-striped">
+                                <table class="table table-striped tabletextooas">
                                     <tr>
                                         <th>
                                             @lang('account.account')
@@ -66,7 +64,7 @@
                         </div>
                         <div class="tab-pane" id="quarterly_tab">
                             <div class="table-responsive" style="height: 500px;">
-                                <table class="table table-striped">
+                                <table class="table table-striped tabletextooas">
                                     <tr>
                                         <th>
                                             @lang('account.account')
@@ -124,7 +122,7 @@
                         </div>
                         <div class="tab-pane" id="yearly_tab">
                             <div class="table-responsive" style="height: 500px;">
-                                <table class="table table-striped">
+                                <table class="table table-striped tabletextooas">
                                     <tr>
                                         <th>
                                             @lang('account.account')
@@ -157,7 +155,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary btn-lg">@lang('messages.submit')</button>
+                <button type="submit" class="btn cusTheme-dark text-white btn-lg">@lang('messages.submit')</button>
             </div>
         </div>
     {!! Form::close() !!}

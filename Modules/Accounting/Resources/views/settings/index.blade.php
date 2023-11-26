@@ -7,46 +7,36 @@
 @include('accounting::layouts.nav')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang( 'messages.settings' )</h1>
-</section>
 <section class="content">
+    <section class="row content-header content-header-custom">
+        <h1 class="content_h1 text-cusTheme1">@lang( 'messages.settings' )</h1>
+    </section>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 px-0">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#account_setting" data-toggle="tab" aria-expanded="true">
-                            @lang('accounting::lang.account_setting')
-                        </a>
+                    <li class="btn cusTapThemeLight large active mx-0" href="#account_setting" data-toggle="tab" aria-expanded="true">
+                        @lang('accounting::lang.account_setting')             
                     </li>
-                    <li>
-                        <a href="#sub_type_tab" data-toggle="tab" aria-expanded="true">
-                            @lang('accounting::lang.account_sub_type')
-                        </a>
+                    <li class="btn cusTapThemeLight large mx-0" href="#sub_type_tab" data-toggle="tab" aria-expanded="true">
+                        @lang('accounting::lang.account_sub_type')           
                     </li>
-                    <li>
-                        <a href="#detail_type_tab" data-toggle="tab" aria-expanded="true">
-                            @lang('accounting::lang.detail_type')
-                        </a>
+                    <li class="btn cusTapThemeLight large mx-0" href="#detail_type_tab" data-toggle="tab" aria-expanded="true">
+                        @lang('accounting::lang.detail_type')     
                     </li>
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content graph-details qaraf">
                     <div class="tab-pane active" id="account_setting"> 
                         <div class="row mb-12">
                             <div class="col-md-4">
-                                <button class="btn btn-danger accounting_reset_data" 
-                                    data-href="{{action([\Modules\Accounting\Http\Controllers\SettingsController::class, 'resetData'])}}">
-                                    @lang('accounting::lang.reset_data')
-                                </button>
+                                
                             </div>
                         </div>
-                        <br>
                         {!! Form::open(['action' => '\Modules\Accounting\Http\Controllers\SettingsController@saveSettings',
                             'method' => 'post']) !!}
                             <div class="row">
                                 <div class="col-md-3">
-                                    <div class="form-group">
+                                    <div class="form-group labelcus">
                                         {!! Form::label('journal_entry_prefix', __('accounting::lang.journal_entry_prefix') . ':') !!}
                                         {!! Form::text('journal_entry_prefix',!empty($accounting_settings['journal_entry_prefix'])? 
                                             $accounting_settings['journal_entry_prefix'] : '', 
@@ -54,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group">
+                                    <div class="form-group labelcus">
                                         {!! Form::label('transfer_prefix', __('accounting::lang.transfer_prefix') . ':') !!}
                                         {!! Form::text('transfer_prefix',!empty($accounting_settings['transfer_prefix'])? 
                                             $accounting_settings['transfer_prefix'] : '', 
@@ -65,7 +55,11 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group pull-right">
-                                    {{Form::submit('update', ['class'=>"btn btn-danger"])}}
+                                    {{Form::submit('update', ['class'=>"btn cusTheme-dark text-white"])}}
+                                    <button class="btn btn-danger accounting_reset_data" 
+                                        data-href="{{action([\Modules\Accounting\Http\Controllers\SettingsController::class, 'resetData'])}}">
+                                        <i class="fa-solid fa-arrow-rotate-left"></i> @lang('accounting::lang.reset_data')
+                                    </button>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +69,7 @@
                     <div class="tab-pane" id="sub_type_tab"> 
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-primary pull-right" id="add_account_sub_type">
+                                <button class="btn cusTheme-dark text-white pull-right" id="add_account_sub_type">
                                     <i class="fas fa-plus"></i> @lang('messages.add')
                                 </button> 
                             </div>
@@ -102,7 +96,7 @@
                     <div class="tab-pane" id="detail_type_tab">
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-primary pull-right" id="add_detail_type">
+                                <button class="btn cusTheme-dark text-white pull-right" id="add_detail_type">
                                     <i class="fas fa-plus"></i> @lang('messages.add')
                                 </button> 
                             </div>

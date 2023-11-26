@@ -18,15 +18,14 @@
     <div class="row mb-12">
         <div class="col-md-12 pb-0 px-0">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-info active">
+                <label class="btn cusTapThemeLight large active">
                     <input type="radio" name="view_type" value="tree" class="view_type">
                     <i class="fas fa-list-ul"></i> @lang('accounting::lang.tree_view')
                 </label>
-                <label class="btn btn-info">
+                <label class="btn cusTapThemeLight large">
                     <input type="radio" name="view_type" value="table" class="view_type">
                     <i class="fas fa-table"></i> @lang('accounting::lang.tabular_view')
                 </label>
-                
             </div>
         </div>
     </div>
@@ -47,16 +46,16 @@
                     <div class="row">
                         <div class="col-md-12">
                             @component('components.filters', ['title' => __('report.filters')])
-                                <div class="col-md-4">
-                                    <div class="form-group">
+                                <div class="col-md-6 pt-4">
+                                    <div class="form-group labelcus">
                                         {!! Form::label('account_type_filter', __( 'accounting::lang.account_type' ) . ':') !!}
                                         {!! Form::select('account_type_filter', $account_types, null,
                                             ['class' => 'form-control select2', 'style' => 'width:100%', 
                                             'id' => 'account_type_filter', 'placeholder' => __('lang_v1.all')]); !!}
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
+                                <div class="col-md-6 pt-4">
+                                    <div class="form-group labelcus">
                                         {!! Form::label('status_filter', __( 'sale.status' ) . ':') !!}
                                         {!! Form::select('status_filter', ['active' => __( 'accounting::lang.active' ),
                                             'inactive' => __('lang_v1.inactive')], null,
@@ -67,7 +66,7 @@
                             @endcomponent
                         </div>
                     </div>
-                    <div class="table-responsive" id="accounts_table">
+                    <div class="table-responsive customTheme101" id="accounts_table">
                     </div>
                 </div>
             @endcomponent

@@ -29,8 +29,6 @@
     <div class="col-md-12" id="accounts_tree_container">
 
         <ul>
-               
-  
             @foreach ($account_types as $key => $value)
                 <li @if ($loop->index == 0) data-jstree='{ "opened" : true }' @endif>
                     {{ $value }} 

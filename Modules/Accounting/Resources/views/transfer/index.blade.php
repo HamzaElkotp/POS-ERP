@@ -7,15 +7,15 @@
 @include('accounting::layouts.nav')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang( 'accounting::lang.transfer' )</h1>
-</section>
 <section class="content no-print">
+    <section class="row content-header content-header-custom">
+        <h1 class="content_h1 text-cusTheme1">@lang( 'accounting::lang.transfer' )</h1>
+    </section>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 px-0">
             @component('components.filters', ['title' => __('report.filters')])
                 <div class="col-md-4">
-                    <div class="form-group">
+                    <div class="form-group labelcus">
                         {!! Form::label('transfer_from_filter', __( 'lang_v1.transfer_from' ) . ':') !!}
                         {!! Form::select('transfer_from_filter', [], null,
                             ['class' => 'form-control accounts-dropdown', 'style' => 'width:100%', 
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group">
+                    <div class="form-group labelcus">
                         {!! Form::label('transfer_to_filter', __( 'account.transfer_to' ) . ':') !!}
                         {!! Form::select('transfer_to_filter', [], null,
                             ['class' => 'form-control accounts-dropdown', 'style' => 'width:100%', 
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group">
+                    <div class="form-group labelcus">
                         {!! Form::label('transfer_date_range_filter', __('report.date_range') . ':') !!}
                         {!! Form::text('transfer_date_range_filter', null, 
                             ['placeholder' => __('lang_v1.select_a_date_range'), 
@@ -42,12 +42,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            @component('components.widget', ['class' => 'box-solid'])
+        <div class="col-md-12 px-0">
+            @component('components.widget', ['class' => 'box-solid graph-details'])
                 @can('accounting.add_transfer')
                     @slot('tool')
                         <div class="box-tools">
-                            <button type="button" class="btn btn-block btn-primary btn-modal" 
+                            <button type="button" class="btn btn-block btn-primary btn-modal cusTheme-dark text-white" 
                                 data-href="{{action([\Modules\Accounting\Http\Controllers\TransferController::class, 'create'])}}" 
                                 data-container="#create_transfer_modal" >
                                 <i class="fas fa-plus"></i> @lang( 'messages.add' )</a>

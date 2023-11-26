@@ -7,37 +7,37 @@
 @include('accounting::layouts.nav')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang( 'accounting::lang.transactions' )</h1>
-</section>
 
 <!-- Main content -->
 <section class="content">
+    <section class="row content-header content-header-custom">
+        <h1 class="content_h1 text-cusTheme1">@lang( 'accounting::lang.transactions' )</h1>
+    </section>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12 px-4 py-4 graph-details">
 
-        <div class="col-xs-12 pos-tab-container">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pos-tab-menu">
-                <div class="list-group">
-                    <a href="#" class="list-group-item text-center active">@lang('sale.sale')</a>
-                    <a href="#" class="list-group-item text-center">@lang('accounting::lang.sales_payments')</a>
-                    <a href="#" class="list-group-item text-center">@lang('purchase.purchases')</a>
-                    <a href="#" class="list-group-item text-center">@lang('accounting::lang.purchase_payments')</a>
+            <div class="col-xs-12 px-0">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pos-tab-menu">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item text-center active">@lang('sale.sale')</a>
+                        <a href="#" class="list-group-item text-center">@lang('accounting::lang.sales_payments')</a>
+                        <a href="#" class="list-group-item text-center">@lang('purchase.purchases')</a>
+                        <a href="#" class="list-group-item text-center">@lang('accounting::lang.purchase_payments')</a>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pos-tab px-4">
+                    @include('accounting::transactions.partials.sales')
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pos-tab px-4">
+                    @include('accounting::transactions.partials.payments', ['id' => "sell_payment_table"])
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pos-tab px-4">
+                    @include('accounting::transactions.partials.purchases')
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pos-tab px-4">
+                    @include('accounting::transactions.partials.payments', ['id' => "purchase_payment_table"])
                 </div>
             </div>
-            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pos-tab">
-                @include('accounting::transactions.partials.sales')
-            </div>
-            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pos-tab">
-                @include('accounting::transactions.partials.payments', ['id' => "sell_payment_table"])
-            </div>
-            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pos-tab">
-                @include('accounting::transactions.partials.purchases')
-            </div>
-            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 pos-tab">
-                @include('accounting::transactions.partials.payments', ['id' => "purchase_payment_table"])
-            </div>
-        </div>
         
         </div>
     </div>

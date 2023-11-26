@@ -1,4 +1,4 @@
-<div class="box @if(!empty($class)) {{$class}} @else box-solid @endif" id="accordion">
+<div class="box  graph-details customcollabs @if(!empty($class)) {{$class}} @else box-solid @endif" id="accordion">
   <div class="box-header with-border" style="cursor: pointer;">
     <h3 class="box-title">
       <a data-toggle="collapse" data-parent="#accordion" href="#collapseFilter">
@@ -12,7 +12,7 @@
     }
   @endphp
   <div id="collapseFilter" class="panel-collapse active collapse @if(empty($closed)) in @endif" aria-expanded="true">
-    <div class="box-body">
+    <div class="box-body px-3">
       {{$slot}}
     </div>
   </div>
