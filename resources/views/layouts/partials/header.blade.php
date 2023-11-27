@@ -32,10 +32,20 @@
             @if (Module::has('Essentials'))
                 @includeIf('essentials::layouts.partials.header_part')
             @endif
-
+            
             <div class="m-8 pull-left mt-15 hidden-xs" style="color: #9ea9ad;">
                 <strong>{{ @format_date('now') }}</strong>
             </div>
+
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a href="#" class="clock_in_btn" data-container="#task_modal" data-toggle="tooltip" data-target="#task_modal" data-type="clock_in" data-placement="bottom" data-original-title="" title=""><i class="fa-solid fa-clipboard-user px-2"></i><span>Clock In</span></a>
+                </li>
+            </ul>
+
+            {{-- <div class="m-8 pull-left mt-15 hidden-xs" style="color: #9ea9ad;">
+                <strong>{{ @format_date('now') }}</strong>
+            </div> --}}
 
             <ul class="nav navbar-nav">
 

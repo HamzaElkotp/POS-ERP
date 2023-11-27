@@ -166,9 +166,7 @@
                                 <div class="statistics-details px-4 py-4">
                                     <p class="static-box-title text-cusTheme">{{ __('lang_v1.expense') }}</p>
                                     <div class="d-flex">
-                                        <h3 class="rate-percentage total_expense static-box-text"><i
-                                                class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
-                                        <div class="percent-tag"><i class="fa-solid fa-caret-up text-green"></i> 20%</div>
+                                        <h3 class="rate-percentage total_expense static-box-text"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
                                     </div>
                                 </div>
                             </div>
@@ -181,7 +179,6 @@
                                     <div class="d-flex">
                                         <h3 class="rate-percentage total_purchase static-box-text" id="get_total_purchase">
                                             <i class="fas fa-sync fa-spin fa-fw "></i></h3>
-                                        <div class="percent-tag"><i class="fa-solid fa-caret-down text-red"></i> 20%</div>
                                     </div>
                                     <div class="info-box-content" style="display: none">
                                         <span class="info-box-text">{{ __('lang_v1.total_purchase_return') }}</span>
@@ -198,7 +195,6 @@
                                     <div class="d-flex">
                                         <h3 class="rate-percentage purchase_due static-box-text"><i
                                                 class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
-                                        <div class="percent-tag"><i class="fa-solid fa-caret-down text-red"></i> 20%</div>
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +207,6 @@
                                     <div class="d-flex">
                                         <h3 class="rate-percentage total_sell static-box-text" id="get_total_sell"><i
                                                 class="fas fa-sync fa-spin fa-fw margin-bottom avatar-title"></i></h3>
-                                        <div class="percent-tag"><i class="fa-solid fa-caret-up text-green"></i> 20%</div>
                                     </div>
                                     <div class="info-box-content" style="display: none">
                                         <span class="info-box-text">{{ __('lang_v1.total_sell_return') }}</span>
@@ -231,7 +226,6 @@
                                     <div class="d-flex">
                                         <h3 class="rate-percentage net static-box-text"><i
                                                 class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
-                                        <div class="percent-tag"><i class="fa-solid fa-caret-down text-red"></i> 20%</div>
                                     </div>
                                 </div>
                             </div>
@@ -244,7 +238,6 @@
                                     <div class="d-flex">
                                         <h3 class="rate-percentage invoice_due static-box-text"><i
                                                 class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
-                                        <div class="percent-tag"><i class="fa-solid fa-caret-down text-red"></i> 20%</div>
                                     </div>
                                 </div>
                             </div>

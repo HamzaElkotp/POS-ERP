@@ -10,10 +10,10 @@
 @include('accounting::layouts.nav')
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>@lang( 'accounting::lang.chart_of_accounts' )</h1>
-</section>
-<section class="content">
+<section class="content px-0">
+    <section class="row content-header content-header-custom">
+        <h1 class="content_h1 text-cusTheme1">@lang( 'accounting::lang.chart_of_accounts' )</h1>
+    </section>
     <div class="row mb-12">
         <div class="col-md-12">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -30,22 +30,22 @@
     </div>
     <a
     href="{{url(
-        action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit']))}}" 
-    ></a>
+        action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit']))}}"
+    ></a> 
     <div class="row">
         <div class="col-md-12">
-            @component('components.widget', ['class' => 'box-solid'])
+            @component('components.widget', ['class' => 'graph-details px-1 pt-3 pb-0 br-tl-0 mnaiel'])
             @slot('tool')
                 <div class="box-tools">
-                    <a class="btn btn-primary pull-right m-5 btn-modal" 
-                    href="{{action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit'])}}" 
-                    {{-- data-href="{{action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit'])}}" 
+                    <a class="btn btn cusTheme-dark text-white pull-right btn-modal"
+                    href="{{action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit'])}}"
+                    {{-- data-href="{{action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit'])}}"
                     data-container="#update_mapping_modal"> --}}
                     >
                     <i class="fas fa-plus"></i> @lang( 'messages.edit' )</a>
-                </div>
+                </div> 
                 {{-- <div class="box-tools">
-                    <a class="btn btn-primary pull-right m-5 btn-modal" 
+                    <a class="btn btn cusTheme-dark text-white pull-right btn-modal"
                     href="{{action([\Modules\Accounting\Http\Controllers\CoaController::class, 'create'])}}" 
                     data-href="{{action([\Modules\Accounting\Http\Controllers\CoaController::class, 'create'])}}" 
                     data-container="#create_account_modal">
