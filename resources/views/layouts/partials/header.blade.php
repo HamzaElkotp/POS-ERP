@@ -33,8 +33,8 @@
                 @includeIf('essentials::layouts.partials.header_part')
             @endif
             
-            <div class="m-8 pull-left mt-15 hidden-xs" style="color: #9ea9ad;">
-                <strong>{{ @format_date('now') }}</strong>
+            <div class="m-8 pull-left mt-15 hidden-xs text-white">
+                <i class="fa-solid fa-calendar-day"></i> {{ @format_date('now') }}
             </div>
 
             <ul class="nav navbar-nav">

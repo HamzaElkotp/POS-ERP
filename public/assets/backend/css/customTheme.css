@@ -1473,6 +1473,23 @@ div.pos-tab-content{
 
 
 
+
+nav.navbar.navbar-static-top.mx-0 {
+    overflow-y: hidden !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 .very-light-cus-bg{
     background: #419dd369 !important;
     font-weight: 500;
@@ -1596,6 +1613,34 @@ html[dir="ltr"] .customTheme101 {
     padding-right: 8px;
     padding-left: 0;
 }
+html[dir="ltr"] .sidebar-menu>li>a {
+    font-weight: 400 !important;
+    padding: 10px 16px 10px 14px;
+}
+
+
+
+
+
+
+
+/* .navbar-brand.sidebar-toggle {
+    margin-right: 0 !important;
+} */
+html[dir="rtl"] .navbar .navbar-brand.sidebar-toggle {
+    margin-left: auto !important;
+    margin-right: 15px !important;
+}
+html[dir="rtl"] .navbar-custom-menu {
+    margin-left: 6% !important;
+}
+html[dir="ltr"] .navbar-custom-menu {
+    margin-right: 2% !important;
+}
+
+
+
+
 
 
 
