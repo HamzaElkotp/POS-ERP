@@ -28,10 +28,10 @@
     <div class="card">
         <div class="card-header d-flex">
             <h2>
-                بيان الكميات للعدسه من نوع : {{ $len->name }}
+                بيان الكميات للعدسه من نوع : {{ $len[0]['name'] }}
             </h2>
-            <a href="{{ route('lens.index') }}" class="btn btn-primary ml-auto"><i class="fa fa-home"></i> عرض شاشه
-                العدسات</a>
+            <a href="{{ route('products.index') }}" class="btn btn-primary ml-auto"><i class="fa fa-home"></i> عرض شاشه
+                الأصناف</a>
 
 
         </div>
@@ -39,7 +39,7 @@
 
         <div class="card-body" dir="ltr">
             <div class="">
-                <form method="POST" action="{{ route('products.store_quant1', $len->id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('products.store_quant1', $len[0]['id']) }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -119,7 +119,7 @@
                             <tbody>
                                 {{-- @foreach (old('len_lens_diams', $len->len_lens_diams->count() ? $len->len_lens_diams : ['']) as $order_product) --}}
 
-                                @foreach ($len->len_lenses_diams as $key => $len)
+                                @foreach ($len[0]['len_lenses_diams'] as $key => $len)
                                     <tr data-entry-id="{{ $len->id }}" style="font-weight:bold">
                                         {{-- <td><input readonly name="len_id[]" id="len_id" type="text"
                                             value="{{ old('len_id', $len->len_id) }}"></td> --}}

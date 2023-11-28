@@ -2,6 +2,7 @@
 
 namespace Modules\Lens\Entities;
 
+use App\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,7 @@ class LensDiam extends Model
 {
     use  HasFactory;
 
-    public $table = 'lens_diam';
+    public $table = 'products_diam';
 
     // protected $dates = [
     //     'created_at',
@@ -53,7 +54,7 @@ class LensDiam extends Model
 
     public function len()
     {
-        return $this->belongsTo(Len::class, 'Len_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
 }

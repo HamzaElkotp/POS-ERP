@@ -192,6 +192,11 @@ Route::middleware(['setData', 'auth', 'SetSessionData', 'language', 'timezone', 
     Route::get('/products/get-combo-product-entry-row', [ProductController::class, 'getComboProductEntryRow']);
     Route::post('/products/toggle-woocommerce-sync', [ProductController::class, 'toggleWooCommerceSync']);
     Route::get('/show6/{id}', [ProductController::class, 'show6']);
+    Route::get('/show2/{id}', [ProductController::class, 'show2']);
+    Route::get('/show3/{id}', [ProductController::class, 'show3']);
+    Route::post('store_quant1/{id}',[ProductController::class, 'store_quant1'])->name('products.store_quant1');
+    Route::post('store_sell_price/{id}',[ProductController::class, 'store_sell_price'])->name('products.store_sell_price');
+    Route::post('store_purch_price/{id}',[ProductController::class, 'store_purch_price'])->name('products.store_purch_price');
 
     Route::resource('products', ProductController::class);
     Route::get('/toggle-subscription/{id}', 'SellPosController@toggleRecurringInvoices');
