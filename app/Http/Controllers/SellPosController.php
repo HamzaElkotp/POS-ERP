@@ -529,6 +529,9 @@ class SellPosController extends Controller
             $transaction = $this->transactionUtil->createSellTransaction($business_id, $input, $invoice_total, $user_id);
             // ======================= حفظ قيد تلقائي  ====================
             // dd( $transaction);
+         
+            if ($this->moduleUtil->isModuleEnabled('account')) {
+
             $len_trans = [];
             $len_trans['len_id'] = $request->input('len_id');
             $len_trans['transaction_id'] = $transaction->id;
@@ -592,7 +595,7 @@ class SellPosController extends Controller
                 $store2->update([$cyl_l => $stck - $quant_l]);
 
             }
-
+        }
             // ==================================
 
             $user_id = auth()->user()->id;

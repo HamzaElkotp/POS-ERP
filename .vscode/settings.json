@@ -1,9 +1,21 @@
 {
-    "editor.fontSize": 14,
+    "editor.fontSize": 20,
     "debug.console.fontSize": 20,
     "scm.inputFontSize": 18,
     "terminal.integrated.fontSize": 20,
     "chat.editor.fontSize": 20,
     "markdown.preview.fontSize": 20,
-    "tailwindCSS.rootFontSize": 20
+    "tailwindCSS.rootFontSize": 20,
+    "files.autoSave": "onFocusChange",
+    "editor.wordWrap": "on",
+    "editor.codeLensFontSize": 20,
+    "editor.columnSelection": true,
+    "editor.scrollbar.ignoreHorizontalScrollbarInContentHeight": true,
+    "editor.tabCompletion": "on",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.find.autoFindInSelection": "always",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "diffEditor.experimental.showMoves": true
 }

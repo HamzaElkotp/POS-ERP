@@ -212,15 +212,17 @@ class ProductController extends Controller
                             $html .=
                                 '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'view'], [$row->id]) . '" class="view-product"><i class="fa fa-eye"></i> ' . __('messages.view') . '</a></li>';
                         }
-                        if (auth()->user()->can('product.view')) {
-                            $html .=
-                                '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'show6'], [$row->id]) . '" class="view-product"><i class="fa fa-eye"></i> ' . 'تعديل كميات العدسات '. '</a></li>';
-                            $html .=
-                                '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'show2'], [$row->id]) . '" class="view-product"><i class="fa fa-eye"></i> ' . 'تعديل أسعار البيع العدسات '. '</a></li>';
-                            $html .=
-                                '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'show3'], [$row->id]) . '" class="view-product"><i class="fa fa-eye"></i> ' . 'تعديل أسعار الشراء العدسات '. '</a></li>';
-                        }
+                        if ($this->moduleUtil->isModuleEnabled('account')) {
 
+                            if (auth()->user()->can('product.view')) {
+                                $html .=
+                                    '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'show6'], [$row->id]) . '" class="view-product"><i class="fa fa-eye"></i> ' . 'تعديل كميات العدسات ' . '</a></li>';
+                                $html .=
+                                    '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'show2'], [$row->id]) . '" class="view-product"><i class="fa fa-eye"></i> ' . 'تعديل أسعار البيع العدسات ' . '</a></li>';
+                                $html .=
+                                    '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'show3'], [$row->id]) . '" class="view-product"><i class="fa fa-eye"></i> ' . 'تعديل أسعار الشراء العدسات ' . '</a></li>';
+                            }
+                        }
                         if (auth()->user()->can('product.update')) {
                             $html .=
                                 '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'edit'], [$row->id]) . '"><i class="glyphicon glyphicon-edit"></i> ' . __('messages.edit') . '</a></li>';
@@ -233,7 +235,7 @@ class ProductController extends Controller
 
                         if ($row->is_inactive == 1) {
                             $html .=
-                                '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'activate'], [$row->id]) . '" class="activate-product"><i class="fas fa-check-circle"></i> ' .'' . '</a></li>';
+                                '<li><a href="' . action([\App\Http\Controllers\ProductController::class, 'activate'], [$row->id]) . '" class="activate-product"><i class="fas fa-check-circle"></i> ' . '' . '</a></li>';
                         }
 
                         $html .= '<li class="divider"></li>';
@@ -513,10 +515,8 @@ class ProductController extends Controller
                 'product_description',
                 'sub_unit_ids',
                 'preparation_time_in_minutes',
-                'signal_type_id',
-                'sph_from_id',
-                'sph_to_id',
-                'lens_diameter_id'
+                'sph',
+                'cyl',
             ];
 
             $module_form_fields = $this->moduleUtil->getModuleFormField('product_form_fields');
@@ -525,6 +525,7 @@ class ProductController extends Controller
             }
 
             $product_details = $request->only($form_fields);
+            // dd($product_details);
             $product_details['business_id'] = $business_id;
             $product_details['created_by'] = $request->session()->get('user.id');
 
@@ -575,18 +576,20 @@ class ProductController extends Controller
 
             $product = Product::create($product_details);
             $items = array();
-            $sph_from = $request->sph_from_id;
-            $sph_to = $request->sph_to_id;
+            if ($this->moduleUtil->isModuleEnabled('account')) {
 
-            for ($i = $sph_from; $i >= $sph_from, $i <= $sph_to; $i += 0.25) {
-                $items[] = ['product_id' => $product->id, 'sph' => $i];
-                // array_push($i,$len->id);
+                $sph_from = $request->sph_from_id;
+                $sph_to = $request->sph_to_id;
+
+                for ($i = $sph_from; $i >= $sph_from, $i <= $sph_to; $i += 0.25) {
+                    $items[] = ['product_id' => $product->id, 'sph' => $i];
+                    // array_push($i,$len->id);
+                }
+                // dd($items,$request->sph_from_id,$sph_to);
+                $len_diam = ProductsDiam::insert($items);
+                $len_diam2 = ProductsDiam2::insert($items);
+                $len_diam3 = ProductsDiam3::insert($items);
             }
-            // dd($items,$request->sph_from_id,$sph_to);
-            $len_diam = ProductsDiam::insert($items);
-            $len_diam2 = ProductsDiam2::insert($items);
-            $len_diam3 = ProductsDiam3::insert($items);
-
 
             if (empty(trim($request->input('sku')))) {
                 $sku = $this->productUtil->generateProductSku($product->id);
@@ -1296,12 +1299,12 @@ class ProductController extends Controller
     public function show6($id)
     {
 
-         $business_id = request()->session()->get('user.business_id');
+        $business_id = request()->session()->get('user.business_id');
 
         $len = Product::where('business_id', $business_id)
 
-        ->where('id', $id)
-        ->with('len_lenses_diams')->get();
+            ->where('id', $id)
+            ->with('len_lenses_diams')->get();
         return view('product.show4', compact('len'));
     }
 
@@ -1311,8 +1314,8 @@ class ProductController extends Controller
 
         $len = Product::where('business_id', $business_id)
 
-        ->where('id', $id)
-        ->with('len_lenses_diams2')->get();
+            ->where('id', $id)
+            ->with('len_lenses_diams2')->get();
         return view('product.show2', compact('len'));
     }
 
@@ -1322,8 +1325,8 @@ class ProductController extends Controller
 
         $len = Product::where('business_id', $business_id)
 
-        ->where('id', $id)
-        ->with('len_lenses_diams3')->get();
+            ->where('id', $id)
+            ->with('len_lenses_diams3')->get();
         return view('product.show3', compact('len'));
     }
 
@@ -1332,10 +1335,10 @@ class ProductController extends Controller
         $business_id = request()->session()->get('user.business_id');
 
         $len = Product::where('business_id', $business_id)
-        ->with(['product_locations'])
-        ->where('id', $id)
-        ->firstOrFail()
-        ->load('len_lenses_diams');
+            ->with(['product_locations'])
+            ->where('id', $id)
+            ->firstOrFail()
+            ->load('len_lenses_diams');
         $sph_froms = SphFrom::all()->pluck('sph_from', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $sph_tos = SphTo::all()->pluck('sph_to', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -1349,10 +1352,10 @@ class ProductController extends Controller
         $business_id = request()->session()->get('user.business_id');
 
         $len = Product::where('business_id', $business_id)
-        ->with(['product_locations'])
-        ->where('id', $id)
-        ->firstOrFail()
-        ->load('len_lenses_diams');
+            ->with(['product_locations'])
+            ->where('id', $id)
+            ->firstOrFail()
+            ->load('len_lenses_diams');
         $sph_froms = SphFrom::all()->pluck('sph_from', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $sph_tos = SphTo::all()->pluck('sph_to', 'id')->prepend(trans('global.pleaseSelect'), '');

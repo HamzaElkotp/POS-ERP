@@ -7,6 +7,7 @@ use Modules\Lens\Entities\SphFrom;
 use Modules\Lens\Entities\LensDiam;
 use Modules\Lens\Entities\LensDiam2;
 use Modules\Lens\Entities\LensDiam3;
+use Modules\Lens\Entities\PurchDiam;
 use Modules\Lens\Entities\Signaltype;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Lens\Entities\LensDiameter;
@@ -41,8 +42,8 @@ class Product extends Model
      */
     public function getImageUrlAttribute()
     {
-        if (! empty($this->image)) {
-            $image_url = asset('/uploads/img/'.rawurlencode($this->image));
+        if (!empty($this->image)) {
+            $image_url = asset('/uploads/img/' . rawurlencode($this->image));
         } else {
             $image_url = asset('/img/default.png');
         }
@@ -57,8 +58,8 @@ class Product extends Model
      */
     public function getImagePathAttribute()
     {
-        if (! empty($this->image)) {
-            $image_path = public_path('uploads').'/'.config('constants.product_img_path').'/'.$this->image;
+        if (!empty($this->image)) {
+            $image_path = public_path('uploads') . '/' . config('constants.product_img_path') . '/' . $this->image;
         } else {
             $image_path = null;
         }
@@ -255,15 +256,20 @@ class Product extends Model
 
     public function len_lenses_diams()
     {
-        return $this->hasMany(ProductsDiam::class, 'product_id','id');
+        return $this->hasMany(ProductsDiam::class, 'product_id', 'id');
     }
     public function len_lenses_diams2()
     {
-        return $this->hasMany(ProductsDiam2::class, 'product_id','id');
+        return $this->hasMany(ProductsDiam2::class, 'product_id', 'id');
     }
+    public function product_purch_diam()
+    {
+        return $this->hasMany(PurchDiam::class, 'product_id', 'id');
+    }
+
     public function len_lenses_diams3()
     {
-        return $this->hasMany(ProductsDiam3::class, 'product_id','id');
+        return $this->hasMany(ProductsDiam3::class, 'product_id', 'id');
     }
 
 

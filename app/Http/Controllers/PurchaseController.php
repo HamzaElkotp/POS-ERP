@@ -267,7 +267,7 @@ class PurchaseController extends Controller
         $business_locations = BusinessLocation::forDropdown($business_id, false, true);
         $bl_attributes = $business_locations['attributes'];
         $business_locations = $business_locations['locations'];
-
+        // dd($business_locations);
         $currency_details = $this->transactionUtil->purchaseCurrencyDetails($business_id);
 
         $default_purchase_status = null;
@@ -437,7 +437,7 @@ class PurchaseController extends Controller
 
         $transaction = Transaction::create($transaction_data);
 
-            // dd($transaction);
+        // dd($transaction);
 
         $purchase_lines = [];
         $pay = $request->input('payment');
@@ -476,7 +476,7 @@ class PurchaseController extends Controller
 
         //    dd( $acc_trans_mapping->id);
         $mapping = Mapping::where('business_id', $business_id)->get();
-        
+
         //$payment_account will increase = sales = credit
 
         $khazine_acc_id = [
@@ -492,13 +492,11 @@ class PurchaseController extends Controller
             'created_by' => $user_id,
             'operation_date' => \Carbon::now(),
         ];
-    if ($transaction->discount_type == "percentage") {
-            $amount = $transaction->total_before_tax * $transaction->discount_amount/100;
-        }
-        else
-        {
+        if ($transaction->discount_type == "percentage") {
+            $amount = $transaction->total_before_tax * $transaction->discount_amount / 100;
+        } else {
             $amount = $transaction->discount_amount;
- 
+
         }
         // dd( $amount,$transaction->discount_amount/100);
         $discount_earned_acc_id = [
@@ -506,7 +504,7 @@ class PurchaseController extends Controller
             'transaction_id' => $transaction->id,
             'transaction_payment_id' => null,
 
-            'amount' =>  $amount,
+            'amount' => $amount,
 
 
             'acc_trans_mapping_id' => $acc_trans_mapping->id,
@@ -580,11 +578,11 @@ class PurchaseController extends Controller
             'transaction_id' => $transaction->id,
             'transaction_payment_id' => null,
             'amount' => $transaction->shipping_charges
-            + $transaction['additional_expense_value_1']
-            + $transaction['additional_expense_value_2']
-            + $transaction['additional_expense_value_3']
-            + $transaction['additional_expense_value_4'],
-            
+                + $transaction['additional_expense_value_1']
+                + $transaction['additional_expense_value_2']
+                + $transaction['additional_expense_value_3']
+                + $transaction['additional_expense_value_4'],
+
             'acc_trans_mapping_id' => $acc_trans_mapping->id,
             'type' => 'debit',
             'business_id1' => $business_id,
@@ -609,11 +607,10 @@ class PurchaseController extends Controller
         }
         AccountingAccountsTransaction::createTransaction($stock_acc_id);
         AccountingAccountsTransaction::createTransaction($suppliers_acc_id);
-       if($pay[0]['amount'])
-       {
-        AccountingAccountsTransaction::createTransaction($khazine_acc_id);
-        AccountingAccountsTransaction::createTransaction($suppliers_acc_id_2);
-       }
+        if ($pay[0]['amount']) {
+            AccountingAccountsTransaction::createTransaction($khazine_acc_id);
+            AccountingAccountsTransaction::createTransaction($suppliers_acc_id_2);
+        }
         // } catch (\Exception $e) {
         //     DB::rollBack();
         //     \Log::emergency('File:'.$e->getFile().'Line:'.$e->getLine().'Message:'.$e->getMessage());
@@ -1189,6 +1186,8 @@ class PurchaseController extends Controller
                 $products_array[$product->product_id]['name'] = $product->name;
                 $products_array[$product->product_id]['sku'] = $product->sub_sku;
                 $products_array[$product->product_id]['type'] = $product->type;
+                // $products_array[$product->product_id]['sph'] = '';
+                // $products_array[$product->product_id]['cyl'] = '';
                 $products_array[$product->product_id]['variations'][]
                     = [
                         'variation_id' => $product->variation_id,
@@ -1196,7 +1195,7 @@ class PurchaseController extends Controller
                         'sub_sku' => $product->sub_sku,
                     ];
             }
-
+            // dd($products_array);
             $result = [];
             $i = 1;
             $no_of_records = $products->count();
@@ -1226,6 +1225,8 @@ class PurchaseController extends Controller
                     }
                     $i++;
                 }
+                // alert(json_encode($result));
+
             }
 
             return json_encode($result);

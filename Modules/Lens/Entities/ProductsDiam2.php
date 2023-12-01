@@ -54,7 +54,7 @@ class ProductsDiam2 extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'Len_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
 }

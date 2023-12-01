@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Modules\Lens\Entities\PurchDiam;
 use Illuminate\Database\Eloquent\Model;
 
 class PurchaseLine extends Model
@@ -22,6 +23,11 @@ class PurchaseLine extends Model
     {
         return $this->belongsTo(\App\Product::class, 'product_id');
     }
+    public function product_purch_diam()
+    {
+        return $this->hasMany(PurchDiam::class, 'purch_id', 'id');
+    }
+
 
     public function variations()
     {

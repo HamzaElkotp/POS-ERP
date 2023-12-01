@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductsDiam extends Model
 {
-    use  HasFactory;
+    use HasFactory;
 
     public $table = 'products_diam';
 
@@ -54,7 +54,7 @@ class ProductsDiam extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'Len_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
 }
