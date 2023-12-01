@@ -1238,6 +1238,15 @@ class ProductUtil extends Util
             //Update purchase order line quantity received
             $this->updatePurchaseOrderLine($purchase_line->purchase_order_line_id, $purchase_line->quantity, $old_qty);
         }
+
+        // $enabled_modules1 = !empty(session('business.enabled_modules')) ? session('business.enabled_modules') : [];
+
+        // $enabled_modules = array_merge($enabled_modules1, array_keys($package_modules));
+
+        // if (in_array('lens_module', $enabled_modules)) {
+
+        // if ($data['sph'] != '' && $data['cyl'] != '') {
+
         $len1 = $data['product_id'];
         $sph = $data['sph'];
         $cyl1 = $data['cyl'];
@@ -1276,7 +1285,7 @@ class ProductUtil extends Util
             $store2->update([$cyl => $stck + $quant]);
 
         }
-
+        // }
         //unset deleted purchase lines
         $delete_purchase_line_ids = [];
         $delete_purchase_lines = null;
