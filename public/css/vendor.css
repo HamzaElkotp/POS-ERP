@@ -14888,9 +14888,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
   }
 }
 
-.navbar-nav {
-  margin: 7.5px -15px
-}
+
 
 .navbar-nav>li>a {
   padding-top: 10px;
@@ -30724,9 +30722,7 @@ button.toast-close-button {
   margin-right: auto;
   margin-left: 15px;
 }
-.navbar-custom-menu {
-    margin-right: 8%;
-}
+
 select{
   padding: 0px !important;
 }
@@ -34535,7 +34531,6 @@ h6 {
 }
 
 .main-header .navbar {
-  height: 62px;
   border-bottom: 1px solid rgba(255, 255, 255, .1) !important
 }
 
@@ -34548,9 +34543,7 @@ h6 {
 }
 
 .main-header .navbar-custom-menu,
-.main-header .navbar-right,
-.main-header .sidebar-toggle {
-  height: 62px;
+.main-header .navbar-right{
   display: flex;
 }
 

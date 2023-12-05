@@ -1616,6 +1616,15 @@ html[dir="ltr"] .sidebar-menu>li>a {
 }
 
 
+html[dir="ltr"] .welcomeMsg{
+    text-align: left !important;
+    padding-left: 20px;
+}
+html[dir="rtl"] .welcomeMsg{
+    text-align: right !important;
+    padding-right: 20px;
+}
+
 
 
 
@@ -1624,20 +1633,16 @@ html[dir="ltr"] .sidebar-menu>li>a {
 /* .navbar-brand.sidebar-toggle {
     margin-right: 0 !important;
 } */
-html[dir="rtl"] .navbar .navbar-brand.sidebar-toggle {
-    margin-left: auto !important;
-    margin-right: 15px !important;
-}
-html[dir="rtl"] .navbar-custom-menu {
-    margin-left: 6% !important;
-}
-html[dir="ltr"] .navbar-custom-menu {
-    margin-right: 2% !important;
+.navbar .navbar-brand.sidebar-toggle {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 
 
-
+.navbar{
+    box-sizing: content-box !important;
+}
 
 
 
