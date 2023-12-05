@@ -1,53 +1,44 @@
 @inject('request', 'Illuminate\Http\Request')
 <!-- Main Header -->
+
 <header class="main-header no-print">
-
-    <!-- Header Navbar -->
     <nav class="navbar navbar-static-top mx-0" role="navigation">
-        <!-- Sidebar toggle button -->
-        <a href="#" class="navbar-brand sidebar-toggle" data-toggle="offcanvas" role="button">
-            &#9776;
-            <span class="sr-only">Toggle navigation</span>
-        </a>
-
-        @if (Module::has('Superadmin'))
-            @includeIf('superadmin::layouts.partials.active_subscription')
-        @endif
-
-        @if (!empty(session('previous_user_id')) && !empty(session('previous_username')))
-            <a href="{{ route('sign-in-as-user', session('previous_user_id')) }}"
-                class="btn btn-flat btn-danger m-8 btn-sm mt-10">
-                <i class="fas fa-undo"></i> @lang('lang_v1.back_to_username', ['username' => session('previous_username')])
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="#" class="navbar-brand sidebar-toggle" data-toggle="offcanvas" role="button">
+                &#9776;
+                <span class="sr-only">Toggle navigation</span>
             </a>
-        @endif
+        </div>
 
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link"
-                        href="{{ action([\App\Http\Controllers\SellPosController::class, 'create']) }}">pos</a>
-                </li>
-            </ul>
+        <ul class="col-md-6 justify-content-center nav col-12 col-md-auto">
+            @if (Module::has('Superadmin'))
+                @includeIf('superadmin::layouts.partials.active_subscription')
+            @endif
+
+            @if (!empty(session('previous_user_id')) && !empty(session('previous_username')))
+                <a href="{{ route('sign-in-as-user', session('previous_user_id')) }}"
+                    class="btn btn-flat btn-danger m-8 btn-sm mt-10">
+                    <i class="fas fa-undo"></i> @lang('lang_v1.back_to_username', ['username' => session('previous_username')])
+                </a>
+            @endif
+            
+            <li class="nav-item">
+                <a class="nav-link"
+                    href="{{ action([\App\Http\Controllers\SellPosController::class, 'create']) }}"><i class="fa-solid fa-table-columns px-2"></i> pos</a>
+            </li>
             @if (Module::has('Essentials'))
                 @includeIf('essentials::layouts.partials.header_part')
             @endif
-            
-            <div class="m-8 pull-left mt-15 hidden-xs text-white">
-                <i class="fa-solid fa-calendar-day"></i> {{ @format_date('now') }}
+            <li class="nav-item">
+                <a href="#" class="clock_in_btn" data-container="#task_modal" data-toggle="tooltip" data-target="#task_modal" data-type="clock_in" data-placement="bottom" data-original-title="" title=""><i class="fa-regular fa-clock px-2"></i><span>Clock In</span></a>
+            </li>
+            <div class="m-8 pull-left mt-10 hidden-xs text-white">
+                <i class="fa-solid fa-calendar-day px-2"></i> {{ @format_date('now') }}
             </div>
+        </ul>
 
-            <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a href="#" class="clock_in_btn" data-container="#task_modal" data-toggle="tooltip" data-target="#task_modal" data-type="clock_in" data-placement="bottom" data-original-title="" title=""><i class="fa-solid fa-clipboard-user px-2"></i><span>Clock In</span></a>
-                </li>
-            </ul>
-
-            {{-- <div class="m-8 pull-left mt-15 hidden-xs" style="color: #9ea9ad;">
-                <strong>{{ @format_date('now') }}</strong>
-            </div> --}}
-
-            <ul class="nav navbar-nav">
+        <div class="col-md-3 navbar-custom-menu flex-row-reverse">
+            <ul class="nav navbar-nav flex-row">
 
                 @include('layouts.partials.header-notifications')
                 <!-- User Account Menu -->
@@ -89,10 +80,7 @@
                         </li>
                     </ul>
                 </li>
-
-                <!-- Control Sidebar Toggle Button -->
             </ul>
         </div>
     </nav>
-
 </header>

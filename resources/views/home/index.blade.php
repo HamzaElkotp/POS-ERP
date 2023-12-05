@@ -40,7 +40,7 @@
     <!-- Main content -->
     <section class="content content-custom no-print">
         <section class="row content-header content-header-custom">
-            <h1 class="content_h1 text-cusTheme1">{{ __('home.welcome_message', ['name' => Session::get('user.first_name')]) }}</h1>
+            <h1 class="content_h1 text-cusTheme1 welcomeMsg">{{ __('home.welcome_message', ['name' => Session::get('user.first_name')]) }}</h1>
         </section>
 
         @if (auth()->user()->can('dashboard.data'))
@@ -159,7 +159,7 @@
                     </div>
                     <div class="col-lg-3 col-md-5 col-12 px-0 mb-4">
                         <div class="static-parent" id="statistics-parent">
-                            <button class="btn cusTheme-dark icon smallpadd mb-4 pinunpin pinned" id="pinunpin"><i class="fa-solid fa-thumbtack"></i><i class="fa-solid fa-link-slash"></i></button>
+                            {{-- <button class="btn cusTheme-dark icon smallpadd mb-4 pinunpin pinned" id="pinunpin"><i class="fa-solid fa-thumbtack"></i><i class="fa-solid fa-link-slash"></i></button> --}}
                             <!-- Total Expense -->
                             <div class="col-sm-12 col-md-12 mb-4 statcis-box px-0">
                                 <i class="fa-solid fa-file-invoice back-icon"></i>
