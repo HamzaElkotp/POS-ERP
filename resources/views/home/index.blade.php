@@ -40,7 +40,8 @@
     <!-- Main content -->
     <section class="content content-custom no-print">
         <section class="row content-header content-header-custom">
-            <h1 class="content_h1 text-cusTheme1 welcomeMsg">{{ __('home.welcome_message', ['name' => Session::get('user.first_name')]) }}</h1>
+            <h1 class="content_h1 text-cusTheme1 welcomeMsg">
+                {{ __('home.welcome_message', ['name' => Session::get('user.first_name')]) }}</h1>
         </section>
 
         @if (auth()->user()->can('dashboard.data'))
@@ -58,8 +59,7 @@
                     <div class="col-md-8 col-xs-12 px-0">
                         <div class="form-group pull-right will-full-mobile">
                             <div class="input-group">
-                                <button type="button" class="btn cusTheme-dark text-white"
-                                    id="dashboard_date_filter">
+                                <button type="button" class="btn cusTheme-dark text-white" id="dashboard_date_filter">
                                     <span>
                                         <i class="fa fa-calendar text-white"></i> {{ __('messages.filter_by_date') }}
                                     </span>
@@ -73,27 +73,31 @@
                 <div class="row mb-4 mobile-reverse-col">
                     <div class="col-lg-9 col-md-7 col-12 mb-4">
                         <div class="row" id="checkpoint_bottom">
-                            
+
                             <div class="col-lg-6 col-md-12 col-12 mb-6 pl-1 pr-1">
                                 <div class="graph-details px-4 py-4">
                                     <div class="px-2 py-2">
-                                        <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">Total Sales & Returns</h2>
+                                        <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">Total Sales & Returns
+                                        </h2>
                                         <hr class="cusColor mt-3">
                                         <p id="chartsell" class="mb-2">
                                             <span class="text-cusTheme1 fsz-15">
-                                                <i class="fa-solid fa-boxes-stacked fsz-14"></i> 
+                                                <i class="fa-solid fa-boxes-stacked fsz-14"></i>
                                                 <span class="px-2">Sells:</span>
                                             </span>
-                                            <span class="total_sell fsz-17 text-cusTheme-dark" data-value="0">£ 540.00</span>
+                                            <span class="total_sell fsz-17 text-cusTheme-dark" data-value="0">£
+                                                540.00</span>
                                         </p>
                                         <p id="chartsellreturn" class="mb-2">
                                             <span class="text-cusTheme1 fsz-15">
-                                                <i class="fa-solid fa-boxes-packing fsz-14"></i> 
+                                                <i class="fa-solid fa-boxes-packing fsz-14"></i>
                                                 <span class="px-2">Sell Returns:</span>
-                                            </span> 
-                                            <span class="total_sell_return fsz-17 text-cusTheme-dark" data-value="0">£ 200.00</span> 
+                                            </span>
+                                            <span class="total_sell_return fsz-17 text-cusTheme-dark" data-value="0">£
+                                                200.00</span>
                                         </p>
-                                        <canvas id="sellChart" width="300" height="150" class="my-4">Sell Chart Placeholder</canvas>
+                                        <canvas id="sellChart" width="300" height="150" class="my-4">Sell Chart
+                                            Placeholder</canvas>
                                     </div>
                                 </div>
                             </div>
@@ -101,34 +105,40 @@
                             <div class="col-lg-6 col-md-12 col-12 mb-6 pl-1 pr-1">
                                 <div class="graph-details px-4 py-4">
                                     <div class="px-2 py-2">
-                                        <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">Total Purchases & Returns</h2>
+                                        <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">Total Purchases &
+                                            Returns</h2>
                                         <hr class="cusColor mt-3">
                                         <div id="chartpurchase">
                                             <span class="text-cusTheme1 fsz-15">
-                                                <i class="fa-solid fa-boxes-stacked fsz-14"></i> 
+                                                <i class="fa-solid fa-boxes-stacked fsz-14"></i>
                                                 <span class="px-2">Purchase:</span>
                                             </span>
-                                            <span class="total_purchase fsz-17 text-cusTheme-dark" data-value="0">£540.00</span>
+                                            <span class="total_purchase fsz-17 text-cusTheme-dark"
+                                                data-value="0">£540.00</span>
                                         </div>
                                         <div id="chartpurchasereturn">
                                             <span class="text-cusTheme1 fsz-15">
-                                                <i class="fa-solid fa-boxes-packing fsz-14"></i> 
+                                                <i class="fa-solid fa-boxes-packing fsz-14"></i>
                                                 <span class="px-2">Purchase Return:</span>
-                                            </span> 
-                                            <span class="total_purchase_return fsz-17 text-cusTheme-dark" data-value="0">£ 100.00</span>
+                                            </span>
+                                            <span class="total_purchase_return fsz-17 text-cusTheme-dark" data-value="0">£
+                                                100.00</span>
                                         </div>
-                                        <canvas id="purchaseChart" width="300" height="150" class="my-4">Purchase Chart Placeholder</canvas>
+                                        <canvas id="purchaseChart" width="300" height="150" class="my-4">Purchase
+                                            Chart Placeholder</canvas>
                                     </div>
                                 </div>
                             </div>
 
-                            @if (auth()->user()->can('sell.view') || auth()->user()->can('direct_sell.view'))
+                            @if (auth()->user()->can('sell.view') ||
+                                    auth()->user()->can('direct_sell.view'))
                                 @if (!empty($all_locations))
                                     <!-- sales chart start -->
                                     <div class="col-md-12 mb-6 px-0">
                                         <div class="graph-details px-4 py-4">
                                             <div class="px-2 py-2">
-                                                <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('home.sells_last_30_days') }}</h2>
+                                                <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">
+                                                    {{ __('home.sells_last_30_days') }}</h2>
                                                 <hr class="cusColor mt-3">
                                                 {!! $sells_chart_1->container() !!}
                                             </div>
@@ -146,7 +156,8 @@
                                     <div class="col-md-12 px-0">
                                         <div class="graph-details px-4 py-4">
                                             <div class="px-2 py-2">
-                                                <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('home.sells_current_fy') }}</h2>
+                                                <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">
+                                                    {{ __('home.sells_current_fy') }}</h2>
                                                 <hr class="cusColor mt-3">
                                                 {!! $sells_chart_2->container() !!}
                                             </div>
@@ -162,51 +173,116 @@
                             {{-- <button class="btn cusTheme-dark icon smallpadd mb-4 pinunpin pinned" id="pinunpin"><i class="fa-solid fa-thumbtack"></i><i class="fa-solid fa-link-slash"></i></button> --}}
                             <!-- Total Expense -->
                             <div class="col-sm-12 col-md-12 mb-4 statcis-box px-0">
-                                <i class="fa-solid fa-file-invoice back-icon"></i>
                                 <div class="statistics-details px-4 py-4">
                                     <p class="static-box-title text-cusTheme">{{ __('lang_v1.expense') }}</p>
                                     <div class="d-flex">
-                                        <h3 class="rate-percentage total_expense static-box-text"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
+                                        <h3 class="rate-percentage total_expense static-box-text"><i
+                                                class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
+                                    </div>
+                                    <div class="d-flex justify-content-between chart_box align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <p class="c_part1 charts-css">Last Month: 90%</p>
+                                            <p class="c_part2 charts-css">This Month: 10%</p>
+                                        </div>
+                                        <table class="charts-css pie hide-data achart">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="--start: 0.0; --end: 0.90;"><span class="data"> $ 10K</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="--start: 0.90; --end: 1;"><span class="data"> $ 5K</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Total Purchase -->
                             <div class="col-sm-12 col-md-12 mb-4 statcis-box px-0">
-                                <i class="fa-solid fa-cart-shopping back-icon"></i>
                                 <div class="statistics-details px-4 py-4">
                                     <p class="static-box-title text-cusTheme">{{ __('home.total_purchase') }}</p>
                                     <div class="d-flex">
-                                        <h3 class="rate-percentage total_purchase static-box-text" id="get_total_purchase">
-                                            <i class="fas fa-sync fa-spin fa-fw "></i></h3>
+                                        <h3 class="rate-percentage total_purchase static-box-text"
+                                            id="get_total_purchase">
+                                            <i class="fas fa-sync fa-spin fa-fw "></i>
+                                        </h3>
+                                    </div>
+                                    <div class="d-flex justify-content-between chart_box align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <p class="c_part1 charts-css">Last Month: 70%</p>
+                                            <p class="c_part2 charts-css">This Month: 30%</p>
+                                        </div>
+                                        <table class="charts-css pie hide-data achart">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="--start: 0.0; --end: 0.70;"><span class="data"> 10K</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="--start: 0.70; --end: 1;"><span class="data"> 5K</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <div class="info-box-content" style="display: none">
                                         <span class="info-box-text">{{ __('lang_v1.total_purchase_return') }}</span>
-                                        <span id="get_total_purchase_return" class="info-box-number total_purchase_return"><i class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
+                                        <span id="get_total_purchase_return"
+                                            class="info-box-number total_purchase_return"><i
+                                                class="fas fa-sync fa-spin fa-fw margin-bottom"></i></span>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Purchase Due -->
                             <div class="col-sm-12 col-md-12 mb-4 statcis-box px-0">
-                                <i class="fa-solid fa-cart-shopping back-icon"></i>
                                 <div class="statistics-details px-4 py-4">
                                     <p class="static-box-title text-cusTheme">{{ __('home.purchase_due') }}</p>
                                     <div class="d-flex">
                                         <h3 class="rate-percentage purchase_due static-box-text"><i
                                                 class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
                                     </div>
+                                    <div class="d-flex justify-content-between chart_box align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <p class="c_part1 charts-css">Last Month: 26%</p>
+                                            <p class="c_part2 charts-css">This Month: 74%</p>
+                                        </div>
+                                        <table class="charts-css pie hide-data achart">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="--start: 0.0; --end: 0.26;"><span class="data"> 10K</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="--start: 0.26; --end: 1;"><span class="data"> 5K</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Total Sell -->
                             <div class="col-sm-12 col-md-12 mb-4 statcis-box px-0">
-                                <i class="fa-solid fa-coins back-icon"></i>
                                 <div class="statistics-details px-4 py-4">
                                     <p class="static-box-title text-cusTheme">{{ __('home.total_sell') }}</p>
                                     <div class="d-flex">
                                         <h3 class="rate-percentage total_sell static-box-text" id="get_total_sell"><i
                                                 class="fas fa-sync fa-spin fa-fw margin-bottom avatar-title"></i></h3>
+                                    </div>
+                                    <div class="d-flex justify-content-between chart_box align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <p class="c_part1 charts-css">Last Month: 59%</p>
+                                            <p class="c_part2 charts-css">This Month: 41%</p>
+                                        </div>
+                                        <table class="charts-css pie hide-data achart">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="--start: 0.0; --end: 0.59;"><span class="data"> 10K</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="--start: 0.59; --end: 1;"><span class="data"> 5K</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <div class="info-box-content" style="display: none">
                                         <span class="info-box-text">{{ __('lang_v1.total_sell_return') }}</span>
@@ -219,7 +295,6 @@
 
                             <!-- Net Revenue -->
                             <div class="col-sm-12 col-md-12 mb-4 statcis-box px-0">
-                                <i class="fa-solid fa-network-wired back-icon"></i>
                                 <div class="statistics-details px-4 py-4">
                                     <p class="static-box-title text-cusTheme">{{ __('lang_v1.net') }}
                                         @show_tooltip(__('lang_v1.net_home_tooltip'))</p>
@@ -227,17 +302,48 @@
                                         <h3 class="rate-percentage net static-box-text"><i
                                                 class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
                                     </div>
+                                    <div class="d-flex justify-content-between chart_box align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <p class="c_part1 charts-css">Last Month: 33%</p>
+                                            <p class="c_part2 charts-css">This Month: 67%</p>
+                                        </div>
+                                        <table class="charts-css pie hide-data achart">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="--start: 0.0; --end: 0.33;"><span class="data"> 10K</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="--start: 0.33; --end: 1;"><span class="data"> 5K</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Invoice Due -->
                             <div class="col-sm-12 col-md-12 mb-0 statcis-box px-0">
-                                <i class="fa-solid fa-file-invoice-dollar back-icon"></i>
                                 <div class="statistics-details px-4 py-4">
                                     <p class="static-box-title text-cusTheme">{{ __('home.invoice_due') }}</p>
                                     <div class="d-flex">
                                         <h3 class="rate-percentage invoice_due static-box-text"><i
                                                 class="fas fa-sync fa-spin fa-fw margin-bottom"></i></h3>
+                                    </div>
+                                    <div class="d-flex justify-content-between chart_box align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <p class="c_part1 charts-css">Last Month: 67%</p>
+                                            <p class="c_part2 charts-css">This Month: 33%</p>
+                                        </div>
+                                        <table class="charts-css pie hide-data achart">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="--start: 0.0; --end: 0.67;"><span class="data"> 10K</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="--start: 0.67; --end: 1;"><span class="data"> 5K</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -252,7 +358,9 @@
                         <div class="col-md-12 mb-6 px-0">
                             <div class="graph-details px-4 py-4">
                                 <div class="px-2 py-2">
-                                    <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('home.product_stock_alert') }} @show_tooltip(__('tooltip.product_stock_alert'))</h2>
+                                    <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">
+                                        {{ __('home.product_stock_alert') }} @show_tooltip(__('tooltip.product_stock_alert'))
+                                    </h2>
                                     <hr class="cusColor mt-3">
                                     <div class="row">
                                         @if (count($all_locations) > 1)
@@ -278,7 +386,8 @@
                                             </table>
                                         </div>
                                     </div>
-                                    {{-- <div class="@if (session('business.enable_product_expiry') != 1 && auth()->user()->can('stock_report.view')) col-md-12 @else col-md-12 @endif">
+                                    {{-- <div class="@if (session('business.enable_product_expiry') != 1 &&
+    auth()->user()->can('stock_report.view')) col-md-12 @else col-md-12 @endif">
                                         
                                     </div> --}}
                                 </div>
@@ -290,19 +399,22 @@
                             <div class="col-md-12 mb-4 px-0">
                                 <div class="graph-details px-4 py-4">
                                     <div class="px-2 py-2">
-                                        <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('home.stock_expiry_alert') }}
+                                        <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">
+                                            {{ __('home.stock_expiry_alert') }}
                                             @show_tooltip(__('tooltip.stock_expiry_alert', ['days' =>
                                             session('business.stock_expiry_alert_days', 30)]))
                                         </h2>
                                         <hr class="cusColor mt-3">
                                         <div class="row px-4">
                                             <div class="px-2 col-md-4 col-xs-12">
-                                                <input type="hidden" class="form-control" id="stock_expiry_alert_days" value="{{ \Carbon::now()->addDays(session('business.stock_expiry_alert_days', 30))->format('Y-m-d') }}">
+                                                <input type="hidden" class="form-control" id="stock_expiry_alert_days"
+                                                    value="{{ \Carbon::now()->addDays(session('business.stock_expiry_alert_days', 30))->format('Y-m-d') }}">
                                             </div>
                                         </div>
                                         <div class="row px-3">
                                             <div class="card-body table-responsive">
-                                                <table class="table table-bordered table-striped" id="stock_expiry_alert_table">
+                                                <table class="table table-bordered table-striped"
+                                                    id="stock_expiry_alert_table">
                                                     <thead>
                                                         <tr>
                                                             <th>@lang('business.product')</th>
@@ -330,13 +442,15 @@
             <!-- end is_admin check -->
 
             @if (!$is_admin)
-                @if (auth()->user()->can('sell.view') || auth()->user()->can('direct_sell.view'))
+                @if (auth()->user()->can('sell.view') ||
+                        auth()->user()->can('direct_sell.view'))
                     @if (!empty($all_locations))
                         <!-- sales chart start -->
                         <div class="col-md-12 mb-6 px-0">
                             <div class="graph-details px-4 py-4">
                                 <div class="px-2 py-2">
-                                    <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('home.sells_last_30_days') }}</h2>
+                                    <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">
+                                        {{ __('home.sells_last_30_days') }}</h2>
                                     <hr class="cusColor mt-3">
                                     {!! $sells_chart_1->container() !!}
                                 </div>
@@ -354,7 +468,8 @@
                         <div class="col-md-12 px-0">
                             <div class="graph-details px-4 py-4">
                                 <div class="px-2 py-2">
-                                    <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('home.sells_current_fy') }}</h2>
+                                    <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">
+                                        {{ __('home.sells_current_fy') }}</h2>
                                     <hr class="cusColor mt-3">
                                     {!! $sells_chart_2->container() !!}
                                 </div>
@@ -374,10 +489,13 @@
             <!-- products less than alert quntity -->
             <div class="row mt-4 mb-4">
                 <div class="col-md-12 mb-4 px-0">
-                    @if (auth()->user()->can('sell.view') || auth()->user()->can('direct_sell.view'))
+                    @if (auth()->user()->can('sell.view') ||
+                            auth()->user()->can('direct_sell.view'))
                         <div class="graph-details px-4 py-4">
                             <div class="px-2 py-2">
-                                <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('lang_v1.sales_payment_dues') }} @show_tooltip(__('lang_v1.tooltip_sales_payment_dues'))</h2>
+                                <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">
+                                    {{ __('lang_v1.sales_payment_dues') }}
+                                    @show_tooltip(__('lang_v1.tooltip_sales_payment_dues'))</h2>
                                 <hr class="cusColor mt-3">
                                 <div class="row">
                                     @if (count($all_locations) > 1)
@@ -416,7 +534,8 @@
                 @can('purchase.view')
                     <div class="graph-details px-4 py-4">
                         <div class="px-2 py-2">
-                            <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('lang_v1.purchase_payment_dues') }} @show_tooltip(__('tooltip.payment_dues'))</h2>
+                            <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">
+                                {{ __('lang_v1.purchase_payment_dues') }} @show_tooltip(__('tooltip.payment_dues'))</h2>
                             <hr class="cusColor mt-3">
                             @if (count($all_locations) > 1)
                                 <div class="row">
@@ -449,93 +568,102 @@
             </div>
 
             {{-- sales order  --}}
-            @if (auth()->user()->can('so.view_all') || auth()->user()->can('so.view_own'))
+            @if (auth()->user()->can('so.view_all') ||
+                    auth()->user()->can('so.view_own'))
                 {{-- <div class="row mt-4 mb-4"> --}}
-                    <div class="col-md-12 mb-6 px-0">
-                        <div class="graph-details px-4 py-4">
-                            <div class="px-2 py-2">
-                                <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('lang_v1.sales_order') }}</h2>
-                                <hr class="cusColor mt-3">
-                                @if (count($all_locations) > 1)
-                                    <div class="row">
-                                        <div class="float-right col-md-4 col-xs-12">
-                                            {!! Form::select('so_location', $all_locations, null, [
-                                                'class' => 'form-control select2',
-                                                'placeholder' => __('lang_v1.select_location'),
-                                                'id' => 'so_location',
-                                            ]) !!}
-                                        </div>
+                <div class="col-md-12 mb-6 px-0">
+                    <div class="graph-details px-4 py-4">
+                        <div class="px-2 py-2">
+                            <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">{{ __('lang_v1.sales_order') }}
+                            </h2>
+                            <hr class="cusColor mt-3">
+                            @if (count($all_locations) > 1)
+                                <div class="row">
+                                    <div class="float-right col-md-4 col-xs-12">
+                                        {!! Form::select('so_location', $all_locations, null, [
+                                            'class' => 'form-control select2',
+                                            'placeholder' => __('lang_v1.select_location'),
+                                            'id' => 'so_location',
+                                        ]) !!}
                                     </div>
-                                @endif
-                            </div>
-                            <div class="row px-3">
-                                <div class="card-body table-responsive">
-                                    <table class="table table-bordered table-striped ajax_view" id="sales_order_table">
-                                        <thead>
-                                            <tr>
-                                                <th>@lang('messages.action')</th>
-                                                <th>@lang('messages.date')</th>
-                                                <th>@lang('restaurant.order_no')</th>
-                                                <th>@lang('sale.customer_name')</th>
-                                                <th>@lang('lang_v1.contact_no')</th>
-                                                <th>@lang('sale.location')</th>
-                                                <th>@lang('sale.status')</th>
-                                                <th>@lang('lang_v1.shipping_status')</th>
-                                                <th>@lang('lang_v1.quantity_remaining')</th>
-                                                <th>@lang('lang_v1.added_by')</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
                                 </div>
+                            @endif
+                        </div>
+                        <div class="row px-3">
+                            <div class="card-body table-responsive">
+                                <table class="table table-bordered table-striped ajax_view" id="sales_order_table">
+                                    <thead>
+                                        <tr>
+                                            <th>@lang('messages.action')</th>
+                                            <th>@lang('messages.date')</th>
+                                            <th>@lang('restaurant.order_no')</th>
+                                            <th>@lang('sale.customer_name')</th>
+                                            <th>@lang('lang_v1.contact_no')</th>
+                                            <th>@lang('sale.location')</th>
+                                            <th>@lang('sale.status')</th>
+                                            <th>@lang('lang_v1.shipping_status')</th>
+                                            <th>@lang('lang_v1.quantity_remaining')</th>
+                                            <th>@lang('lang_v1.added_by')</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
+                </div>
                 {{-- </div> --}}
             @endif
 
-            @if (!empty($common_settings['enable_purchase_requisition']) && (auth()->user()->can('purchase_requisition.view_all') || auth()->user()->can('purchase_requisition.view_own')))
+            @if (
+                !empty($common_settings['enable_purchase_requisition']) &&
+                    (auth()->user()->can('purchase_requisition.view_all') ||
+                        auth()->user()->can('purchase_requisition.view_own')))
                 {{-- <div class="row mt-4 mb-4"> --}}
-                    <div class="col-md-12 mb-6 px-0">
-                        <div class="graph-details px-4 py-4">
-                            <div class="px-2 py-2">
-                                <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">@lang('lang_v1.purchase_requisition')</h2>
-                                <hr class="cusColor mt-3">
+                <div class="col-md-12 mb-6 px-0">
+                    <div class="graph-details px-4 py-4">
+                        <div class="px-2 py-2">
+                            <h2 class="mt-0 mx-4 text-center text-cusTheme-dark fsz-25">@lang('lang_v1.purchase_requisition')</h2>
+                            <hr class="cusColor mt-3">
 
-                                @if (count($all_locations) > 1)
-                                    <div class="row">
-                                        <div class="float-right col-md-4 col-xs-12">
-                                            {!! Form::select('pr_location', $all_locations, null, [
-                                                'class' => 'form-control select2',
-                                                'placeholder' => __('lang_v1.select_location'),
-                                                'id' => 'pr_location',
-                                            ]) !!}
-                                        </div>
+                            @if (count($all_locations) > 1)
+                                <div class="row">
+                                    <div class="float-right col-md-4 col-xs-12">
+                                        {!! Form::select('pr_location', $all_locations, null, [
+                                            'class' => 'form-control select2',
+                                            'placeholder' => __('lang_v1.select_location'),
+                                            'id' => 'pr_location',
+                                        ]) !!}
                                     </div>
-                                @endif
-                            </div>
-                            <div class="row px-3">
-                                <div class="card-body table-responsive">
-                                    <table class="table table-bordered table-striped ajax_view" id="purchase_requisition_table">
-                                        <thead>
-                                            <tr>
-                                                <th>@lang('messages.action')</th>
-                                                <th>@lang('messages.date')</th>
-                                                <th>@lang('purchase.ref_no')</th>
-                                                <th>@lang('purchase.location')</th>
-                                                <th>@lang('sale.status')</th>
-                                                <th>@lang('lang_v1.required_by_date')</th>
-                                                <th>@lang('lang_v1.added_by')</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
                                 </div>
+                            @endif
+                        </div>
+                        <div class="row px-3">
+                            <div class="card-body table-responsive">
+                                <table class="table table-bordered table-striped ajax_view"
+                                    id="purchase_requisition_table">
+                                    <thead>
+                                        <tr>
+                                            <th>@lang('messages.action')</th>
+                                            <th>@lang('messages.date')</th>
+                                            <th>@lang('purchase.ref_no')</th>
+                                            <th>@lang('purchase.location')</th>
+                                            <th>@lang('sale.status')</th>
+                                            <th>@lang('lang_v1.required_by_date')</th>
+                                            <th>@lang('lang_v1.added_by')</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
+                </div>
                 {{-- </div> --}}
             @endif
 
-            @if (!empty($common_settings['enable_purchase_order']) && (auth()->user()->can('purchase_order.view_all') || auth()->user()->can('purchase_order.view_own')))
+            @if (
+                !empty($common_settings['enable_purchase_order']) &&
+                    (auth()->user()->can('purchase_order.view_all') ||
+                        auth()->user()->can('purchase_order.view_own')))
                 <div class="col-md-12 mb-6 px-0">
                     <div class="graph-details px-4 py-4">
                         <div class="px-2 py-2">
@@ -578,7 +706,9 @@
             @endif
 
             {{-- pending shipments --}}
-            @if (auth()->user()->can('access_pending_shipments_only') || auth()->user()->can('access_shipping') || auth()->user()->can('access_own_shipping'))
+            @if (auth()->user()->can('access_pending_shipments_only') ||
+                    auth()->user()->can('access_shipping') ||
+                    auth()->user()->can('access_own_shipping'))
                 <div class="col-md-12 mb-6 px-0">
                     <div class="graph-details px-4 py-4">
                         <div class="px-2 py-2">
@@ -596,7 +726,7 @@
                                 </div>
                             @endif
                         </div>
-                    
+
                         <div class="row px-3">
                             <div class="card-body table-responsive">
                                 <table class="table table-bordered table-striped ajax_view" id="shipments_table">
@@ -1250,15 +1380,28 @@
 <script src="{{ asset('assets/backend/js/custom.js?v=' . $asset_v) }}" defer></script>
 
 
-{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css@1.1.0/dist/charts.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css@1.1.0/dist/charts.min.css" />
 <style>
-    #orientation-example-15 {
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
+    .achart {
+        height: fit-content !important;
+        width: 40px;
+        margin: 0 0 0 0;
+    }
+    .abar{
+        height: fit-content !important;
+        width: 140px;
+        margin: 0 0 0 0;
+    }
+    .chart_box{
+        margin-top: 5px;
     }
 
-    #orientation-example-15 .area {
-        --aspect-ratio: 16 / 9;
+    .c_part1{
+        color: var(--color-1) !important;
+        height: fit-content !important;
     }
-</style> --}}
+    .c_part2{
+        color: var(--color-2) !important;
+        height: fit-content !important;
+    }
+</style>
