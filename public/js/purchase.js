@@ -191,7 +191,7 @@ $(document).ready(function () {
                                     url: '/products/quick_add?product_name=' + term,
                                     dataType: 'html',
                                     success: function (result) {
-                                        alert(result);
+                                        // alert(result);
                                         $(container)
                                             .html(result)
                                             .modal('show');

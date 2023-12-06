@@ -1993,6 +1993,7 @@ class ProductController extends Controller
      */
     public function getProducts()
     {
+        // dd(request()->get('product_types', []));
         if (request()->ajax()) {
             $search_term = request()->input('term', '');
             $location_id = request()->input('location_id', null);
@@ -2007,8 +2008,18 @@ class ProductController extends Controller
             if (in_array('sku', $search_fields)) {
                 $search_fields[] = 'sub_sku';
             }
+            // dd($result);
 
-            $result = $this->productUtil->filterProduct($business_id, $search_term, $location_id, $not_for_selling, $price_group_id, $product_types, $search_fields, $check_qty);
+            $result = $this->productUtil->filterProduct(
+                $business_id,
+                $search_term,
+                $location_id,
+                $not_for_selling,
+                $price_group_id,
+                $product_types,
+                $search_fields,
+                $check_qty
+            );
 
             return json_encode($result);
         }

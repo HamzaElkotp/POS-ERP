@@ -283,11 +283,16 @@
                 </td>
             @endif
         @endif
+        <style>
+            .tdd {
+                min-width: 70px !important;
+            }
+        </style>
         <td>
-            {!! Form::text('purchases[' . $row_count . '][sph]', $lot_number, ['class' => 'form-control input-sm sph']) !!}
+            {!! Form::text('purchases[' . $row_count . '][sph]', $lot_number, ['class' => 'form-control  tdd']) !!}
         </td>
         <td>
-            {!! Form::text('purchases[' . $row_count . '][cyl]', $lot_number, ['class' => 'form-control input-sm cyl']) !!}
+            {!! Form::text('purchases[' . $row_count . '][cyl]', $lot_number, ['class' => 'form-control  tdd']) !!}
         </td>
 
         <?php $row_count++; ?>

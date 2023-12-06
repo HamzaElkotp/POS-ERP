@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Request;
 class AdminSidebarMenu
 {
 
-    
+
     /**
      * Handle an incoming request.
      *
@@ -24,20 +24,20 @@ class AdminSidebarMenu
     {
         if ($request->ajax()) {
             return $next($request);
-        }          
-    
-            Menu::create('admin-sidebar-menu', function ($menu) {
-                $business = Business::find( auth()->user()->business_id);
-                $mod = $business->subscriptions;
-                foreach ($mod as $item){ 
-                    $package_modules = $item->package['custom_permissions'];
-                               
-                    }
-    
-                $enabled_modules1 = !empty(session('business.enabled_modules')) ? session('business.enabled_modules') : [];
-            
-                $enabled_modules =array_merge($enabled_modules1, array_keys($package_modules));
-                    // dd($enabled_modules);
+        }
+
+        Menu::create('admin-sidebar-menu', function ($menu) {
+            $business = Business::find(auth()->user()->business_id);
+            $mod = $business->subscriptions;
+            foreach ($mod as $item) {
+                $package_modules = $item->package['custom_permissions'];
+
+            }
+
+            $enabled_modules1 = !empty(session('business.enabled_modules')) ? session('business.enabled_modules') : [];
+
+            $enabled_modules = array_merge($enabled_modules1, array_keys($package_modules));
+            // dd($enabled_modules);
             $common_settings = !empty(session('business.common_settings')) ? session('business.common_settings') : [];
             $pos_settings = !empty(session('business.pos_settings')) ? json_decode(session('business.pos_settings'), true) : [];
 
@@ -45,7 +45,7 @@ class AdminSidebarMenu
             $is_admin1 = auth()->user()->hasRole('Admin') ? true : false;
 
             //superadmin
-            if (  auth()->user()->hasRole('Admin#1') ) {
+            if (auth()->user()->hasRole('Admin#1')) {
                 $menu->dropdown(
                     __('Superadmin'),
                     function ($sub) {
@@ -273,7 +273,7 @@ class AdminSidebarMenu
             ) {
 
                 $menu->dropdown(
-    
+
                     __('sale.products'),
                     function ($sub) {
                         if (auth()->user()->can('product.view')) {
@@ -359,26 +359,26 @@ class AdminSidebarMenu
                             __('lang_v1.warranties'),
                             ['icon' => 'fa fas fa-shield-alt', 'active' => request()->segment(1) == 'warranties']
                         );
-                        $business = Business::find( auth()->user()->business_id);
+                        $business = Business::find(auth()->user()->business_id);
                         $mod = $business->subscriptions;
-                        foreach ($mod as $item){ 
+                        foreach ($mod as $item) {
                             $package_modules = $item->package['custom_permissions'];
-                                       
-                            }
-        // dd( $package_modules);
+
+                        }
+                        // dd( $package_modules);
                         $enabled_modules1 = !empty(session('business.enabled_modules')) ? session('business.enabled_modules') : [];
-            
-                        $enabled_modules =array_merge($enabled_modules1, array_keys($package_modules));
-    
-                        if (in_array('lens_module', $enabled_modules)) {
-                        $sub->url(
-                            action([\Modules\Lens\Http\Controllers\LensController::class, 'index']),
-                            __('lens::lang.lens'),
-                            ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'lens' ]
-                        );
-                    }
+
+                        $enabled_modules = array_merge($enabled_modules1, array_keys($package_modules));
+
+                        // if (in_array('lens_module', $enabled_modules)) {
+                        //     $sub->url(
+                        //         action([\Modules\Lens\Http\Controllers\LensController::class, 'index']),
+                        //         __('lens::lang.lens'),
+                        //         ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'lens']
+                        //     );
+                        // }
                     },
-                    
+
                     ['icon' => 'fa fas fa-cubes', 'id' => 'tour_step5']
                 )->order(20);
             }
@@ -421,16 +421,17 @@ class AdminSidebarMenu
                 )->order(20);
             }
             //Repait
-            if (in_array('repair_module', $enabled_modules) && (
-                auth()->user()->can('job_sheet.create') ||
-                auth()->user()->can('job_sheet.view_assigned') ||
-                auth()->user()->can('job_sheet.view_all') ||
-                auth()->user()->can('repair.view') ||
-                auth()->user()->can('repair.view_own') ||
-                auth()->user()->can('repair.create') ||
-                auth()->user()->can('brand.view') ||
-                auth()->user()->can('brand.create') ||
-                auth()->user()->can('edit_repair_settings'))
+            if (
+                in_array('repair_module', $enabled_modules) && (
+                    auth()->user()->can('job_sheet.create') ||
+                    auth()->user()->can('job_sheet.view_assigned') ||
+                    auth()->user()->can('job_sheet.view_all') ||
+                    auth()->user()->can('repair.view') ||
+                    auth()->user()->can('repair.view_own') ||
+                    auth()->user()->can('repair.create') ||
+                    auth()->user()->can('brand.view') ||
+                    auth()->user()->can('brand.create') ||
+                    auth()->user()->can('edit_repair_settings'))
             ) {
                 $menu->dropdown(
                     __('Repair'),
@@ -745,12 +746,13 @@ class AdminSidebarMenu
 
             // accounting 000000
 
-            if (in_array('accounting_module', $enabled_modules) && (
-                auth()->user()->can('accounting.manage_accounts') ||
-                auth()->user()->can('accounting.view_journal') ||
-                auth()->user()->can('accounting.view_transfer') ||
-                auth()->user()->can('accounting.manage_budget') ||
-                auth()->user()->can('accounting.view_reports'))
+            if (
+                in_array('accounting_module', $enabled_modules) && (
+                    auth()->user()->can('accounting.manage_accounts') ||
+                    auth()->user()->can('accounting.view_journal') ||
+                    auth()->user()->can('accounting.view_transfer') ||
+                    auth()->user()->can('accounting.manage_budget') ||
+                    auth()->user()->can('accounting.view_reports'))
             ) {
                 $menu->dropdown(
                     __('Accounting'),
@@ -806,18 +808,18 @@ class AdminSidebarMenu
                             );
                         }
                         // if (auth()->user()->can('superadmin')) {
-                            $sub->url(
-                                action([\Modules\Accounting\Http\Controllers\SettingsController::class, 'index']),
-                                __('messages.settings'),
-                                ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'settings']
-                            );
+                        $sub->url(
+                            action([\Modules\Accounting\Http\Controllers\SettingsController::class, 'index']),
+                            __('messages.settings'),
+                            ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'settings']
+                        );
                         // }
                         // if (auth()->user()->can('superadmin')) {
-                            $sub->url(
-                                action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit']),
-                                __('accounting::lang.mapping'),
-                                ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'mapping']
-                            );
+                        $sub->url(
+                            action([\Modules\Accounting\Http\Controllers\MappingController::class, 'edit']),
+                            __('accounting::lang.mapping'),
+                            ['icon' => 'fa fas fa-list', 'active' => request()->segment(1) == 'accounting' && request()->segment(2) == 'mapping']
+                        );
                         // }
                     },
                     ['icon' => 'fas fa-industry']
@@ -1163,7 +1165,7 @@ class AdminSidebarMenu
                             ['icon' => 'fa fas fa-bolt', 'active' => request()->segment(1) == 'all_trans']
                         );
                         // }
-
+    
                         if (in_array('tables', $enabled_modules) && auth()->user()->can('access_tables')) {
                             $sub->url(
                                 action([\App\Http\Controllers\Restaurant\TableController::class, 'index']),
@@ -1196,18 +1198,20 @@ class AdminSidebarMenu
             // CRM
 
             // dd($enabled_modules);
-            if (in_array('crm_module', $enabled_modules) 
-            &&               
-               ( auth()->user()->can('crm.access_all_leads') ||
-                auth()->user()->can('crm.access_all_schedule') ||
-                auth()->user()->can('crm.access_all_campaigns') ||
-                auth()->user()->can('crm.access_contact_login') ||
-                (auth()->user()->can('crm.view_all_call_log') && config('constants.enable_crm_call_log')) ||
-                auth()->user()->can('crm.view_reports') ||
-                auth()->user()->can('crm.access_b2b_marketplace') ||
-                auth()->user()->can('crm.access_sources') ||
-                auth()->user()->can('crm.access_life_stage')
-            )) {
+            if (
+                in_array('crm_module', $enabled_modules)
+                &&
+                (auth()->user()->can('crm.access_all_leads') ||
+                    auth()->user()->can('crm.access_all_schedule') ||
+                    auth()->user()->can('crm.access_all_campaigns') ||
+                    auth()->user()->can('crm.access_contact_login') ||
+                    (auth()->user()->can('crm.view_all_call_log') && config('constants.enable_crm_call_log')) ||
+                    auth()->user()->can('crm.view_reports') ||
+                    auth()->user()->can('crm.access_b2b_marketplace') ||
+                    auth()->user()->can('crm.access_sources') ||
+                    auth()->user()->can('crm.access_life_stage')
+                )
+            ) {
                 $menu->dropdown(
                     __('CRM'),
                     function ($sub) {
@@ -1310,7 +1314,7 @@ class AdminSidebarMenu
             }
 
             // Project
-            if (in_array('project_module', $enabled_modules) && (auth()->user()->can('project.create_project') || auth()->user()->can('project.edit_project') || auth()->user()->can('project.delete_project')) ){
+            if (in_array('project_module', $enabled_modules) && (auth()->user()->can('project.create_project') || auth()->user()->can('project.edit_project') || auth()->user()->can('project.delete_project'))) {
                 $menu->dropdown(
                     __('Project'),
                     function ($sub) {
@@ -1346,7 +1350,7 @@ class AdminSidebarMenu
                 )->order(86);
             }
             // Asset Management
-            if (in_array('assetmanagement_module', $enabled_modules) && (auth()->user()->can('asset.view') || auth()->user()->can('asset.view_all_maintenance') || auth()->user()->can('asset.view_own_maintenance')) ){
+            if (in_array('assetmanagement_module', $enabled_modules) && (auth()->user()->can('asset.view') || auth()->user()->can('asset.view_all_maintenance') || auth()->user()->can('asset.view_own_maintenance'))) {
                 $menu->dropdown(
                     __('Asset Management'),
                     function ($sub) {
@@ -1394,16 +1398,17 @@ class AdminSidebarMenu
             }
 
             // HRM Management
-            if (in_array('essentials_module', $enabled_modules) && 
+            if (
+                in_array('essentials_module', $enabled_modules) &&
                 (auth()->user()->can('edit_essentials_settings') ||
-                auth()->user()->can('essentials.crud_all_leave') ||
-                auth()->user()->can('essentials.crud_own_leave') ||
-                auth()->user()->can('essentials.crud_all_attendance') ||
-                auth()->user()->can('essentials.view_own_attendance') ||
-                auth()->user()->can('essentials.crud_department') ||
-                auth()->user()->can('essentials.crud_designation') ||
-                auth()->user()->can('essentials.access_sales_target') ||
-                auth()->user()->can('edit_essentials_settings'))
+                    auth()->user()->can('essentials.crud_all_leave') ||
+                    auth()->user()->can('essentials.crud_own_leave') ||
+                    auth()->user()->can('essentials.crud_all_attendance') ||
+                    auth()->user()->can('essentials.view_own_attendance') ||
+                    auth()->user()->can('essentials.crud_department') ||
+                    auth()->user()->can('essentials.crud_designation') ||
+                    auth()->user()->can('essentials.access_sales_target') ||
+                    auth()->user()->can('edit_essentials_settings'))
             ) {
                 $menu->dropdown(
                     __('HRM'),
@@ -1493,7 +1498,7 @@ class AdminSidebarMenu
                                 __('Settings'),
                                 ['icon' => 'fas fa-chart-pie', 'active' => Request::is('hrm/settings')]
                             );
-                              $sub->url(
+                            $sub->url(
                                 url('/hrm/calcualte'),
                                 __('Calculate'),
                                 ['icon' => 'fas fa-chart-pie', 'active' => Request::is('hrm/calcualte')]
@@ -1505,15 +1510,16 @@ class AdminSidebarMenu
             }
 
             // Essentials
-            if (in_array('essentials_module', $enabled_modules) && 
+            if (
+                in_array('essentials_module', $enabled_modules) &&
                 (auth()->user()->can('essentials.edit_todos') ||
-                auth()->user()->can('essentials.delete_todos') ||
-                auth()->user()->can('essentials.access_sales_target') ||
-                auth()->user()->can('essentials.crud_own_leave') ||
-                auth()->user()->can('essentials.view_own_attendance') ||
-                auth()->user()->can('essentials.create_message') ||
-                auth()->user()->can('essentials.view_message') ||
-                auth()->user()->can('essentials.assign_todos'))
+                    auth()->user()->can('essentials.delete_todos') ||
+                    auth()->user()->can('essentials.access_sales_target') ||
+                    auth()->user()->can('essentials.crud_own_leave') ||
+                    auth()->user()->can('essentials.view_own_attendance') ||
+                    auth()->user()->can('essentials.create_message') ||
+                    auth()->user()->can('essentials.view_message') ||
+                    auth()->user()->can('essentials.assign_todos'))
             ) {
                 $menu->dropdown(
                     __('Essentials'),
@@ -1562,7 +1568,7 @@ class AdminSidebarMenu
                 )->order(86);
             }
             // Woocommerce
-            if (in_array('woocommerce_module', $enabled_modules) && (auth()->user()->can('woocommerce.sync_orders') || auth()->user()->can('woocommerce.access_woocommerce_api_settings')) ){
+            if (in_array('woocommerce_module', $enabled_modules) && (auth()->user()->can('woocommerce.sync_orders') || auth()->user()->can('woocommerce.access_woocommerce_api_settings'))) {
                 $menu->dropdown(
                     __('Woocommerce'),
                     function ($sub) {
@@ -1607,7 +1613,7 @@ class AdminSidebarMenu
                 )->order(86);
             }
             // Spreadsheet
-            if (in_array('spreadsheet_module', $enabled_modules) && (auth()->user()->can('access.spreadsheet') || auth()->user()->can('create.spreadsheet')) ){
+            if (in_array('spreadsheet_module', $enabled_modules) && (auth()->user()->can('access.spreadsheet') || auth()->user()->can('create.spreadsheet'))) {
                 $menu->dropdown(
                     __('Spreadsheet'),
                     function ($sub) {

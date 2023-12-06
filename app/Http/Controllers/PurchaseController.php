@@ -1186,8 +1186,6 @@ class PurchaseController extends Controller
                 $products_array[$product->product_id]['name'] = $product->name;
                 $products_array[$product->product_id]['sku'] = $product->sub_sku;
                 $products_array[$product->product_id]['type'] = $product->type;
-                // $products_array[$product->product_id]['sph'] = '';
-                // $products_array[$product->product_id]['cyl'] = '';
                 $products_array[$product->product_id]['variations'][]
                     = [
                         'variation_id' => $product->variation_id,
@@ -1258,7 +1256,7 @@ class PurchaseController extends Controller
             if (!empty($product_id)) {
                 $row_count = $request->input('row_count');
                 $product = Product::where('id', $product_id)
-                    ->with(['unit', 'second_unit'])
+                    // ->with(['unit', 'second_unit'])
                     ->first();
 
                 $sub_units = $this->productUtil->getSubUnits($business_id, $product->unit->id, false, $product_id);

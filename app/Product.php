@@ -4,9 +4,6 @@ namespace App;
 
 use Modules\Lens\Entities\SphTo;
 use Modules\Lens\Entities\SphFrom;
-use Modules\Lens\Entities\LensDiam;
-use Modules\Lens\Entities\LensDiam2;
-use Modules\Lens\Entities\LensDiam3;
 use Modules\Lens\Entities\PurchDiam;
 use Modules\Lens\Entities\Signaltype;
 use Illuminate\Database\Eloquent\Model;

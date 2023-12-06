@@ -1238,6 +1238,15 @@ class ProductUtil extends Util
             //Update purchase order line quantity received
             $this->updatePurchaseOrderLine($purchase_line->purchase_order_line_id, $purchase_line->quantity, $old_qty);
         }
+
+        // $enabled_modules1 = !empty(session('business.enabled_modules')) ? session('business.enabled_modules') : [];
+
+        // $enabled_modules = array_merge($enabled_modules1, array_keys($package_modules));
+
+        // if (in_array('lens_module', $enabled_modules)) {
+
+        // if ($data['sph'] != '' && $data['cyl'] != '') {
+
         $len1 = $data['product_id'];
         $sph = $data['sph'];
         $cyl1 = $data['cyl'];
@@ -1247,6 +1256,7 @@ class ProductUtil extends Util
         if ($cyl1 == '0.00') {
             $cyl = '_s00';
         }
+
         if ($cyl1 == '0.25') {
             $cyl = '_s25';
         }
@@ -1258,6 +1268,71 @@ class ProductUtil extends Util
         }
         if ($cyl1 == '1.00') {
             $cyl = '_s100';
+        }
+
+        if ($cyl1 == '1.25') {
+            $cyl = '_s125';
+        }
+        if ($cyl1 == '1.50') {
+            $cyl = '_s150';
+        }
+        if ($cyl1 == '1.75') {
+            $cyl = '_s175';
+        }
+        if ($cyl1 == '2.00') {
+            $cyl = '_s200';
+        }
+
+        if ($cyl1 == '2.25') {
+            $cyl = '_s225';
+        }
+        if ($cyl1 == '2.50') {
+            $cyl = '_s250';
+        }
+        if ($cyl1 == '2.75') {
+            $cyl = '_s275';
+        }
+        if ($cyl1 == '3.00') {
+            $cyl = '_s300';
+        }
+
+        if ($cyl1 == '3.25') {
+            $cyl = '_s325';
+        }
+        if ($cyl1 == '3.50') {
+            $cyl = '_s350';
+        }
+        if ($cyl1 == '3.75') {
+            $cyl = '_s375';
+        }
+        if ($cyl1 == '4.00') {
+            $cyl = '_s400';
+        }
+
+        if ($cyl1 == '4.25') {
+            $cyl = '_s425';
+        }
+        if ($cyl1 == '4.50') {
+            $cyl = '_s450';
+        }
+        if ($cyl1 == '4.75') {
+            $cyl = '_s475';
+        }
+        if ($cyl1 == '5.00') {
+            $cyl = '_s500';
+        }
+
+        if ($cyl1 == '5.25') {
+            $cyl = '_s525';
+        }
+        if ($cyl1 == '5.50') {
+            $cyl = '_s550';
+        }
+        if ($cyl1 == '5.75') {
+            $cyl = '_s575';
+        }
+        if ($cyl1 == '6.00') {
+            $cyl = '_s600';
         }
 
         // dd($sph);
@@ -1276,7 +1351,7 @@ class ProductUtil extends Util
             $store2->update([$cyl => $stck + $quant]);
 
         }
-
+        // }
         //unset deleted purchase lines
         $delete_purchase_line_ids = [];
         $delete_purchase_lines = null;

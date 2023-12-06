@@ -329,10 +329,10 @@ class SellPos1Controller extends Controller
         $user_id = $request->session()->get('user.id');
         $business_id = $request->session()->get('user.business_id');
         $transaction_data = $request->only(['ref_no', 'status', 'contact_id', 'transaction_date', 'total_before_tax', 'location_id', 'discount_type', 'discount_amount', 'tax_id', 'tax_amount', 'shipping_details', 'shipping_charges', 'final_total', 'additional_notes', 'exchange_rate', 'pay_term_number', 'pay_term_type', 'purchase_order_ids']);
-    //    $d = gmp_init($request->final_total);
-    //    $g = (int)$request->sub_total_l;
-    // //    $v = $d + $g;
-    // //    dd($d);
+        //    $d = gmp_init($request->final_total);
+        //    $g = (int)$request->sub_total_l;
+        // //    $v = $d + $g;
+        // //    dd($d);
         $acc_trans_mapping = new AccountingAccTransMapping();
         $acc_trans_mapping['business_id'] = $business_id;
         // $acc_trans_mapping['ref_no'] = $transaction_data['ref_no'];
@@ -517,12 +517,12 @@ class SellPos1Controller extends Controller
             }
             // $input['final_total'] = $transaction_data['final_total'] + $request->input('sub_total_l') + $request->input('sub_total_r');
             // $input['change_return'] = $input['change_return'] + $request->input('sub_total_l') + $request->input('sub_total_r');
-         
-           
+
+
             // $invoice_total['total_before_tax'] = $invoice_total['total_before_tax'] + $request->input('sub_total_l') + $request->input('sub_total_r');
             // $invoice_total['fin_total'] = $transaction_data['final_total'] + $request->input('sub_total_l') + $request->input('sub_total_r');
             // dd( $invoice_total);      
- 
+
             //upload document
             $input['document'] = $this->transactionUtil->uploadFile($request, 'sell_document', 'documents');
 
@@ -619,12 +619,12 @@ class SellPos1Controller extends Controller
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
                 'amount' => $transaction->shipping_charges
-                            // + $input['additional_expense_value_1']
-                            // + $input['additional_expense_value_2']
-                            // + $input['additional_expense_value_3']
-                            // + $input['additional_expense_value_4']
-                
-                                ,
+                // + $input['additional_expense_value_1']
+                // + $input['additional_expense_value_2']
+                // + $input['additional_expense_value_3']
+                // + $input['additional_expense_value_4']
+
+                ,
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'credit',
                 'business_id1' => $business_id,
@@ -676,7 +676,7 @@ class SellPos1Controller extends Controller
             ];
 
             //Deposit to will increase = debit
-    
+
             $khazine_acc_id = [
                 'accounting_account_id' => $mapping[0]['khazine_acc_id'],
                 'transaction_id' => $transaction->id,
@@ -708,44 +708,20 @@ class SellPos1Controller extends Controller
 
 
             if ($transaction->discount_type == "percentage") {
-                $amount = $transaction->total_before_tax * $transaction->discount_amount/100;
-            }
-            else
-            {
+                $amount = $transaction->total_before_tax * $transaction->discount_amount / 100;
+            } else {
                 $amount = $transaction->discount_amount;
-     
+
             }
 
             $discount_permitted_acc_id = [
                 'accounting_account_id' => $mapping[0]['discount_permitted_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-    
-                'amount' =>  $amount,
-    
-    
-                'acc_trans_mapping_id' => $acc_trans_mapping->id,
-                'type' => 'debit',
-                'business_id1' => $business_id,
-                'sub_type' => $transaction->type,
-                'map_type' => 'deposit_to',
-                'created_by' => $user_id,
-                'operation_date' => \Carbon::now(),
-            ];
-    
-            $customers_acc_id = [
-                'accounting_account_id' => $mapping[0]['customers_acc_id'],
-                'transaction_id' => $transaction->id,
-                'transaction_payment_id' => null,
-                'amount' => $transaction->total_before_tax
-                              + $transaction->shipping_charges
-                              + $transaction->tax_amount
-                              - $amount
-                            //   + $input['additional_expense_value_1']
-                            //   + $input['additional_expense_value_2']
-                            //   + $input['additional_expense_value_3']
-                            //   + $input['additional_expense_value_4']
-                              ,
+
+                'amount' => $amount,
+
+
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'debit',
                 'business_id1' => $business_id,
@@ -755,39 +731,60 @@ class SellPos1Controller extends Controller
                 'operation_date' => \Carbon::now(),
             ];
 
-    // dd(
-    //    $value_added_tax_on_sales_acc_id,
-    //    $shipping_revenue_acc_id,
-    //    $stock_acc_id,
-    //    $sales_revenue_acc_id,
-    //    $customers_acc_id_2,
-    //    $khazine_acc_id,
-    //    $cost_of_goods,
-    //    $discount_permitted_acc_id,
-    //    $customers_acc_id
-    // );
+            $customers_acc_id = [
+                'accounting_account_id' => $mapping[0]['customers_acc_id'],
+                'transaction_id' => $transaction->id,
+                'transaction_payment_id' => null,
+                'amount' => $transaction->total_before_tax
+                    + $transaction->shipping_charges
+                    + $transaction->tax_amount
+                    - $amount
+                //   + $input['additional_expense_value_1']
+                //   + $input['additional_expense_value_2']
+                //   + $input['additional_expense_value_3']
+                //   + $input['additional_expense_value_4']
+                ,
+                'acc_trans_mapping_id' => $acc_trans_mapping->id,
+                'type' => 'debit',
+                'business_id1' => $business_id,
+                'sub_type' => $transaction->type,
+                'map_type' => 'deposit_to',
+                'created_by' => $user_id,
+                'operation_date' => \Carbon::now(),
+            ];
+
+            // dd(
+            //    $value_added_tax_on_sales_acc_id,
+            //    $shipping_revenue_acc_id,
+            //    $stock_acc_id,
+            //    $sales_revenue_acc_id,
+            //    $customers_acc_id_2,
+            //    $khazine_acc_id,
+            //    $cost_of_goods,
+            //    $discount_permitted_acc_id,
+            //    $customers_acc_id
+            // );
             if ($transaction->tax_amount) {
                 AccountingAccountsTransaction::createTransaction($value_added_tax_on_sales_acc_id);
-    
+
             }
             if ($transaction->shipping_charges) {
                 AccountingAccountsTransaction::createTransaction($shipping_revenue_acc_id);
-    
+
             }
             if ($transaction->discount_amount) {
                 AccountingAccountsTransaction::createTransaction($discount_permitted_acc_id);
-    
+
             }
             AccountingAccountsTransaction::createTransaction($stock_acc_id);
             AccountingAccountsTransaction::createTransaction($customers_acc_id);
             AccountingAccountsTransaction::createTransaction($sales_revenue_acc_id);
             AccountingAccountsTransaction::createTransaction($cost_of_goods);
-            if($input['change_return'])
-            {
-            AccountingAccountsTransaction::createTransaction($khazine_acc_id);
-            AccountingAccountsTransaction::createTransaction($customers_acc_id_2);
+            if ($input['change_return']) {
+                AccountingAccountsTransaction::createTransaction($khazine_acc_id);
+                AccountingAccountsTransaction::createTransaction($customers_acc_id_2);
             }
-                // ======================================================
+            // ======================================================
 
 
 
