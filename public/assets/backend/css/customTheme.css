@@ -864,6 +864,11 @@ select.form-control{
 
 
 
+.tdd.form-control.full-widthed{
+    min-width: 100%;
+}
+
+
 
 
 #openBtnParentNav, #closeBtnParentNav {
@@ -1245,6 +1250,23 @@ tr[role="row"] th{
 }
 
 
+
+tbody .dropdown-menu {
+    /* position: relative !important; */
+    box-shadow: 0px 0px 7px 0px #21252966;
+}
+tbody tr:nth-last-child(-n+3) .dropdown-menu {
+    position: relative !important;
+}
+.table.table-bordered.table-striped.dataTable thead tr th {
+    min-width: max-content;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+
 #purchase_table_wrapper {
     overflow-x: auto;
   }
@@ -1260,9 +1282,11 @@ tr[role="row"] th{
     color: var(--main-color);
 }
 
-tbody tr:last-child .dropdown-menu {
-    position: relative !important;
+.dropdown-menu.dropdown-menu-left {
+    max-height: 160px !important;
+    overflow-y: auto;
 }
+
 
 .customcollabs {
     border-radius: 10px !important;
@@ -1471,15 +1495,44 @@ div.pos-tab-content{
     border: none !important;
 }
 
+.tb-col-50{
+    min-width: 50px !important;
+}
+.tb-col-100{
+    min-width: 100px !important;
+}
+.tb-col-150{
+    min-width: 150px !important;
+}
+.tb-col-200{
+    min-width: 200px !important;
+}
+.tb-col-250{
+    min-width: 250px !important;
+}
 
 
 
 
-
-
-
-
-
+.nav.nav-tabs.nav-justified li {
+    width: fit-content;
+    height: fit-content;
+    margin-right: 0;
+    margin-left: 0;
+}
+.nav.nav-tabs.nav-justified li *{
+    font-size: 15px !important;
+}
+.nav.nav-tabs.nav-justified li a{
+    background: var(--bs-body-bg) !important;
+    border-bottom: 2px solid var(--main-color) !important;
+    color: var(--main-color) !important;
+}
+.nav.nav-tabs.nav-justified li.active a{
+    background: var(--main-color1) !important;
+    border-bottom: 3px solid var(--main-color) !important;
+    color: var(--bs-body-bg) !important;
+}
 
 
 

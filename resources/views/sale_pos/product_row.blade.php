@@ -456,43 +456,43 @@
         }
     </style>
     <td>
-        <input class="tdd" name="products[{{ $row_count }}][r_d_sph]" type="text"
+        <input class="tdd form-control full-widthed" name="products[{{ $row_count }}][r_d_sph]" type="text"
             value="{{ old('r_d_sph', '') }}">
     </td>
     <td>
-        <input class="tdd" type="text" name="products[{{ $row_count }}][r_d_cyl]"
+        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][r_d_cyl]"
             value="{{ old('r_d_cyl', '') }}">
     </td>
     <td>
-        <input class="tdd" type="text" name="products[{{ $row_count }}][r_d_axi]"
+        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][r_d_axi]"
             value="{{ old('r_d_axi', '') }}">
     </td>
     <td>
-        <input class="tdd" type="text" name="products[{{ $row_count }}][r_rd_cyl]"
+        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][r_rd_cyl]"
             value="{{ old('r_rd_cyl', '') }}">
     </td>
     <td>
-        <input class="tdd" type="text" name="products[{{ $row_count }}][r_rd_axi]"
+        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][r_rd_axi]"
             value="{{ old('r_rd_axi', '') }}">
     </td>
     <td>
-        <input class="tdd" type="text" name="products[{{ $row_count }}][l_d_sph]"
+        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_d_sph]"
             value="{{ old('l_d_sph', '') }}">
     </td>
     <td>
-        <input class="tdd" type="text" name="products[{{ $row_count }}][l_d_cyl]"
+        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_d_cyl]"
             value="{{ old('l_d_cyl', '') }}">
     </td>
     <td>
-        <input class="tdd" type="text" name="products[{{ $row_count }}][l_d_axi]"
+        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_d_axi]"
             value="{{ old('l_d_axi', '') }}">
     </td>
     <td>
-        <input class="tdd" type="text" name="products[{{ $row_count }}][l_rd_cyl]"
+        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_rd_cyl]"
             value="{{ old('l_rd_cyl', '') }}">
     </td>
     <td>
-        <input class="tdd" type="text" name="products[{{ $row_count }}][l_rd_axi]"
+        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_rd_axi]"
             value="{{ old('l_rd_axi', '') }}">
     </td>
 

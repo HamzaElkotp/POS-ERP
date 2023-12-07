@@ -50,14 +50,14 @@
             <table class="table table-bordered table-striped ajax_view" id="sell_table">
                 <thead>
                     <tr>
-                        <th>@lang('messages.date')</th>
-                        <th>@lang('purchase.ref_no')</th>
-                        <th>@lang('sale.customer_name')</th>
-                        <th>@lang('lang_v1.contact_no')</th>
-                        <th>@lang('sale.location')</th>
-                        <th>@lang('lang_v1.total_items')</th>
-                        <th>@lang('lang_v1.added_by')</th>
-                        <th>@lang('messages.action')</th>
+                        <th class="tb-col-150">@lang('messages.date')</th>
+                        <th class="tb-col-150">@lang('purchase.ref_no')</th>
+                        <th class="tb-col-150">@lang('sale.customer_name')</th>
+                        <th class="tb-col-150">@lang('lang_v1.contact_no')</th>
+                        <th class="tb-col-150">@lang('sale.location')</th>
+                        <th class="tb-col-150">@lang('lang_v1.total_items')</th>
+                        <th class="tb-col-150">@lang('lang_v1.added_by')</th>
+                        <th class="tb-col-150">@lang('messages.action')</th>
                     </tr>
                 </thead>
             </table>

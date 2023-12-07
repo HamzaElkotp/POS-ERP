@@ -198,24 +198,24 @@
 						<table class="table table-condensed table-bordered table-striped table-responsive" id="pos_table">
 							<thead>
 								<tr>
-									<th class="text-center @if(!empty($pos_settings['inline_service_staff'])) col-md-3 @else col-md-4 @endif">	
+									<th class="text-center tb-col-150 @if(!empty($pos_settings['inline_service_staff'])) col-md-3 @else col-md-4 @endif">	
 										@lang('sale.product')
 									</th>
-									<th class="text-center col-md-3">
+									<th class="text-center tb-col-150 col-md-3">
 										@lang('sale.qty')
 									</th>
 									@if(!empty($pos_settings['inline_service_staff']))
-										<th class="text-center col-md-2">
+										<th class="text-center tb-col-150 col-md-2">
 											@lang('restaurant.service_staff')
 										</th>
 									@endif
-									<th class="text-center col-md-2 {{$hide_tax}}">
+									<th class="text-center tb-col-150 col-md-2 {{$hide_tax}}">
 										@lang('sale.price_inc_tax')
 									</th>
-									<th class="text-center col-md-3">
+									<th class="text-center tb-col-150 col-md-3">
 										@lang('sale.subtotal')
 									</th>
-									<th class="text-center"><i class="fa fa-close" aria-hidden="true"></i></th>
+									<th class="text-center tb-col-150"><i class="fa fa-close" aria-hidden="true"></i></th>
 								</tr>
 							</thead>
 							<tbody>

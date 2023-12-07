@@ -279,37 +279,37 @@
             <thead>
                 <tr>
                     <th
-                        class="fs-4 fw-500 tex-center @if (!empty($pos_settings['inline_service_staff'])) col-md-3 @else col-md-4 @endif">
+                        class="fs-4 fw-500 tex-center tb-col-200 @if (!empty($pos_settings['inline_service_staff'])) col-md-3 @else col-md-4 @endif">
                         <i class="fa-solid fa-box text-cusTheme1"></i> @lang('sale.product')
                         @show_tooltip(__('lang_v1.tooltip_sell_product_column'))
                     </th>
-                    <th class="fs-4 fw-500 text-center col-md-2">
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-150">
                         <i class="fa-solid fa-boxes-stacked text-cusTheme1"></i> @lang('sale.qty')
                     </th>
                     @if (!empty($pos_settings['inline_service_staff']))
-                        <th class="fs-4 fw-500 text-center col-md-2">
+                        <th class="fs-4 fw-500 text-center col-md-2 tb-col-150">
                             <i class="fa-solid fa-people-group text-cusTheme1"></i> @lang('restaurant.service_staff')
                         </th>
                     @endif
-                    <th class="fs-4 fw-500 text-center col-md-3 {{ $hide_tax }}">
+                    <th class="fs-4 fw-500 text-center col-md-3 tb-col-200 {{ $hide_tax }}">
                         <i class="fa-solid fa-sack-dollar text-cusTheme1"></i> @lang('sale.price_inc_tax')
                     </th>
-                    <th class="fs-4 fw-500 text-center col-md-2">
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-150">
                         <i class="fa-solid fa-dollar-sign text-cusTheme1"></i> @lang('sale.subtotal')
                     </th>
-                    <th>R-D-Sph</th>
-                    <th>R-D-Cyl</th>
-                    <th>R-D-Axi</th>
-                    <th>R-Rd-Cyl</th>
-                    <th>R-Rd-Axi</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-D-Sph</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-D-Cyl</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-D-Axi</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-Rd-Cyl</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-Rd-Axi</th>
 
-                    <th>L-D-Sph</th>
-                    <th>L-D-Cyl</th>
-                    <th>L-D-Axi</th>
-                    <th>L-Rd-Cyl</th>
-                    <th>L-Rd-Axi</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-D-Sph</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-D-Cyl</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-D-Axi</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-Rd-Cyl</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-Rd-Axi</th>
 
-                    <th class="text-center col-md-2"><i class="fas fa-times fs-3" aria-hidden="true"></i></th>
+                    <th class="text-center col-md-2 tb-col-50"><i class="fas fa-times fs-3" aria-hidden="true"></i></th>
                 </tr>
             </thead>
             <tbody></tbody>

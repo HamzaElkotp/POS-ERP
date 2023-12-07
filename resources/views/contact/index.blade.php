@@ -112,71 +112,71 @@
             <table class="table table-bordered table-striped" id="contact_table">
                 <thead>
                     <tr>
-                        <th>@lang('messages.action')</th>
-                        <th>@lang('lang_v1.contact_id')</th>
+                        <th class="tb-col-100">@lang('messages.action')</th>
+                        <th class="tb-col-100">@lang('lang_v1.contact_id')</th>
                         @if($type == 'supplier') 
-                            <th>@lang('business.business_name')</th>
-                            <th>@lang('contact.name')</th>
-                            <th>@lang('business.email')</th>
-                            <th>@lang('contact.tax_no')</th>
-                            <th>@lang('contact.pay_term')</th>
-                            <th>@lang('account.opening_balance')</th>
-                            <th>@lang('lang_v1.advance_balance')</th>
-                            <th>@lang('lang_v1.added_on')</th>
-                            <th>@lang('business.address')</th>
-                            <th>@lang('contact.mobile')</th>
-                            <th>@lang('contact.total_purchase_due')</th>
-                            <th>@lang('lang_v1.total_purchase_return_due')</th>
+                            <th class="tb-col-150">@lang('business.business_name')</th>
+                            <th class="tb-col-150">@lang('contact.name')</th>
+                            <th class="tb-col-200">@lang('business.email')</th>
+                            <th class="tb-col-150">@lang('contact.tax_no')</th>
+                            <th class="tb-col-150">@lang('contact.pay_term')</th>
+                            <th class="tb-col-150">@lang('account.opening_balance')</th>
+                            <th class="tb-col-150">@lang('lang_v1.advance_balance')</th>
+                            <th class="tb-col-50">@lang('lang_v1.added_on')</th>
+                            <th class="tb-col-200">@lang('business.address')</th>
+                            <th class="tb-col-100">@lang('contact.mobile')</th>
+                            <th class="tb-col-250">@lang('contact.total_purchase_due')</th>
+                            <th class="tb-col-250">@lang('lang_v1.total_purchase_return_due')</th>
                         @elseif( $type == 'customer')
-                            <th>@lang('business.business_name')</th>
-                            <th>@lang('user.name')</th>
-                            <th>@lang('business.email')</th>
-                            <th>@lang('contact.tax_no')</th>
-                            <th>@lang('lang_v1.credit_limit')</th>
-                            <th>@lang('contact.pay_term')</th>
-                            <th>@lang('account.opening_balance')</th>
-                            <th>@lang('lang_v1.advance_balance')</th>
-                            <th>@lang('lang_v1.added_on')</th>
+                            <th class="tb-col-150">@lang('business.business_name')</th>
+                            <th class="tb-col-150">@lang('user.name')</th>
+                            <th class="tb-col-150">@lang('business.email')</th>
+                            <th class="tb-col-150">@lang('contact.tax_no')</th>
+                            <th class="tb-col-150">@lang('lang_v1.credit_limit')</th>
+                            <th class="tb-col-150">@lang('contact.pay_term')</th>
+                            <th class="tb-col-150">@lang('account.opening_balance')</th>
+                            <th class="tb-col-150">@lang('lang_v1.advance_balance')</th>
+                            <th class="tb-col-150">@lang('lang_v1.added_on')</th>
                             @if($reward_enabled)
                                 <th id="rp_col">{{session('business.rp_name')}}</th>
                             @endif
-                            <th>@lang('lang_v1.customer_group')</th>
-                            <th>@lang('business.address')</th>
-                            <th>@lang('contact.mobile')</th>
-                            <th>@lang('contact.total_sale_due')</th>
-                            <th>@lang('lang_v1.total_sell_return_due')</th>
+                            <th class="tb-col-150">@lang('lang_v1.customer_group')</th>
+                            <th class="tb-col-150">@lang('business.address')</th>
+                            <th class="tb-col-150">@lang('contact.mobile')</th>
+                            <th class="tb-col-150">@lang('contact.total_sale_due')</th>
+                            <th class="tb-col-150">@lang('lang_v1.total_sell_return_due')</th>
                         @endif
                         @php
                             $custom_labels = json_decode(session('business.custom_labels'), true);
                         @endphp
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_1'] ?? __('lang_v1.contact_custom_field1') }}
                         </th>
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_2'] ?? __('lang_v1.contact_custom_field2') }}
                         </th>
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_3'] ?? __('lang_v1.contact_custom_field3') }}
                         </th>
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_4'] ?? __('lang_v1.contact_custom_field4') }}
                         </th>
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_5'] ?? __('lang_v1.custom_field', ['number' => 5]) }}
                         </th>
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_6'] ?? __('lang_v1.custom_field', ['number' => 6]) }}
                         </th>
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_7'] ?? __('lang_v1.custom_field', ['number' => 7]) }}
                         </th>
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_8'] ?? __('lang_v1.custom_field', ['number' => 8]) }}
                         </th>
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_9'] ?? __('lang_v1.custom_field', ['number' => 9]) }}
                         </th>
-                        <th>
+                        <th class="tb-col-150">
                             {{ $custom_labels['contact']['custom_field_10'] ?? __('lang_v1.custom_field', ['number' => 10]) }}
                         </th>
                     </tr>
