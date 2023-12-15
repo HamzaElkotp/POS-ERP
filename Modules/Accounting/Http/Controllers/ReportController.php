@@ -24,7 +24,7 @@ class ReportController extends Controller
      * @return void
      */
     public function __construct(AccountingUtil $accountingUtil, BusinessUtil $businessUtil,
-    ModuleUtil $moduleUtil)
+        ModuleUtil $moduleUtil)
     {
         $this->accountingUtil = $accountingUtil;
         $this->businessUtil = $businessUtil;
@@ -40,17 +40,19 @@ class ReportController extends Controller
     {
         $business_id = request()->session()->get('user.business_id');
 
-        if (! (auth()->user()->can('superadmin') ||
-            $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
-            ! (auth()->user()->can('accounting.view_reports'))) {
+        if (
+            !(auth()->user()->can('superadmin') ||
+                $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
+            !(auth()->user()->can('accounting.view_reports'))
+        ) {
             abort(403, 'Unauthorized action.');
         }
 
         $first_account = AccountingAccount::where('business_id', $business_id)
-                            ->where('status', 'active')
-                            ->first();
+            ->where('status', 'active')
+            ->first();
         $ledger_url = null;
-        if (! empty($first_account)) {
+        if (!empty($first_account)) {
             $ledger_url = route('accounting.ledger', $first_account);
         }
 
@@ -64,46 +66,59 @@ class ReportController extends Controller
      * @return Response
      */
 
-     public function get_acc_trans()
-     {
+    public function get_acc_trans()
+    {
         $business_id = request()->session()->get('user.business_id');
         $quods = AccountingAccountsTransaction::where('business_id1', $business_id)
-        ->get();
+            ->get();
 
         // dd( $quods);
         return view('accounting::report.get_acc_trans', compact('quods'));
-     }
+    }
     public function trialBalance()
     {
         $business_id = request()->session()->get('user.business_id');
+        // dd($business_id);
 
-        if (! (auth()->user()->can('superadmin') ||
-            $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
-            ! (auth()->user()->can('accounting.view_reports'))) {
+        if (
+            !(auth()->user()->can('superadmin') ||
+                $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
+            !(auth()->user()->can('accounting.view_reports'))
+        ) {
             abort(403, 'Unauthorized action.');
         }
 
-        if (! empty(request()->start_date) && ! empty(request()->end_date)) {
+        if (!empty(request()->start_date) && !empty(request()->end_date)) {
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+
+            // dd($start_date);
+
         } else {
             $fy = $this->businessUtil->getCurrentFinancialYear($business_id);
             $start_date = $fy['start'];
             $end_date = $fy['end'];
+
         }
 
-        $accounts = AccountingAccount::join('accounting_accounts_transactions as AAT',
-                                'AAT.accounting_account_id', '=', 'accounting_accounts.id')
-                            ->where('business_id', $business_id)
-                            ->whereDate('AAT.operation_date', '>=', $start_date)
-                            ->whereDate('AAT.operation_date', '<=', $end_date)
-                            ->select(
-                                DB::raw("SUM(IF(AAT.type = 'credit', AAT.amount, 0)) as credit_balance"),
-                                DB::raw("SUM(IF(AAT.type = 'debit', AAT.amount, 0)) as debit_balance"),
-                                'accounting_accounts.name'
-                            )
-                            ->groupBy('accounting_accounts.name')
-                            ->get();
+        // dd($start_date);
+        $account2 = AccountingAccount::
+            // ::where('level', 4)
+            leftJoin('accounting_accounts_transactions as AAT',
+                'AAT.accounting_account_id', '=', 'accounting_accounts.id')
+            ->where('business_id', $business_id)
+            ->whereDate('AAT.operation_date', '>=', $start_date)
+            ->whereDate('AAT.operation_date', '<=', $end_date)
+            ->select(
+                DB::raw("SUM(IF(AAT.type = 'credit', AAT.amount, 0)) as credit_balance"),
+                DB::raw("SUM(IF(AAT.type = 'debit', AAT.amount, 0)) as debit_balance"),
+                'accounting_accounts.name'
+            )
+            ->groupBy('accounting_accounts.name')
+            ->get();
+        $accounts = AccountingAccount::where('business_id', $business_id)
+            ->whereHas('transactions')
+            ->get();
 
         return view('accounting::report.trial_balance')
             ->with(compact('accounts', 'start_date', 'end_date'));
@@ -118,13 +133,23 @@ class ReportController extends Controller
     {
         $business_id = request()->session()->get('user.business_id');
 
-        if (! (auth()->user()->can('superadmin') ||
-            $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
-            ! (auth()->user()->can('accounting.view_reports'))) {
+        $accounts = AccountingAccount::where('business_id', $business_id)
+            ->with('child_accounts')
+            ->with('transac_sum')
+            ->whereHas('transactions')
+            // ->where('level', '=', 5)
+            ->whereIn('account_primary_type', ['liability', 'asset'])
+            ->get();
+
+        // dd($accounts);
+        if (
+            !(auth()->user()->can('superadmin') ||
+                $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
+            !(auth()->user()->can('accounting.view_reports'))
+        ) {
             abort(403, 'Unauthorized action.');
         }
-
-        if (! empty(request()->start_date) && ! empty(request()->end_date)) {
+        if (!empty(request()->start_date) && !empty(request()->end_date)) {
             $start_date = request()->start_date;
             $end_date = request()->end_date;
         } else {
@@ -133,55 +158,90 @@ class ReportController extends Controller
             $end_date = $fy['end'];
         }
 
-        $balance_formula = $this->accountingUtil->balanceFormula();
+        // $balance_formula = $this->accountingUtil->balanceFormula();
 
-        $assets = AccountingAccount::join('accounting_accounts_transactions as AAT',
-                                'AAT.accounting_account_id', '=', 'accounting_accounts.id')
-                    ->join('accounting_account_types as AATP',
-                                'AATP.id', '=', 'accounting_accounts.account_sub_type_id')
-                    ->whereDate('AAT.operation_date', '>=', $start_date)
-                    ->whereDate('AAT.operation_date', '<=', $end_date)
-                    ->select(DB::raw($balance_formula), 'accounting_accounts.name', 'AATP.name as sub_type')
-                    ->where('accounting_accounts.business_id', $business_id)
-                    ->whereIn('accounting_accounts.account_primary_type', ['asset'])
-                    ->groupBy('accounting_accounts.name')
-                    ->get();
+        // $assets = AccountingAccount::join('accounting_accounts_transactions as AAT',
+        //     'AAT.accounting_account_id', '=', 'accounting_accounts.id')
+        //     ->join('accounting_account_types as AATP',
+        //         'AATP.id', '=', 'accounting_accounts.account_sub_type_id')
+        //     ->whereDate('AAT.operation_date', '>=', $start_date)
+        //     ->whereDate('AAT.operation_date', '<=', $end_date)
+        //     ->select(DB::raw($balance_formula), 'accounting_accounts.name', 'AATP.name as sub_type')
+        //     ->where('accounting_accounts.business_id', $business_id)
+        //     ->whereIn('accounting_accounts.account_primary_type', ['asset'])
+        //     ->groupBy('accounting_accounts.name')
+        //     ->get();
 
-        $liabilities = AccountingAccount::join('accounting_accounts_transactions as AAT',
-                                'AAT.accounting_account_id', '=', 'accounting_accounts.id')
-                    ->join('accounting_account_types as AATP',
-                                'AATP.id', '=', 'accounting_accounts.account_sub_type_id')
-                    ->whereDate('AAT.operation_date', '>=', $start_date)
-                    ->whereDate('AAT.operation_date', '<=', $end_date)
-                    ->select(DB::raw($balance_formula), 'accounting_accounts.name', 'AATP.name as sub_type')
-                    ->where('accounting_accounts.business_id', $business_id)
-                    ->whereIn('accounting_accounts.account_primary_type', ['liability'])
-                    ->groupBy('accounting_accounts.name')
-                    ->get();
+        // $liabilities = AccountingAccount::join('accounting_accounts_transactions as AAT',
+        //     'AAT.accounting_account_id', '=', 'accounting_accounts.id')
+        //     ->join('accounting_account_types as AATP',
+        //         'AATP.id', '=', 'accounting_accounts.account_sub_type_id')
+        //     ->whereDate('AAT.operation_date', '>=', $start_date)
+        //     ->whereDate('AAT.operation_date', '<=', $end_date)
+        //     ->select(DB::raw($balance_formula), 'accounting_accounts.name', 'AATP.name as sub_type')
+        //     ->where('accounting_accounts.business_id', $business_id)
+        //     ->whereIn('accounting_accounts.account_primary_type', ['liability'])
+        //     ->groupBy('accounting_accounts.name')
+        //     ->get();
 
-        $equities = AccountingAccount::join('accounting_accounts_transactions as AAT',
-                                'AAT.accounting_account_id', '=', 'accounting_accounts.id')
-                    ->join('accounting_account_types as AATP',
-                                'AATP.id', '=', 'accounting_accounts.account_sub_type_id')
-                    ->whereDate('AAT.operation_date', '>=', $start_date)
-                    ->whereDate('AAT.operation_date', '<=', $end_date)
-                    ->select(DB::raw($balance_formula), 'accounting_accounts.name', 'AATP.name as sub_type')
-                    ->where('accounting_accounts.business_id', $business_id)
-                    ->whereIn('accounting_accounts.account_primary_type', ['equity'])
-                    ->groupBy('accounting_accounts.name')
-                    ->get();
+        // $equities = AccountingAccount::join('accounting_accounts_transactions as AAT',
+        //     'AAT.accounting_account_id', '=', 'accounting_accounts.id')
+        //     ->join('accounting_account_types as AATP',
+        //         'AATP.id', '=', 'accounting_accounts.account_sub_type_id')
+        //     ->whereDate('AAT.operation_date', '>=', $start_date)
+        //     ->whereDate('AAT.operation_date', '<=', $end_date)
+        //     ->select(DB::raw($balance_formula), 'accounting_accounts.name', 'AATP.name as sub_type')
+        //     ->where('accounting_accounts.business_id', $business_id)
+        //     ->whereIn('accounting_accounts.account_primary_type', ['equity'])
+        //     ->groupBy('accounting_accounts.name')
+        //     ->get();
 
         return view('accounting::report.balance_sheet')
-            ->with(compact('assets', 'liabilities', 'equities', 'start_date', 'end_date'));
+            ->with(compact('accounts', 'start_date', 'end_date'));
+        // ->with(compact('assets', 'liabilities', 'equities', 'start_date', 'end_date'));
+    }
+    public function income_list()
+    {
+        $business_id = request()->session()->get('user.business_id');
+
+        $accounts = AccountingAccount::where('business_id', $business_id)
+            ->with('child_accounts')
+            ->with('transac_sum')
+            ->whereHas('transactions')
+            // ->where('level', '=', 5)
+            ->whereIn('account_primary_type', ['expenses', 'income'])
+            ->get();
+
+        // dd($accounts);
+        if (
+            !(auth()->user()->can('superadmin') ||
+                $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
+            !(auth()->user()->can('accounting.view_reports'))
+        ) {
+            abort(403, 'Unauthorized action.');
+        }
+        if (!empty(request()->start_date) && !empty(request()->end_date)) {
+            $start_date = request()->start_date;
+            $end_date = request()->end_date;
+        } else {
+            $fy = $this->businessUtil->getCurrentFinancialYear($business_id);
+            $start_date = $fy['start'];
+            $end_date = $fy['end'];
+        }
+
+        return view('accounting::report.income_list')
+            ->with(compact('accounts', 'start_date', 'end_date'));
     }
 
     public function accountReceivableAgeingReport()
     {
         $business_id = request()->session()->get('user.business_id');
 
-        if (! (auth()->user()->can('superadmin') ||
-            $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
-            ! (auth()->user()->can('accounting.view_reports'))) {
+        if (
+            !(auth()->user()->can('superadmin') ||
+                $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
+            !(auth()->user()->can('accounting.view_reports'))
+        ) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -192,67 +252,73 @@ class ReportController extends Controller
         $business_locations = BusinessLocation::forDropdown($business_id, true);
 
         return view('accounting::report.account_receivable_ageing_report')
-        ->with(compact('report_details', 'business_locations'));
+            ->with(compact('report_details', 'business_locations'));
     }
 
     public function accountPayableAgeingReport()
     {
         $business_id = request()->session()->get('user.business_id');
 
-        if (! (auth()->user()->can('superadmin') ||
-            $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
-            ! (auth()->user()->can('accounting.view_reports'))) {
+        if (
+            !(auth()->user()->can('superadmin') ||
+                $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
+            !(auth()->user()->can('accounting.view_reports'))
+        ) {
             abort(403, 'Unauthorized action.');
         }
 
         $location_id = request()->input('location_id', null);
         $report_details = $this->accountingUtil->getAgeingReport($business_id, 'purchase', 'contact',
-        $location_id);
+            $location_id);
         $business_locations = BusinessLocation::forDropdown($business_id, true);
 
         return view('accounting::report.account_payable_ageing_report')
-        ->with(compact('report_details', 'business_locations'));
+            ->with(compact('report_details', 'business_locations'));
     }
 
     public function accountReceivableAgeingDetails()
     {
         $business_id = request()->session()->get('user.business_id');
 
-        if (! (auth()->user()->can('superadmin') ||
-            $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
-            ! (auth()->user()->can('accounting.view_reports'))) {
+        if (
+            !(auth()->user()->can('superadmin') ||
+                $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
+            !(auth()->user()->can('accounting.view_reports'))
+        ) {
             abort(403, 'Unauthorized action.');
         }
 
         $location_id = request()->input('location_id', null);
 
         $report_details = $this->accountingUtil->getAgeingReport($business_id, 'sell', 'due_date',
-        $location_id);
+            $location_id);
 
         $business_locations = BusinessLocation::forDropdown($business_id, true);
 
         return view('accounting::report.account_receivable_ageing_details')
-        ->with(compact('business_locations', 'report_details'));
+            ->with(compact('business_locations', 'report_details'));
     }
 
     public function accountPayableAgeingDetails()
     {
         $business_id = request()->session()->get('user.business_id');
 
-        if (! (auth()->user()->can('superadmin') ||
-            $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
-            ! (auth()->user()->can('accounting.view_reports'))) {
+        if (
+            !(auth()->user()->can('superadmin') ||
+                $this->moduleUtil->hasThePermissionInSubscription($business_id, 'accounting_module')) ||
+            !(auth()->user()->can('accounting.view_reports'))
+        ) {
             abort(403, 'Unauthorized action.');
         }
 
         $location_id = request()->input('location_id', null);
 
         $report_details = $this->accountingUtil->getAgeingReport($business_id, 'purchase', 'due_date',
-        $location_id);
+            $location_id);
 
         $business_locations = BusinessLocation::forDropdown($business_id, true);
 
         return view('accounting::report.account_payable_ageing_details')
-        ->with(compact('business_locations', 'report_details'));
+            ->with(compact('business_locations', 'report_details'));
     }
 }

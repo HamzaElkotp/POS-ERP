@@ -576,11 +576,13 @@ class ProductController extends Controller
 
             $product = Product::create($product_details);
             $items = array();
-            if ($this->moduleUtil->isModuleEnabled('account')) {
+            // if ($this->moduleUtil->isModuleEnabled('account')) {
 
-                $sph_from = $request->sph_from_id;
-                $sph_to = $request->sph_to_id;
+            $sph_from = $request->sph_from_id;
+            $sph_to = $request->sph_to_id;
 
+            // dd($sph_from);
+            if ($sph_from != "يرجى الإختيار" && $sph_to != "يرجى الإختيار") {
                 for ($i = $sph_from; $i >= $sph_from, $i <= $sph_to; $i += 0.25) {
                     $items[] = ['product_id' => $product->id, 'sph' => $i];
                     // array_push($i,$len->id);
@@ -589,7 +591,9 @@ class ProductController extends Controller
                 $len_diam = ProductsDiam::insert($items);
                 $len_diam2 = ProductsDiam2::insert($items);
                 $len_diam3 = ProductsDiam3::insert($items);
+
             }
+            // }
 
             if (empty(trim($request->input('sku')))) {
                 $sku = $this->productUtil->generateProductSku($product->id);
@@ -2020,7 +2024,7 @@ class ProductController extends Controller
                 $search_fields,
                 $check_qty
             );
-
+            // dd(json_encode($result))
             return json_encode($result);
         }
     }

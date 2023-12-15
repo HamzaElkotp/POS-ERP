@@ -10,7 +10,20 @@ class AccountingAccountsTransaction extends Model
 
     public function account()
     {
-        return $this->belongsTo('Modules\Accounting\Entities\AccountingAccount', 'accounting_account_id');
+        return $this->belongsTo(\Modules\Accounting\Entities\AccountingAccount::class, 'accounting_account_id');
+    }
+    public function total_debit($start_date, $end_date, $business_id)
+    {
+        return AccountingAccountsTransaction::where('business_id', '=', $business_id)
+
+            ->where('type', 'debit')
+            ->sum('amount');
+    }
+    public function total_credit($start_date, $end_date, $business_id)
+    {
+        return AccountingAccountsTransaction::where('business_id', '=', $business_id)
+            ->where('type', 'credit')
+            ->sum('amount');
     }
 
     /**
@@ -24,15 +37,15 @@ class AccountingAccountsTransaction extends Model
 
         $transaction->amount = $data['amount'];
         $transaction->accounting_account_id = $data['accounting_account_id'];
-        $transaction->transaction_id = ! empty($data['transaction_id']) ? $data['transaction_id'] : null;
+        $transaction->transaction_id = !empty($data['transaction_id']) ? $data['transaction_id'] : null;
         $transaction->business_id1 = $data['business_id1'];
         $transaction->acc_trans_mapping_id = $data['acc_trans_mapping_id'];
         $transaction->type = $data['type'];
-        $transaction->sub_type = ! empty($data['sub_type']) ? $data['sub_type'] : null;
-        $transaction->map_type = ! empty($data['map_type']) ? $data['map_type'] : null;
-        $transaction->operation_date = ! empty($data['operation_date']) ? $data['operation_date'] : \Carbon::now();
+        $transaction->sub_type = !empty($data['sub_type']) ? $data['sub_type'] : null;
+        $transaction->map_type = !empty($data['map_type']) ? $data['map_type'] : null;
+        $transaction->operation_date = !empty($data['operation_date']) ? $data['operation_date'] : \Carbon::now();
         $transaction->created_by = $data['created_by'];
-        $transaction->note = ! empty($data['note']) ? $data['note'] : null;
+        $transaction->note = !empty($data['note']) ? $data['note'] : null;
 
         return $transaction->save();
     }
@@ -51,13 +64,13 @@ class AccountingAccountsTransaction extends Model
                 'transaction_payment_id' => $data['transaction_payment_id'],
             ],
             ['accounting_account_id' => $data['accounting_account_id'],
-             'amount' => $data['amount'],
-                'type' => $data['type'], 
+                'amount' => $data['amount'],
+                'type' => $data['type'],
                 'sub_type' => $data['sub_type'],
-                 'created_by' => $data['created_by'],
-                 'business_id1' => $data['business_id1'],
-                 'acc_trans_mapping_id' => $data['acc_trans_mapping_id'],
-                  'operation_date' => $data['operation_date'],
+                'created_by' => $data['created_by'],
+                'business_id1' => $data['business_id1'],
+                'acc_trans_mapping_id' => $data['acc_trans_mapping_id'],
+                'operation_date' => $data['operation_date'],
             ]
         );
         // dd( $transaction);

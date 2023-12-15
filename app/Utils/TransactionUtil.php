@@ -45,6 +45,7 @@ class TransactionUtil extends Util
         $invoice_no = !empty($input['invoice_no']) ? $input['invoice_no'] : $this->getInvoiceNumber($business_id, $input['status'], $input['location_id'], $invoice_scheme_id, $sale_type);
 
         $final_total = $uf_data ? $this->num_uf($input['final_total']) : $input['final_total'];
+        $tot_purch = $uf_data ? $this->num_uf($input['tot_purch']) : $input['tot_purch'];
 
         $pay_term_number = isset($input['pay_term_number']) ? $input['pay_term_number'] : null;
         $pay_term_type = isset($input['pay_term_type']) ? $input['pay_term_type'] : null;
@@ -73,6 +74,7 @@ class TransactionUtil extends Util
             'discount_amount' => $uf_data ? $this->num_uf($input['discount_amount']) : $input['discount_amount'],
             'tax_amount' => $invoice_total['tax'],
             'final_total' => $final_total,
+            'tot_purch' => $tot_purch,
             'additional_notes' => !empty($input['sale_note']) ? $input['sale_note'] : null,
             'staff_note' => !empty($input['staff_note']) ? $input['staff_note'] : null,
             'created_by' => $user_id,
@@ -280,7 +282,7 @@ class TransactionUtil extends Util
      */
     public function createOrUpdateSellLines($transaction, $products, $location_id, $return_deleted = false, $status_before = null, $extra_line_parameters = [], $uf_data = true)
     {
-
+        // dd($products);
         $lines_formatted = [];
         $modifiers_array = [];
         $edit_ids = [0];
@@ -336,7 +338,8 @@ class TransactionUtil extends Util
                                         'l_d_cyl' => $product['l_d_cyl'],
                                         'l_d_axi' => $product['l_d_axi'],
                                         'l_rd_cyl' => $product['l_rd_cyl'],
-                                        'l_rd_axi' => $product['l_rd_axi']
+                                        'l_rd_axi' => $product['l_rd_axi'],
+                                        'purch_price' => $product['purch_price']
                                     ]);
                                 }
                             }
@@ -401,7 +404,9 @@ class TransactionUtil extends Util
                     'l_d_cyl' => $product['l_d_cyl'],
                     'l_d_axi' => $product['l_d_axi'],
                     'l_rd_cyl' => $product['l_rd_cyl'],
-                    'l_rd_axi' => $product['l_rd_axi']
+                    'l_rd_axi' => $product['l_rd_axi'],
+                    'purch_price' => $product['purch_price']
+
 
                 ];
                 self::len_quant(

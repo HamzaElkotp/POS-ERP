@@ -113,6 +113,13 @@
         @if (!empty($sale_type))
             <input type="hidden" id="sale_type" name="type" value="{{ $sale_type }}">
         @endif
+        <div>
+            <label for="">Tot Purch</label>
+            <input type="text" name="tot_purch" id="tot_purch" value="">
+            <span class="tot_purch"></span>
+
+        </div>
+
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 @component('components.widget', ['class' => 'box-solid'])
@@ -1010,7 +1017,7 @@
                             <input type="hidden" name="round_off_amount" id="round_off_amount" value=0>
                         @endif
                         <div><b>@lang('sale.total_payable'): </b>
-                            <input type="" name="final_total" id="final_total_input">
+                            <input type="" name="final_total" id="$final_total">
                             <span id="total_payable">0</span>
                         </div>
                     </div>
@@ -1209,7 +1216,6 @@
 
         {!! Form::close() !!}
     </section>
-
     <div class="modal fade contact_modal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
         @include('contact.create', ['quick_add' => true])
     </div>

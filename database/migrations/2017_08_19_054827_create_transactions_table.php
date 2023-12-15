@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -31,6 +30,7 @@ return new class extends Migration
             $table->decimal('tax_amount', 22, 4)->default(0);
             $table->enum('discount_type', ['fixed', 'percentage'])->nullable();
             $table->decimal('discount_amount', 22, 4)->default(0);
+            $table->decimal('purch_total', 22, 4)->default(0);
             $table->string('shipping_details')->nullable();
             $table->decimal('shipping_charges', 22, 4)->default(0);
             $table->text('additional_notes')->nullable();

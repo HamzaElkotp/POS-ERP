@@ -10,7 +10,8 @@ return [
     'level' => 'المستوي',
     'code' => 'كود الحساب',
     'code_help' => '',
-    
+    'income_list' => 'قائمه الدخل',
+
     'non_current_assets' => 'الاصول الغير المتداولة',
     'accounts_payable' => 'حسابات قابلة للدفع (A/P)',
     'credit_card' => 'بطاقة الائتمان',
@@ -436,7 +437,7 @@ return [
     'suppliers_acc_id' => 'حساب الموردين',
     'value_added_tax_on_sales_acc_id' => 'حساب ضريبه القيمه المضافه علي المبيعات',
     'shipping_revenue_acc_id' => 'حساب ايرادات شحن    ',
-    
+
     'sales_tax_acc_id' => 'حساب ضريبه المبيعات',
     'sales_perc_acc_id' => 'نسبه ضريبه المبيعات',
     'purch_tax_acc_id' => 'حساب ضريبه المشتريانسبه الضريبهت',
@@ -455,7 +456,7 @@ return [
     'stock_acc_id' => 'حساب المخزون',
     'damaged_stock_acc_id' => 'حساب مخزن التالف',
     'ingred_store_acc_id' => 'حساب مخزن الخامات',
-    
+
     'purch' => 'ضبط حسابات المشتريات مع حسابات شجرة الحسابات',
     'sale' => 'ضبط حسابات المبيعات مع حسابات شجرة الحسابات',
     'ohda' => 'ضبط حسابات العهد والسلف',

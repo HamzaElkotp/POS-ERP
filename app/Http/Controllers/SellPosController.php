@@ -330,7 +330,7 @@ class SellPosController extends Controller
         // dd($request);
         $user_id = $request->session()->get('user.id');
         $business_id = $request->session()->get('user.business_id');
-        $transaction_data = $request->only(['ref_no', 'status', 'contact_id', 'transaction_date', 'total_before_tax', 'location_id', 'discount_type', 'discount_amount', 'tax_id', 'tax_amount', 'shipping_details', 'shipping_charges', 'final_total', 'additional_notes', 'exchange_rate', 'pay_term_number', 'pay_term_type', 'purchase_order_ids']);
+        $transaction_data = $request->only(['ref_no', 'status', 'contact_id', 'transaction_date', 'total_before_tax', 'location_id', 'discount_type', 'discount_amount', 'tax_id', 'tax_amount', 'shipping_details', 'shipping_charges', 'final_total', 'additional_notes', 'exchange_rate', 'pay_term_number', 'pay_term_type', 'purchase_order_ids', 'tot_purch']);
         //    $d = gmp_init($request->final_total);
         //    $g = (int)$request->sub_total_l;
         // //    $v = $d + $g;
@@ -418,6 +418,7 @@ class SellPosController extends Controller
                 'discount_amount' => $input['discount_amount'],
             ];
             $invoice_total = $this->productUtil->calculateInvoiceTotal($input['products'], $input['tax_rate_id'], $discount);
+            $purch_tot = $this->productUtil->calculateInvoicePurchTotal($input['products']);
 
             DB::beginTransaction();
 
@@ -519,7 +520,7 @@ class SellPosController extends Controller
             }
             $input['final_total'] = (float) $transaction_data['final_total'] + (float) $request->input('sub_total_l') + (float) $request->input('sub_total_r');
             // $input['change_return'] = $input['change_return'] + $request->input('sub_total_l') + $request->input('sub_total_r');
-
+            // dd($transaction_data);
 
             $invoice_total['total_before_tax'] = (float) $invoice_total['total_before_tax'] + (float) $request->input('sub_total_l') + (float) $request->input('sub_total_r');
             $invoice_total['fin_total'] = (float) $transaction_data['final_total'] + (float) $request->input('sub_total_l') + (float) $request->input('sub_total_r');
@@ -529,76 +530,6 @@ class SellPosController extends Controller
             $input['document'] = $this->transactionUtil->uploadFile($request, 'sell_document', 'documents');
 
             $transaction = $this->transactionUtil->createSellTransaction($business_id, $input, $invoice_total, $user_id);
-            // ======================= حفظ قيد تلقائي  ====================
-            // dd( $transaction);
-
-            // if ($this->moduleUtil->isModuleEnabled('account')) {
-
-            //     $len_trans = [];
-            //     $len_trans['len_id'] = $request->input('len_id');
-            //     $len_trans['transaction_id'] = $transaction->id;
-            //     $len_trans['price'] = $request->input('price_l');
-            //     $len_trans['purch_price'] = $request->input('purch_price_l');
-            //     $len_trans['sph'] = $request->input('sph_1_l');
-            //     $len_trans['cyl'] = $request->input('cyl_1_l');
-            //     $len_trans['sub_total'] = $request->input('sub_total_l');
-            //     $len_trans['disc'] = $request->input('disc_l');
-            //     $len_trans['lens_diam_id'] = $request->input('lens_diam_id_l');
-            //     $len_trans['quantity'] = $request->input('quant_l');
-            //     // dd($len_trans);
-            //     LenTransaction::create($len_trans);
-
-            //     $len_trans = [];
-            //     $len_trans['len_id'] = $request->input('len_id');
-            //     $len_trans['transaction_id'] = $transaction->id;
-            //     $len_trans['price'] = $request->input('price_r');
-            //     $len_trans['purch_price'] = $request->input('purch_price_r');
-            //     $len_trans['sph'] = $request->input('sph_1_r');
-            //     $len_trans['cyl'] = $request->input('cyl_1_r');
-            //     $len_trans['sub_total'] = $request->input('sub_total_r');
-            //     $len_trans['disc'] = $request->input('disc_r');
-            //     $len_trans['lens_diam_id'] = $request->input('lens_diam_id_r');
-            //     $len_trans['quantity'] = $request->input('quant_r');
-
-            //     LenTransaction::create($len_trans);
-
-            //     $len1 = $request->input('lens_diam_id_r');
-            //     $cyl_r = $request->input('cyl_1_r');
-            //     $quant_r = $request->input('quant_r');
-
-            //     $store1 = DB::table('lens_diam')
-            //         ->where('id', '=', $len1)->get();
-
-            //     $store2 = DB::table('lens_diam')
-            //         ->where('id', '=', $len1);
-
-            //     foreach ($store1 as $disc) {
-
-            //         $stck = $disc->$cyl_r;
-
-            //         $store2->update([$cyl_r => $stck - $quant_r]);
-
-            //     }
-
-            //     $len1 = $request->input('lens_diam_id_l');
-            //     $cyl_l = $request->input('cyl_1_l');
-            //     $quant_l = $request->input('quant_l');
-
-            //     $store1 = DB::table('lens_diam')
-            //         ->where('id', '=', $len1)->get();
-
-
-            //     $store2 = DB::table('lens_diam')
-            //         ->where('id', '=', $len1);
-            //     foreach ($store1 as $disc) {
-
-            //         $stck = $disc->$cyl_l;
-
-            //         $store2->update([$cyl_l => $stck - $quant_l]);
-
-            //     }
-            // }
-            // ==================================
 
             $user_id = auth()->user()->id;
             $mapping = Mapping::where('business_id', $business_id)->get();
@@ -696,12 +627,12 @@ class SellPosController extends Controller
                 'operation_date' => \Carbon::now(),
             ];
 
-
+            // dd($request->tot_purch);
             $cost_of_goods = [
                 'accounting_account_id' => $mapping[0]['cost_of_goods_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-                'amount' => $transaction->total_before_tax,
+                'amount' => $request->tot_purch,
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'debit',
                 'business_id1' => $business_id,
@@ -757,17 +688,17 @@ class SellPosController extends Controller
                 'operation_date' => \Carbon::now(),
             ];
 
-            // dd(
-            //    $value_added_tax_on_sales_acc_id,
-            //    $shipping_revenue_acc_id,
-            //    $stock_acc_id,
-            //    $sales_revenue_acc_id,
-            //    $customers_acc_id_2,
-            //    $khazine_acc_id,
-            //    $cost_of_goods,
-            //    $discount_permitted_acc_id,
-            //    $customers_acc_id
-            // );
+            dd(
+               $value_added_tax_on_sales_acc_id,
+               $shipping_revenue_acc_id,
+               $stock_acc_id,
+               $sales_revenue_acc_id,
+               $customers_acc_id_2,
+               $khazine_acc_id,
+               $cost_of_goods,
+               $discount_permitted_acc_id,
+               $customers_acc_id
+            );
             if ($transaction->tax_amount) {
                 AccountingAccountsTransaction::createTransaction($value_added_tax_on_sales_acc_id);
 

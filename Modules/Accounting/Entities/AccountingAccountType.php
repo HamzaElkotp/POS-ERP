@@ -15,7 +15,7 @@ class AccountingAccountType extends Model
 
     public function getAccountTypeNameAttribute()
     {
-        $name = ! empty($this->business_id) ? $this->name : __('accounting::lang.'.$this->name);
+        $name = !empty($this->business_id) ? $this->name : __('accounting::lang.' . $this->name);
 
         return $name;
     }
@@ -26,8 +26,8 @@ class AccountingAccountType extends Model
             return '';
         }
 
-        $descriptiion = ! empty($this->business_id) ?
-        $this->descriptiion : __('accounting::lang.'.$this->descriptiion);
+        $descriptiion = !empty($this->business_id) ?
+            $this->descriptiion : __('accounting::lang.' . $this->descriptiion);
 
         return $descriptiion;
     }
@@ -43,12 +43,12 @@ class AccountingAccountType extends Model
     public static function accounting_primary_type()
     {
         $accounting_primary_type = [
-            'asset' => ['id' => 1,'label' => __('accounting::lang.asset')],
-          'liability' => ['id' => 2,'label' => __('accounting::lang.liability')],
+            'asset' => ['id' => 1, 'label' => __('accounting::lang.asset')],
+            'liability' => ['id' => 2, 'label' => __('accounting::lang.liability')],
 
             'expenses' => ['id' => 3, 'label' => __('accounting::lang.expenses')],
-            'income' => ['id' => 4,'label' => __('accounting::lang.income')],
-            'equity' => ['id' => 5,'label' => __('accounting::lang.equity')],
+            'income' => ['id' => 4, 'label' => __('accounting::lang.income')],
+            'equity' => ['id' => 5, 'label' => __('accounting::lang.equity')],
         ];
 
         return $accounting_primary_type;

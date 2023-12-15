@@ -504,6 +504,7 @@ class ProductUtil extends Util
             'p.barcode_type',
             'vld.qty_available',
             'variations.default_sell_price',
+            'variations.default_purchase_price',
             'variations.sell_price_inc_tax',
             'variations.id as variation_id',
             'variations.combo_variations',  //Used in combo products
@@ -681,6 +682,30 @@ class ProductUtil extends Util
 
         return $sku_prefix . str_pad($string, 4, '0', STR_PAD_LEFT);
     }
+    public function calculateInvoicePurchTotal($products, $uf_number = true)
+    {
+        if (empty($products)) {
+            return false;
+        }
+
+        $output = ['final_total' => 0];
+
+        //Sub Total
+        foreach ($products as $product) {
+            // dd($product);
+            $purch_price = $uf_number ? $this->num_uf($product['purch_price']) : $product['purch_price'];
+            $quantity = $uf_number ? $this->num_uf($product['quantity']) : $product['quantity'];
+
+            $output['final_total'] += $quantity * $purch_price;
+
+        }
+
+        //Calculate total
+        // $output['final_total'] = $output['purch_price'];
+
+        return $output;
+    }
+
 
     /**
      * Gives list of trending products
@@ -1239,117 +1264,118 @@ class ProductUtil extends Util
             $this->updatePurchaseOrderLine($purchase_line->purchase_order_line_id, $purchase_line->quantity, $old_qty);
         }
 
-        // $enabled_modules1 = !empty(session('business.enabled_modules')) ? session('business.enabled_modules') : [];
+        $enabled_modules1 = !empty(session('business.enabled_modules')) ? session('business.enabled_modules') : [];
 
         // $enabled_modules = array_merge($enabled_modules1, array_keys($package_modules));
 
         // if (in_array('lens_module', $enabled_modules)) {
 
-        // if ($data['sph'] != '' && $data['cyl'] != '') {
+        if ($data['sph'] != '' && $data['cyl'] != '') {
 
-        $len1 = $data['product_id'];
-        $sph = $data['sph'];
-        $cyl1 = $data['cyl'];
-        $quant = $data['quantity'];
-        $cyl = 0;
+            $len1 = $data['product_id'];
+            $sph = $data['sph'];
+            $cyl1 = $data['cyl'];
+            $quant = $data['quantity'];
+            $cyl = 0;
 
-        if ($cyl1 == '0.00') {
-            $cyl = '_s00';
-        }
+            if ($cyl1 == '0.00') {
+                $cyl = '_s00';
+            }
 
-        if ($cyl1 == '0.25') {
-            $cyl = '_s25';
-        }
-        if ($cyl1 == '0.50') {
-            $cyl = '_s50';
-        }
-        if ($cyl1 == '0.75') {
-            $cyl = '_s75';
-        }
-        if ($cyl1 == '1.00') {
-            $cyl = '_s100';
-        }
+            if ($cyl1 == '0.25') {
+                $cyl = '_s25';
+            }
+            if ($cyl1 == '0.50') {
+                $cyl = '_s50';
+            }
+            if ($cyl1 == '0.75') {
+                $cyl = '_s75';
+            }
+            if ($cyl1 == '1.00') {
+                $cyl = '_s100';
+            }
 
-        if ($cyl1 == '1.25') {
-            $cyl = '_s125';
-        }
-        if ($cyl1 == '1.50') {
-            $cyl = '_s150';
-        }
-        if ($cyl1 == '1.75') {
-            $cyl = '_s175';
-        }
-        if ($cyl1 == '2.00') {
-            $cyl = '_s200';
-        }
+            if ($cyl1 == '1.25') {
+                $cyl = '_s125';
+            }
+            if ($cyl1 == '1.50') {
+                $cyl = '_s150';
+            }
+            if ($cyl1 == '1.75') {
+                $cyl = '_s175';
+            }
+            if ($cyl1 == '2.00') {
+                $cyl = '_s200';
+            }
 
-        if ($cyl1 == '2.25') {
-            $cyl = '_s225';
-        }
-        if ($cyl1 == '2.50') {
-            $cyl = '_s250';
-        }
-        if ($cyl1 == '2.75') {
-            $cyl = '_s275';
-        }
-        if ($cyl1 == '3.00') {
-            $cyl = '_s300';
-        }
+            if ($cyl1 == '2.25') {
+                $cyl = '_s225';
+            }
+            if ($cyl1 == '2.50') {
+                $cyl = '_s250';
+            }
+            if ($cyl1 == '2.75') {
+                $cyl = '_s275';
+            }
+            if ($cyl1 == '3.00') {
+                $cyl = '_s300';
+            }
 
-        if ($cyl1 == '3.25') {
-            $cyl = '_s325';
-        }
-        if ($cyl1 == '3.50') {
-            $cyl = '_s350';
-        }
-        if ($cyl1 == '3.75') {
-            $cyl = '_s375';
-        }
-        if ($cyl1 == '4.00') {
-            $cyl = '_s400';
-        }
+            if ($cyl1 == '3.25') {
+                $cyl = '_s325';
+            }
+            if ($cyl1 == '3.50') {
+                $cyl = '_s350';
+            }
+            if ($cyl1 == '3.75') {
+                $cyl = '_s375';
+            }
+            if ($cyl1 == '4.00') {
+                $cyl = '_s400';
+            }
 
-        if ($cyl1 == '4.25') {
-            $cyl = '_s425';
-        }
-        if ($cyl1 == '4.50') {
-            $cyl = '_s450';
-        }
-        if ($cyl1 == '4.75') {
-            $cyl = '_s475';
-        }
-        if ($cyl1 == '5.00') {
-            $cyl = '_s500';
-        }
+            if ($cyl1 == '4.25') {
+                $cyl = '_s425';
+            }
+            if ($cyl1 == '4.50') {
+                $cyl = '_s450';
+            }
+            if ($cyl1 == '4.75') {
+                $cyl = '_s475';
+            }
+            if ($cyl1 == '5.00') {
+                $cyl = '_s500';
+            }
 
-        if ($cyl1 == '5.25') {
-            $cyl = '_s525';
-        }
-        if ($cyl1 == '5.50') {
-            $cyl = '_s550';
-        }
-        if ($cyl1 == '5.75') {
-            $cyl = '_s575';
-        }
-        if ($cyl1 == '6.00') {
-            $cyl = '_s600';
-        }
+            if ($cyl1 == '5.25') {
+                $cyl = '_s525';
+            }
+            if ($cyl1 == '5.50') {
+                $cyl = '_s550';
+            }
+            if ($cyl1 == '5.75') {
+                $cyl = '_s575';
+            }
+            if ($cyl1 == '6.00') {
+                $cyl = '_s600';
+            }
 
-        // dd($sph);
-        $store1 = DB::table('products_diam')
-            ->where('product_id', '=', $len1)
-            ->where('sph', '=', $sph)->get();
-        $store2 = DB::table('products_diam')
-            ->where('product_id', '=', $len1)
-            ->where('sph', '=', $sph);
-        // dd($store1, $store2);
+            // dd($sph);
+            $store1 = DB::table('products_diam')
+                ->where('product_id', '=', $len1)
+                ->where('sph', '=', $sph)->get();
+            $store2 = DB::table('products_diam')
+                ->where('product_id', '=', $len1)
+                ->where('sph', '=', $sph);
+            // dd($store1, $store2);
 
-        foreach ($store1 as $disc) {
+            foreach ($store1 as $disc) {
 
-            $stck = $disc->$cyl;
+                $stck = $disc->$cyl;
 
-            $store2->update([$cyl => $stck + $quant]);
+                $store2->update([$cyl => $stck + $quant]);
 
+            }
         }
         // }
         //unset deleted purchase lines

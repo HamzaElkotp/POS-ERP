@@ -10,6 +10,7 @@ return [
     'level' => 'Level',
     'code' => 'Account Code',
     'code_help' => '',
+    'income_list' => 'Income List',
     'non_current_assets' => 'Non-current assets',
     'accounts_payable' => 'Accounts Payable (A/P)',
     'credit_card' => 'Credit Card',

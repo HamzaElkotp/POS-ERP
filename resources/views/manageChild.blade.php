@@ -2,7 +2,8 @@
 
     @foreach ($childs as $child)
         <li>
-            {{ $child->id }}-{{ $child->name }}
+            <span style="color: red">{{ $child->level }}</span> -
+            {{ $child->code }}-{{ $child->name }}
             @if (!empty($child->gl_code))
                 ({{ $child->gl_code }})
             @endif
@@ -14,13 +15,12 @@
             @endif
             <span class="tree-actions">
                 @if ($child->level < $levels)
-                  <a class="btn btn-xs btn-default text-success  m-5 btn-modal" title="@lang('accounting::lang.add')"
-                    href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger1'], $child->id) }}"
-                    data-href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger1'], $child->id) }}"
-                    data-container="#create_account_modal">
-                    <i class="fas fa-plus"></i>
-                </a>
-  
+                    <a class="btn btn-xs btn-default text-success  m-5 btn-modal" title="@lang('accounting::lang.add')"
+                        href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger1'], $child->id) }}"
+                        data-href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger1'], $child->id) }}"
+                        data-container="#create_account_modal">
+                        <i class="fas fa-plus"></i>
+                    </a>
                 @endif
                 <a class="btn btn-xs btn-default text-success ledger-link" title="@lang('accounting::lang.ledger')"
                     href="{{ action([\Modules\Accounting\Http\Controllers\CoaController::class, 'ledger'], $child->id) }}">
