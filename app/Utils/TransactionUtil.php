@@ -46,7 +46,6 @@ class TransactionUtil extends Util
 
         $final_total = $uf_data ? $this->num_uf($input['final_total']) : $input['final_total'];
         $tot_purch = $uf_data ? $this->num_uf($input['tot_purch']) : $input['tot_purch'];
-
         $pay_term_number = isset($input['pay_term_number']) ? $input['pay_term_number'] : null;
         $pay_term_type = isset($input['pay_term_type']) ? $input['pay_term_type'] : null;
 

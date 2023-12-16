@@ -116,7 +116,7 @@
         <div>
             <label for="">Tot Purch</label>
             <input type="text" name="tot_purch" id="tot_purch" value="">
-            <span class="tot_purch"></span>
+            {{-- <span class="tot_purch"></span> --}}
 
         </div>
 

@@ -519,6 +519,11 @@ class SellPosController extends Controller
                 $input['res_waiter_id'] = request()->get('res_waiter_id');
             }
             $input['final_total'] = (float) $transaction_data['final_total'] + (float) $request->input('sub_total_l') + (float) $request->input('sub_total_r');
+
+            // dd($transaction_data['tot_purch']);
+
+            $input['tot_purch'] = $transaction_data['tot_purch'];
+
             // $input['change_return'] = $input['change_return'] + $request->input('sub_total_l') + $request->input('sub_total_r');
             // dd($transaction_data);
 
@@ -533,7 +538,7 @@ class SellPosController extends Controller
 
             $user_id = auth()->user()->id;
             $mapping = Mapping::where('business_id', $business_id)->get();
-            // dd($input);
+            // dd($transaction);
             // payment_account credit
 
             $value_added_tax_on_sales_acc_id = [
@@ -573,7 +578,7 @@ class SellPosController extends Controller
                 'accounting_account_id' => $mapping[0]['stock_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-                'amount' => $transaction->total_before_tax,
+                'amount' => $transaction->tot_purch,
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'credit',
                 'business_id1' => $business_id,
@@ -601,7 +606,7 @@ class SellPosController extends Controller
                 'accounting_account_id' => $mapping[0]['customers_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-                'amount' => $input['change_return'],
+                'amount' => $this->transactionUtil->num_uf($input['change_return']),
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'credit',
                 'business_id1' => $business_id,
@@ -611,13 +616,15 @@ class SellPosController extends Controller
                 'operation_date' => \Carbon::now(),
             ];
 
+            // dd($input['change_return']);
             //Deposit to will increase = debit
 
             $khazine_acc_id = [
                 'accounting_account_id' => $mapping[0]['khazine_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-                'amount' => $input['change_return'],
+                'amount' => $this->transactionUtil->num_uf($input['change_return']),
+
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'debit',
                 'business_id1' => $business_id,
@@ -632,7 +639,7 @@ class SellPosController extends Controller
                 'accounting_account_id' => $mapping[0]['cost_of_goods_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-                'amount' => $request->tot_purch,
+                'amount' => $transaction->tot_purch,
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'debit',
                 'business_id1' => $business_id,
@@ -688,17 +695,17 @@ class SellPosController extends Controller
                 'operation_date' => \Carbon::now(),
             ];
 
-            dd(
-               $value_added_tax_on_sales_acc_id,
-               $shipping_revenue_acc_id,
-               $stock_acc_id,
-               $sales_revenue_acc_id,
-               $customers_acc_id_2,
-               $khazine_acc_id,
-               $cost_of_goods,
-               $discount_permitted_acc_id,
-               $customers_acc_id
-            );
+            // dd(
+            //     // $value_added_tax_on_sales_acc_id,
+            //     // $shipping_revenue_acc_id,
+            //     // $stock_acc_id,
+            //     // $sales_revenue_acc_id,
+            //     $customers_acc_id_2,
+            //     $khazine_acc_id,
+            //     // $cost_of_goods,
+            //     // $discount_permitted_acc_id,
+            //     // $customers_acc_id
+            // );
             if ($transaction->tax_amount) {
                 AccountingAccountsTransaction::createTransaction($value_added_tax_on_sales_acc_id);
 
@@ -707,10 +714,12 @@ class SellPosController extends Controller
                 AccountingAccountsTransaction::createTransaction($shipping_revenue_acc_id);
 
             }
+
             if ($transaction->discount_amount) {
                 AccountingAccountsTransaction::createTransaction($discount_permitted_acc_id);
 
             }
+
             AccountingAccountsTransaction::createTransaction($stock_acc_id);
             AccountingAccountsTransaction::createTransaction($customers_acc_id);
             AccountingAccountsTransaction::createTransaction($sales_revenue_acc_id);
