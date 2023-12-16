@@ -32,6 +32,7 @@ return new class extends Migration {
             $table->decimal('discount_amount', 22, 4)->default(0);
             $table->decimal('purch_total', 22, 4)->default(0);
             $table->string('shipping_details')->nullable();
+            $table->string('tot_purch')->nullable();
             $table->decimal('shipping_charges', 22, 4)->default(0);
             $table->text('additional_notes')->nullable();
             $table->text('staff_note')->nullable();

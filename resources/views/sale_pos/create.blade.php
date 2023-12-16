@@ -37,6 +37,11 @@
             ]) !!}
 
 
+            <div hidden>
+                <label for="">Tot Purch</label>
+                <input type="text" name="tot_purch" id="tot_purch" value="">
+            </div>
+
 
             <div class="row mobile-reverse">
                 <div class="@if (empty($pos_settings['hide_product_suggestion'])) col-md-8 @else col-md-10 offset-md-1 @endif">

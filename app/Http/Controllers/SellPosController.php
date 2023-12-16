@@ -695,17 +695,17 @@ class SellPosController extends Controller
                 'operation_date' => \Carbon::now(),
             ];
 
-            // dd(
-            //     // $value_added_tax_on_sales_acc_id,
-            //     // $shipping_revenue_acc_id,
-            //     // $stock_acc_id,
-            //     // $sales_revenue_acc_id,
-            //     $customers_acc_id_2,
-            //     $khazine_acc_id,
-            //     // $cost_of_goods,
-            //     // $discount_permitted_acc_id,
-            //     // $customers_acc_id
-            // );
+            dd(
+                $value_added_tax_on_sales_acc_id,
+                $shipping_revenue_acc_id,
+                $stock_acc_id,
+                $sales_revenue_acc_id,
+                $customers_acc_id_2,
+                $khazine_acc_id,
+                $cost_of_goods,
+                $discount_permitted_acc_id,
+                $customers_acc_id
+            );
             if ($transaction->tax_amount) {
                 AccountingAccountsTransaction::createTransaction($value_added_tax_on_sales_acc_id);
 

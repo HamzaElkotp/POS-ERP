@@ -113,11 +113,9 @@
         @if (!empty($sale_type))
             <input type="hidden" id="sale_type" name="type" value="{{ $sale_type }}">
         @endif
-        <div>
+        <div hidden>
             <label for="">Tot Purch</label>
             <input type="text" name="tot_purch" id="tot_purch" value="">
-            {{-- <span class="tot_purch"></span> --}}
-
         </div>
 
         <div class="row">
