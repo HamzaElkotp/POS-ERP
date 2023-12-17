@@ -328,7 +328,7 @@ class SellPos1Controller extends Controller
     {
         $user_id = $request->session()->get('user.id');
         $business_id = $request->session()->get('user.business_id');
-        $transaction_data = $request->only(['ref_no', 'status', 'contact_id', 'transaction_date', 'total_before_tax', 'location_id', 'discount_type', 'discount_amount', 'tax_id', 'tax_amount', 'shipping_details', 'shipping_charges', 'final_total', 'additional_notes', 'exchange_rate', 'pay_term_number', 'pay_term_type', 'purchase_order_ids']);
+        $transaction_data = $request->only(['ref_no', 'status', 'contact_id', 'transaction_date', 'total_before_tax', 'location_id', 'discount_type', 'discount_amount', 'tax_id', 'tax_amount', 'shipping_details', 'shipping_charges', 'final_total', 'additional_notes', 'exchange_rate', 'pay_term_number', 'pay_term_type', 'purchase_order_ids','tot_purch']);
         //    $d = gmp_init($request->final_total);
         //    $g = (int)$request->sub_total_l;
         // //    $v = $d + $g;
@@ -529,72 +529,6 @@ class SellPos1Controller extends Controller
             $transaction = $this->transactionUtil->createSellTransaction($business_id, $input, $invoice_total, $user_id);
             // ======================= حفظ قيد تلقائي  ====================
             // dd( $transaction);
-            // $len_trans = [];
-            // $len_trans['len_id'] = $request->input('len_id');
-            // $len_trans['transaction_id'] = $transaction->id;
-            // $len_trans['price'] = $request->input('price_l');
-            // $len_trans['purch_price'] = $request->input('purch_price_l');
-            // $len_trans['sph'] = $request->input('sph_1_l');
-            // $len_trans['cyl'] = $request->input('cyl_1_l');
-            // $len_trans['sub_total'] = $request->input('sub_total_l');
-            // $len_trans['disc'] = $request->input('disc_l');
-            // $len_trans['lens_diam_id'] = $request->input('lens_diam_id_l');
-            // $len_trans['quantity'] = $request->input('quant_l');
-            //     // dd($len_trans);
-            //     LenTransaction::create($len_trans);
-
-            // $len_trans = [];
-            // $len_trans['len_id'] = $request->input('len_id');
-            // $len_trans['transaction_id'] = $transaction->id;
-            // $len_trans['price'] = $request->input('price_r');
-            // $len_trans['purch_price'] = $request->input('purch_price_r');
-            // $len_trans['sph'] = $request->input('sph_1_r');
-            // $len_trans['cyl'] = $request->input('cyl_1_r');
-            // $len_trans['sub_total'] = $request->input('sub_total_r');
-            // $len_trans['disc'] = $request->input('disc_r');
-            // $len_trans['lens_diam_id'] = $request->input('lens_diam_id_r');
-            // $len_trans['quantity'] = $request->input('quant_r');
-
-            // LenTransaction::create($len_trans);
-
-            // $len1 = $request->input('lens_diam_id_r');
-            // $cyl_r = $request->input('cyl_1_r');
-            // $quant_r = $request->input('quant_r');
-
-            // $store1 = DB::table('lens_diam')
-            //     ->where('id', '=', $len1)->get();
-
-            // $store2 = DB::table('lens_diam')
-            //     ->where('id', '=', $len1);
-
-            // foreach ($store1 as $disc) {
-
-            //     $stck = $disc->$cyl_r;
-
-            //     $store2->update([$cyl_r => $stck - $quant_r]);
-
-            // }
-
-            // $len1 = $request->input('lens_diam_id_l');
-            // $cyl_l = $request->input('cyl_1_l');
-            // $quant_l = $request->input('quant_l');
-
-            // $store1 = DB::table('lens_diam')
-            //     ->where('id', '=', $len1)->get();
-
-
-            // $store2 = DB::table('lens_diam')
-            //     ->where('id', '=', $len1);
-            // foreach ($store1 as $disc) {
-
-            //     $stck = $disc->$cyl_l;
-
-            //     $store2->update([$cyl_l => $stck - $quant_l]);
-
-            // }
-
-            // ==================================
-
             $user_id = auth()->user()->id;
             $mapping = Mapping::where('business_id', $business_id)->get();
             // dd($input);
@@ -637,7 +571,7 @@ class SellPos1Controller extends Controller
                 'accounting_account_id' => $mapping[0]['stock_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-                'amount' => $transaction->total_before_tax,
+                'amount' => $transaction->tot_purch,
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'credit',
                 'business_id1' => $business_id,
@@ -665,7 +599,7 @@ class SellPos1Controller extends Controller
                 'accounting_account_id' => $mapping[0]['customers_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-                'amount' => $input['change_return'],
+                'amount' => $this->transactionUtil->num_uf($input['change_return']),
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'credit',
                 'business_id1' => $business_id,
@@ -681,7 +615,7 @@ class SellPos1Controller extends Controller
                 'accounting_account_id' => $mapping[0]['khazine_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-                'amount' => $input['change_return'],
+                'amount' => $this->transactionUtil->num_uf($input['change_return']),
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'debit',
                 'business_id1' => $business_id,
@@ -696,7 +630,7 @@ class SellPos1Controller extends Controller
                 'accounting_account_id' => $mapping[0]['cost_of_goods_acc_id'],
                 'transaction_id' => $transaction->id,
                 'transaction_payment_id' => null,
-                'amount' => $transaction->total_before_tax,
+                'amount' => $transaction->tot_purch,
                 'acc_trans_mapping_id' => $acc_trans_mapping->id,
                 'type' => 'debit',
                 'business_id1' => $business_id,

@@ -455,59 +455,75 @@
             min-width: 70px !important;
         }
     </style>
-    <td>
-        <input class="tdd form-control full-widthed" name="products[{{ $row_count }}][r_d_sph]" type="text"
-            value="{{ old('r_d_sph', '0') }}">
-    </td>
-    <td>
-        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][r_d_cyl]"
-            value="{{ old('r_d_cyl', '0') }}">
-    </td>
-    <td>
-        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][r_d_axi]"
-            value="{{ old('r_d_axi', '0') }}">
-    </td>
-    <td>
-        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][r_rd_cyl]"
-            value="{{ old('r_rd_cyl', '0') }}">
-    </td>
-    <td>
-        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][r_rd_axi]"
-            value="{{ old('r_rd_axi', '0') }}">
-    </td>
-    <td>
-        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_d_sph]"
-            value="{{ old('l_d_sph', '0') }}">
-    </td>
-    <td>
-        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_d_cyl]"
-            value="{{ old('l_d_cyl', '0') }}">
-    </td>
-    <td>
-        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_d_axi]"
-            value="{{ old('l_d_axi', '0') }}">
-    </td>
-    <td>
-        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_rd_cyl]"
-            value="{{ old('l_rd_cyl', '0') }}">
-    </td>
-    <td>
-        <input class="tdd form-control full-widthed" type="text" name="products[{{ $row_count }}][l_rd_axi]"
-            value="{{ old('l_rd_axi', '0') }}">
-    </td>
+    <div class="text_container">
+        <button class="btn btn-primary lenss">عرض مواصفات العدسات</button>
+        <td>
+            <input class="tdd form-control full-widthed" name="products[{{ $row_count }}][r_d_sph]"
+                type="text" value="{{ old('r_d_sph', '0') }}">
+        </td>
+        <td>
+            <input class="tdd form-control full-widthed" type="text"
+                name="products[{{ $row_count }}][r_d_cyl]" value="{{ old('r_d_cyl', '0') }}">
+        </td>
+        <td>
+            <input class="tdd form-control full-widthed" type="text"
+                name="products[{{ $row_count }}][r_d_axi]" value="{{ old('r_d_axi', '0') }}">
+        </td>
+        <td>
+            <input class="tdd form-control full-widthed" type="text"
+                name="products[{{ $row_count }}][r_rd_cyl]" value="{{ old('r_rd_cyl', '0') }}">
+        </td>
+        <td>
+            <input class="tdd form-control full-widthed" type="text"
+                name="products[{{ $row_count }}][r_rd_axi]" value="{{ old('r_rd_axi', '0') }}">
+        </td>
+        <td>
+            <input class="tdd form-control full-widthed" type="text"
+                name="products[{{ $row_count }}][l_d_sph]" value="{{ old('l_d_sph', '0') }}">
+        </td>
+        <td>
+            <input class="tdd form-control full-widthed" type="text"
+                name="products[{{ $row_count }}][l_d_cyl]" value="{{ old('l_d_cyl', '0') }}">
+        </td>
+        <td>
+            <input class="tdd form-control full-widthed" type="text"
+                name="products[{{ $row_count }}][l_d_axi]" value="{{ old('l_d_axi', '0') }}">
+        </td>
+        <td>
+            <input class="tdd form-control full-widthed" type="text"
+                name="products[{{ $row_count }}][l_rd_cyl]" value="{{ old('l_rd_cyl', '0') }}">
+        </td>
+        <td>
+            <input class="tdd form-control full-widthed" type="text"
+                name="products[{{ $row_count }}][l_rd_axi]" value="{{ old('l_rd_axi', '0') }}">
+        </td>
 
-    <td>
-        <input class="tdd form-control full-widthed purch" type="text"
-            name="products[{{ $row_count }}][purch_price]" value="{{ $product->default_purchase_price }}">
-    <td>
-        <input class="tdd form-control pos_line_purch_total "
-            value="{{ @num_format($product->quantity_ordered * $product->default_purchase_price) }}">
-        <span class="display_currency pos_line_purch_total1 "
-            data-currency_symbol="true">{{ $product->quantity_ordered * $product->default_purchase_price }}</span>
+        <td hidden>
+            <input class="tdd form-control full-widthed purch" type="text"
+                name="products[{{ $row_count }}][purch_price]" value="{{ $product->default_purchase_price }}">
+        <td hidden>
+            <input class="tdd form-control pos_line_purch_total "
+                value="{{ @num_format($product->quantity_ordered * $product->default_purchase_price) }}">
+            <span class="display_currency pos_line_purch_total1 "
+                data-currency_symbol="true">{{ $product->quantity_ordered * $product->default_purchase_price }}</span>
 
-    </td>
+        </td>
 
+
+    </div>
     <td class="text-center v-center">
         <i class="fa-solid fa-trash-can text-danger pos_remove_row cursor-pointer" aria-hidden="true"></i>
     </td>
 </tr>
+<script>
+    $('.lenss ').click(function(e) {
+        // var $this =  $('.text_container .lens');
+        e.preventDefault();
+        if ($('.text_container .lens').hasClass("hidden")) {
+            $('.text_container .lens').removeClass("hidden").addClass("visible");
+
+        } else {
+            $('.text_container .lens').removeClass("visible").addClass("hidden");
+        }
+    });
+</script>
