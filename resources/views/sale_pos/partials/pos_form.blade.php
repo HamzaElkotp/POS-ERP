@@ -263,6 +263,13 @@
     @endforeach
 @endif
 <div class="row">
+
+    <div class="form-check form-switch d-flex justify-content-between" style="width: 200px !important;">
+        <label class="form-check-label" for="lens" style="font-weight: 500">Show</label>
+        <input class="form-check-input mx-4" type="checkbox" role="switch" id="lens" checked=true>
+        <label class="form-check-label" for="lens" style="font-weight: 500">Hide lens</label>
+    </div>
+
     <div class="col-sm-12 pos_product_div">
         <input type="hidden" name="sell_price_tax" id="sell_price_tax"
             value="{{ $business_details->sell_price_tax }}">
@@ -297,17 +304,17 @@
                     <th class="fs-4 fw-500 text-center col-md-2 tb-col-150">
                         <i class="fa-solid fa-dollar-sign text-cusTheme1"></i> @lang('sale.subtotal')
                     </th>
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-D-Sph</th>
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-D-Cyl</th>
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-D-Axi</th>
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-Rd-Cyl</th>
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>R-Rd-Axi</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>R-D-Sph</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>R-D-Cyl</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>R-D-Axi</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>R-Rd-Cyl</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>R-Rd-Axi</th>
 
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-D-Sph</th>
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-D-Cyl</th>
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-D-Axi</th>
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-Rd-Cyl</th>
-                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100">>L-Rd-Axi</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>L-D-Sph</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>L-D-Cyl</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>L-D-Axi</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>L-Rd-Cyl</th>
+                    <th class="fs-4 fw-500 text-center col-md-2 tb-col-100" col_to_hide>>L-Rd-Axi</th>
 
                     <th class="text-center col-md-2 tb-col-50"><i class="fas fa-times fs-3" aria-hidden="true"></i></th>
                 </tr>
@@ -316,3 +323,14 @@
         </table>
     </div>
 </div>
+
+
+<script>
+    let lens = document.getElementById("lens");
+    let cols_to_hide = document.querySelectorAll("[col_to_hide]");
+    lens.addEventListener("change", ()=>{
+        cols_to_hide.forEach((ele)=>{
+            ele.classList.toggle("hide")
+        })
+    })
+</script>

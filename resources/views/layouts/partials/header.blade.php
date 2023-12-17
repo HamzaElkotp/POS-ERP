@@ -11,10 +11,6 @@
         </div>
 
         <ul class="col-md-6 justify-content-center nav col-12 col-md-auto">
-            @if (Module::has('Superadmin'))
-                @includeIf('superadmin::layouts.partials.active_subscription')
-            @endif
-
             @if (!empty(session('previous_user_id')) && !empty(session('previous_username')))
                 <a href="{{ route('sign-in-as-user', session('previous_user_id')) }}"
                     class="btn btn-flat btn-danger m-8 btn-sm mt-10">

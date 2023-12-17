@@ -1789,3 +1789,29 @@ html[dir="rtl"] .welcomeMsg{
         padding-left: 0 !important;
     }
 }
+
+
+
+
+.dropdown.user.user-menu .dropdown-menu .user-header{
+    background: var(--system-box-bg) !important; 
+}
+
+.dropdown.user.user-menu .dropdown-menu .user-header{
+    height: fit-content !important;
+}
+
+.dropdown.user.user-menu .dropdown-menu .user-header *{
+    color: var(--main-color1) !important;
+}
+
+.dropdown.user.user-menu .dropdown-menu .btn{
+    background: var(--main-color1) !important;
+    color: var(--system-box) !important;
+    border-color: var(--main-color1) !important;
+}
+
+.dropdown.user.user-menu .dropdown-menu{
+    overflow: hidden !important;
+    margin-top: 15px !important;
+}
